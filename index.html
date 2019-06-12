@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+    <title></title>
+    <link rel="stylesheet" href="./static/css/reset.css">
+<!--    解决点击延时-->
+    <script src="./static/js/fastclick.js"></script>
+    <script>
+      // rem适配
+      window.onresize=htmlFont
+      htmlFont()
+      function htmlFont() {
+        let styleNode = document.createElement("style")
+        let w = (document.documentElement.clientWidth || document.body.clientWidth)/25
+        styleNode.innerHTML = "html{font-size:"+w+"px!important}"
+        document.head.appendChild(styleNode)
+      }
+      // 解决点击延时
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+          FastClick.attach(document.body);
+        }, false);
+      }
+      if(!window.Promise) {
+        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+      }
+      // 滑动窗口input失去焦点
+      set_blur()
+      function set_blur() {
+        if ('addEventListener' in document) {
+          let inp = document.getElementsByTagName("input")
+          if(inp){
+            window.addEventListener('touchstart',function () {
+              for (let i=0,lenght=inp.length; i<lenght; i++){
+                inp[i].blur()
+              }
+            })
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
