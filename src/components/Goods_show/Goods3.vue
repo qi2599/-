@@ -1,5 +1,5 @@
 <template>
-  <div class="goods3">
+  <div class="goods3" @click="goto">
     <div class="img">
       <img :src="info.tab_image_url">
       <div class="mask" v-if="info.store_amount === 0">补货中</div>
@@ -20,7 +20,12 @@
   export default {
     props: [
       'info'
-    ]
+    ],
+    methods:{
+      goto(){
+        this.$router.push({name: 'goods_detail', query: {id:this.info.id}})
+      }
+    }
   }
 </script>
 
@@ -36,6 +41,8 @@
     overflow: hidden;
     .img{
       position: relative;
+      width: 260/@rem;
+      height: 260/@rem;
       img{
         width: 100%;
       }

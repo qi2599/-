@@ -1,13 +1,10 @@
 <template>
   <div id="sort">
-    <div class="head">
-      <div class="content">
-        <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @click="set_focus"/>
-        <a href="javascript:;">搜索</a>
-      </div>
-    </div>
+    <Search_head>
+      <div class="iconfont iconsousuo" slot='iconfont'></div>
+    </Search_head>
     <div id="class_list">
-      <div class="swiper-wrapper">
+      <div class="swiper-wrapper" v-if="class1.length">
         <div class="swiper-slide vux-1px-b"
              :class="{active: id == item.id}"
              v-for="(item, index) in class1"
@@ -15,6 +12,7 @@
           {{item.name}}
         </div>
       </div>
+      <img src="./img/class_list.svg" v-else>
     </div>
     <div class="goods_wrap">
       <scroller :on-infinite="infinite" ref="myscroller" >
@@ -29,6 +27,7 @@
 <script>
   import {queryClass, queryGoods} from '../../api'
   import Goods3 from '../../components/Goods_show/Goods3.vue'
+  import Search_head from '../../components/Search_type_head/Search_type_head'
   import Swiper from 'swiper'
   export default {
     data(){
@@ -41,38 +40,52 @@
       }
     },
     components:{
-      Goods3
+      Goods3,
+      Search_head
     },
     methods:{
-      set_focus(ev){
-        ev.target.focus()
-      },
       get_class1(id){
-        this.$vux.loading.show({text: 'Loading'})
         this.pageNumber=1
+        this.goodsList=[]
         queryGoods({pageNumber: 1, pageSize: 10, classId:id}).then(res => {
           this.goodsList = res.result
           this.id = id
-          this.$refs.myscroller.scrollTo(0,10,false)
-          this.$vux.loading.hide()
         })
+        if(id !== 0){
+          queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
+            if(res.result[0]){
+              this.class1.some(item => {
+                if(item.id === res.result[0].parent_id){
+                  item.class2 = res.result
+                  return true
+                }
+              })
+            }
+          })
+        }
       },
       infinite(done){
-        let classId = this.id=='0'? '':this.id
-        queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId}).then(res => {
-          if(res.result.length!=0){
-            this.goodsList = [...this.goodsList,...res.result]
-            this.pageNumber++
-            done() //进行下一次加载操作
-          }else{
-            done(true)
-          }
-        })
+        if(this.goodsList.length){
+          let classId = this.id=='0'? '':this.id
+          queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId}).then(res => {
+            if(res.result.length!=0){
+              this.goodsList = [...this.goodsList,...res.result]
+              this.pageNumber++
+              done() //进行下一次加载操作
+            }else{
+              done(true)
+            }
+          })
+        }else {
+          this.$nextTick(()=>{
+            done()
+          })
+        }
       }
     },
     created(){
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
-        this.class1 = [{id:0, name:'所有商品'},...res.result]
+        this.class1 = [{id:'0', name:'所有商品'},...res.result]
         this.$nextTick(() => {
           new Swiper('#class_list', {
             direction: 'vertical',
@@ -92,43 +105,15 @@
 <style lang="less" scoped>
   #sort{
     height: 100%;
-    .head{
-      position: fixed;
-      top: 0;
-      z-index: 2;
-      background: @c1;
+    .iconsousuo{
+      width: 70/@rem;
       height: 70/@rem;
-      padding: 18.5/@rem 50/@rem;
-      .content{
-        background: tan;
-        width: 650/@rem;
-        height: 70/@rem;
-        border-radius: 10/@rem;
-        overflow: hidden;
-        input{
-          width: 510/@rem;
-          height: 70/@rem;
-          padding-left: 20/@rem;
-          border-radius: 0;
-          border: none;
-          outline: none;
-          float: left;
-          background: @gray2;
-          &:focus{
-            background: white;
-          }
-        }
-        a{
-          float: right;
-          display: block;
-          line-height: 70/@rem;
-          text-align: center;
-          width: 120/@rem;
-          background: @c3;
-          color: white;
-          font-size: 1.2rem;
-        }
-      }
+      line-height: 70/@rem;
+      padding-left: 20/@rem;
+      float: left;
+      color: white;
+      font-size: 1.3rem;
+      
     }
     #class_list{
       position: fixed;

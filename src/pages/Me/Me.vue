@@ -1,12 +1,13 @@
 <template>
-<div>
-  me
-</div>
+  <div style="height: 100%">
+  </div>
 </template>
 
 <script>
-export default {
-}
+  export default {
+    components:{
+    }
+  }
 </script>
 
 <style lang="less" scoped>

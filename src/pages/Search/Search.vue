@@ -1,93 +1,107 @@
 <template>
-  <div>
-    <Search></Search>
-    <div class="search_page">
-      <div class="recent_search">
-        <div class="title">最近搜索</div>
-        <div class="content clearfix">
-          <div>花生</div>
-          <div>花生</div>
-          <div>花生</div>
-        </div>
-        <div class="del"><div></div><p class="iconfont icondel"></p></div>
-      </div>
-      <div class="hot_search">
-        <div class="title">热门搜索</div>
-        <div class="content clearfix">
-          <div>瓜子</div>
-          <div>瓜子</div>
-          <div>瓜子</div>
-          <div>瓜子</div>
-        </div>
-      </div>
+  <div id="search_page">
+    <Search ref="search_id" :queryGoods="queryGoods" :queryAll="queryAll"></Search>
+    <div class="scro_wrap">
+      <scroller :on-infinite="infinite" ref="myscroller">
+        <Goods2 :goodsList="goodsList"></Goods2>
+      </scroller>
     </div>
   </div>
 </template>
 
 <script>
   import Search from '../../components/Search/Search.vue'
-  import {queryGoods} from '../../api'
+  import {queryClass, queryGoods} from '../../api'
+  import Goods2 from '../../components/Goods_show/Goods2'
   export default {
     data (){
       return {
-        goodsList: []
+        goodsList: [],
+        pageNumber: 1,
+        ref_factor_id: '',
+        keyword: '',
+        classId: ''
       }
     },
     components: {
-      Search
+      Search,
+      Goods2
+    },
+    methods:{
+      queryAll(){
+        this.goodsList=[]
+        this.$vux.loading.show({text: 'loading...'})
+        queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
+          this.goodsList = res.result
+          this.$vux.loading.hide()
+        })
+      },
+      queryGoods(queryData){
+        this.goodsList=[]
+        this.$vux.loading.show({text: '加载中...'})
+        queryGoods(queryData).then(res => {
+          this.goodsList = res.result
+          this.$vux.loading.hide()
+        })
+      },
+      infinite(done){
+        // 判断是否是首次加载
+        if(this.goodsList.length){
+          // 获取子搜索组件的classid
+          let classId = this.$refs.search_id.id || this.$refs.search_id.parent_id
+          // 如果子组件的id不等于此组件的id则证明点击过其他分类
+          if(classId !== this.classId){
+            this.pageNumber=1
+            this.classId = classId
+          }
+          // 判断是否曾经点击过分类
+          if(this.$refs.search_id.isClass){
+            // 曾经点击过分还需要排除上次请求不是ref_factor_id
+            if(this.ref_factor_id){
+              this.pageNumber=1
+            }
+            this.ref_factor_id = ''
+          }
+          queryGoods({ref_factor_id: this.ref_factor_id, pageNumber: this.pageNumber+1, pageSize: 10, classId: this.classId==='0'? '':this.classId}).then(res => {
+            if(res.result.length!=0){
+              this.goodsList = [...this.goodsList,...res.result]
+              this.pageNumber++
+              done() //进行下一次加载操作
+            }else{
+              // 没有返回商品则停止上拉加载
+              done(true)
+            }
+          })
+        }else {
+          this.$nextTick(()=>{
+            done()
+          })
+        }
+      }
     },
     created() {
-      let ref_factor_id = this.$route.query.id
-      let pageNumber = 1
+      let {pageNumber, keyword} = this
       let pageSize = 10
-      let keyword = ''
-      queryGoods({ref_factor_id, pageNumber, pageSize, keyword}).then(res => {
-        this.goodsList = res.result
-      })
+      let ref_factor_id=''
+      if(this.$route.query.id){
+        this.$vux.loading.show({text: 'loading...'})
+        ref_factor_id = this.ref_factor_id = this.$route.query.id
+        queryGoods({ref_factor_id, pageNumber, pageSize}).then(res => {
+          this.goodsList = res.result
+          this.$vux.loading.hide()
+        })
+      }
     }
   }
 </script>
 
 <style lang="less" scoped>
-  .search_page{
-    padding-top: 200/@rem;
-    .title{
-      text-align: center;
-      font-size: 1.2rem;
-      line-height: 2.5rem;
-    }
-    .content{
-      padding: 0 37.5/@rem;
-      color: @gray6;
-    }
-    .content div{
-      text-align: center;
-      line-height: 2rem;
-      width: 195/@rem;
-      margin: 15/@rem 15/@rem;
-      background: white;
-      border-radius: 5/@rem;
-      float: left;
-    }
-    .recent_search{
-      margin-bottom: 40/@rem;
-      .del{
-        color: white;
-        text-align: center;
-        div{
-          width: 45/@rem;
-          height: 45/@rem;
-          margin-bottom: -65/@rem;
-          background: @gray5;
-          display: inline-block;
-        }
-        p{
-          font-size: 2.5rem;
-        }
-      }
-    }
-    .hot_search{
-    
+  #search_page{
+    .scro_wrap{
+      position: absolute;
+      top: 95/@rem;
+      bottom: 0;
+      width: 100%;
     }
   }
 </style>

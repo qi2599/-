@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="search_wrap" :class="{sreach_fixed: isSearchFixed}" ref="search">
-        <router-link class="sreach iconfont iconsousuo" :to="{name: 'search'}"> 搜索</router-link>
+        <router-link class="sreach iconfont iconsousuo" :to="{name: 'search_type'}"> 搜索</router-link>
       </div>
     </div>
     <div class="hot_sort">
@@ -45,7 +45,7 @@
       <div class="head">
         大·品·牌
       </div>
-      <div class="brand_list">
+      <div class="brand_list" v-if="brandList.length">
         <div class="swiper-wrapper">
           <router-link :to="{ name:'search', query:{id: item.ref_factor_id} }" v-for="item in brandList" :key="item.id" class="swiper-slide">
             <img :src="item.bar_image_url">
@@ -53,18 +53,19 @@
           </router-link>
         </div>
       </div>
+      <img src="./img/brand.svg" v-else>
     </div>
-    <div class="sale">
+    <div class="sale" :class="{sale_height: !goodsList.length}">
       <div class="head">促·销·商·品</div>
-      <div class="content">
-        <Goods2 v-for="item in goodsList" :key="item.id" :info="item"></Goods2>
-      </div>
+      <Goods2 :goodsList="goodsList"></Goods2>
     </div>
+    <div class="footer_text">~~~~到底了 (ˉ▽ˉ；)</div>
   </div>
 </template>
 
 <script>
 import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
 import Goods2 from '../../components/Goods_show/Goods2'
 import {queryWapBar, getHomeGoods} from '../../api'
 export default {
@@ -95,6 +96,14 @@ export default {
   created(){
     queryWapBar().then(res => {
       this.brandList = res.result
+      this.$nextTick(()=>{
+        // logo列表滑动
+        new Swiper('#brand .brand_list', {
+          freeMode: true,
+          slidesPerView: 'auto',
+          freeModeSticky: true,
+        })
+      })
     })
     getHomeGoods().then(res => {
       this.goodsList = res.result
@@ -107,6 +116,7 @@ export default {
     // 轮播图
     new Swiper('#swiper_wrap .swiper-container', {
       loop: true,
+      observer:true, //修改swiper自己或子元素时，自动初始化swiper
       autoplay: {
         delay: 5000,
         disableOnInteraction: false
@@ -115,20 +125,13 @@ export default {
         el: '.swiper-pagination'
       }
     })
-    // logo列表滑动
-    new Swiper('#brand .brand_list', {
-      freeMode: true,
-      slidesPerView: 'auto',
-      freeModeSticky: true,
-      observer:true,
-      observeParents:true
-    })
   }
 }
 </script>
 
 <style lang="less" scoped>
   #home{
+    padding-bottom: 140/@rem;
     .back_img{
       height: 550/@rem;
       margin-bottom: -90/@rem;
@@ -165,7 +168,7 @@ export default {
       #swiper_wrap{
         width: 720/@rem;
         height: 280/@rem;
-        background: @gray5;
+        background: @gray2;
         margin: 0 auto;
         border-radius: 5px;
         overflow: hidden;
@@ -217,6 +220,7 @@ export default {
       }
       .content{
         padding-bottom: 20/@rem;
+        height: 147/@rem;
         .item{
           float: left;
           margin-left: 16.5/@rem;
@@ -260,7 +264,7 @@ export default {
     .sale{
       margin-top: 16/@rem;
       background-color: white;
-      border-radius: 5px 5px 0 0;
+      border-radius: 10/@rem;
       .head{
         text-align: center;
         line-height: 65/@rem;
@@ -270,13 +274,14 @@ export default {
         background-size: 316/@rem;
         background-position: center center;
       }
-      .content{
-        padding: 15/@rem;
-        padding-bottom: 140/@rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
+    }
+    .sale_height{
+      height: 1500px;
+    }
+    .footer_text{
+      text-align: center;
+      color: @gray5;
+      line-height: 100/@rem;
     }
   }
 </style>

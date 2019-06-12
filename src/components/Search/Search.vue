@@ -13,27 +13,19 @@
         <p>分类</p>
       </div>
     </div>
-    <div class="mask" :class="{mask_show: isMask}" @touchend.self="isMask = !isMask" @touchstart.prevent="">
+    <div class="mask" :class="{mask_show: isMask}" @touchstart.self="isMask = !isMask" @touchstart.prevent="">
       <div class="class_wrap">
         <div class="class1">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" :class="{active: isActive==0}" @click="addActive(0)">所有商品</div>
-            <div class="swiper-slide" :class="{active: isActive==1}" @click="addActive(1)">所有商品</div>
-            <div class="swiper-slide" :class="{active: isActive==2}" @click="addActive(2)">所有商品</div>
-            <div class="swiper-slide" :class="{active: isActive==3}" @click="addActive(3)">所有商品</div>
-            <div class="swiper-slide" :class="{active: isActive==4}" @click="addActive(4)">所有商品</div>
-            <div class="swiper-slide" :class="{active: isActive==5}" @click="addActive(5)">所有商品</div>
-            <div class="swiper-slide" :class="{active: isActive==6}" @click="addActive(6)">所有商品</div>
+          <div class="content">
+            <div :class="{active: item.id===parent_id}"
+                 v-for="(item,index) in classList"
+                 :key="index"
+                 @click="get_class2(item.id)">{{item.name}}
+            </div>
           </div>
         </div>
-        <div class="class2 clearfix vux-1px-t">
-          <div class="item">二级分类</div>
-          <div class="item">二级分类</div>
-          <div class="item">二级分类</div>
-          <div class="item">二级分类</div>
-          <div class="item">二级分类</div>
-          <div class="item">二级分类</div>
-          <div class="item">二级分类</div>
+        <div class="class2 clearfix vux-1px-t" :class="{class2_active: classList2.length}">
+          <div class="item" v-for="(item, index) in classList2" :key="index" @click="get_id(item.id)">{{item.name}}</div>
         </div>
       </div>
     </div>
@@ -41,14 +33,22 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.css'
+import {queryClass} from "../../api";
+import BScroll from 'better-scroll'
 export default {
   data () {
     return {
       isMask: false,
-      isActive: 0
+      isClass: false,
+      classList: [],
+      classList2: [],
+      id: '',
+      parent_id: '',
     }
+  },
+  props:{
+    queryGoods: Function,
+    queryAll: Function
   },
   methods: {
     goBack(){
@@ -59,13 +59,48 @@ export default {
     },
     getFocus(ev){
       ev.target.focus()
+    },
+    get_class2(id){
+      this.isClass=true
+      if(id !== '0'){
+        queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
+          if (res.result[0]){
+            this.classList2 = res.result
+          }else {
+            this.classList2 = []
+            this.isMask=false
+          }
+          this.queryGoods({pageNumber: 1, pageSize: 10, classId: id})
+          this.parent_id = id
+          this.id=''
+        })
+      }else {
+        this.parent_id = '0'
+        this.id = ''
+        this.classList2 = []
+        this.queryAll()
+        this.isMask=false
+      }
+    },
+    get_id(id){
+      this.id = id
+      this.isMask=false
+      this.queryGoods({pageNumber: 1, pageSize: 10, classId: id})
     }
   },
-  mounted () {
-    new Swiper('.class1', {
-      freeMode: true,
-      slidesPerView: 'auto',
-      freeModeSticky: true
+  mounted() {
+    queryClass({pageNumber : 1, pageSize : 50}).then(res => {
+      this.classList = [{id:'0', name:'所有商品'},...res.result]
+      this.$nextTick(() => {
+        new BScroll('.class1',{
+          startX: 0,
+          click: true,
+          scrollX: true,
+          // 忽略竖直方向的滚动
+          scrollY: false,
+          eventPassthrough: "vertical"
+        })
+      })
     })
   }
 }
@@ -75,13 +110,11 @@ export default {
 #search{
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 1;
   &.show{
     height: 100%;
   }
   .head{
-    position: relative;
-    z-index: 3;
     background: @c1;
     height: 97/@rem;
     display: flex;
@@ -140,9 +173,9 @@ export default {
   .mask{
     position: absolute;
     top: 97/@rem;
+    width: 100%;
     height: 0;
     overflow: hidden;
-    z-index: 2;
     background: rgba(0,0,0,0.5);
     .class_wrap{
       overflow: hidden;
@@ -150,10 +183,13 @@ export default {
       .class1{
         padding: 30/@rem 0;
         height: 60/@rem;
-        .swiper-wrapper{
-          .swiper-slide{
+        position: relative;
+        .content{
+          position: absolute;
+          display: flex;
+          white-space: nowrap;
+          div{
             line-height: 60/@rem;
-            width: auto;
             padding: 0 20/@rem;
           }
           > :first-child{
@@ -170,7 +206,6 @@ export default {
         }
       }
       .class2{
-        padding: 30/@rem 0;
         .item{
           color: @c1;
           background: @gray2;
@@ -182,6 +217,9 @@ export default {
           padding: 15/@rem 0;
           border-radius: 30/@rem;
         }
+      }
+      .class2_active{
+        padding: 50/@rem 0;
       }
     }
   }
