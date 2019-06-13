@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="content">
-      <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="goto(info.id)">
+      <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="$goods_toast(info.id)">
         <div class="img" >
           <img :src="info.tab_image_url">
-          <div class="mask" v-if="info.store_amount === 0">补货中</div>
+          <div class="mask" v-if="info.store_amount < 0">补货中</div>
         </div>
         <div class="name vux-1px-b">
           <span class="att" v-if="info.support_virtual === '2'">积分</span>
@@ -25,11 +25,6 @@
 export default {
   props: {
     goodsList: Array
-  },
-  methods: {
-    goto(id){
-      this.$router.push({name: "goods_detail", query: {id}})
-    }
   }
 }
 </script>
@@ -63,7 +58,7 @@ export default {
           text-align: center;
           font-size: 1.2rem;
           color: white;
-          line-height: 110/@rem;
+          line-height: 80/@rem;
         }
       }
       .name{

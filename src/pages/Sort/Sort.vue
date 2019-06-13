@@ -4,7 +4,7 @@
       <div class="iconfont iconsousuo" slot='iconfont'></div>
     </Search_head>
     <div id="class_list">
-      <div class="swiper-wrapper" v-if="class1.length">
+      <div class="swiper-wrapper">
         <div class="swiper-slide vux-1px-b"
              :class="{active: id == item.id}"
              v-for="(item, index) in class1"
@@ -12,7 +12,6 @@
           {{item.name}}
         </div>
       </div>
-      <img src="./img/class_list.svg" v-else>
     </div>
     <div class="goods_wrap">
       <scroller :on-infinite="infinite" ref="myscroller" >

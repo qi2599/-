@@ -1,66 +1,68 @@
 <template>
-  <div id="home">
-    <div class="back_img">
-      <div class="horn">
-        <div class="iconfont iconhorn1"></div>
-        <div class="text">天天饮百津，健康又开心。——百津饮料</div>
-      </div>
-      <div id="swiper_wrap">
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" >
-              <img src="./img/1.jpg">
+  <scroller>
+    <div id="home">
+      <div class="back_img">
+        <div class="horn">
+          <div class="iconfont iconhorn1"></div>
+          <div class="text">天天饮百津，健康又开心。——百津饮料</div>
+        </div>
+        <div id="swiper_wrap">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" >
+                <img src="./img/1.jpg">
+              </div>
+              <div class="swiper-slide" >
+                <img src="./img/2.jpg">
+              </div>
+              <div class="swiper-slide" >
+                <img src="./img/3.jpg">
+              </div>
+              <div class="swiper-slide" >
+                <img src="./img/4.jpg">
+              </div>
+              <div class="swiper-slide" >
+                <img src="./img/5.jpg">
+              </div>
             </div>
-            <div class="swiper-slide" >
-              <img src="./img/2.jpg">
-            </div>
-            <div class="swiper-slide" >
-              <img src="./img/3.jpg">
-            </div>
-            <div class="swiper-slide" >
-              <img src="./img/4.jpg">
-            </div>
-            <div class="swiper-slide" >
-              <img src="./img/5.jpg">
-            </div>
+            <div class="swiper-pagination"></div>
           </div>
-          <div class="swiper-pagination"></div>
+        </div>
+        <div class="search_wrap" :class="{sreach_fixed: isSearchFixed}" ref="search">
+          <router-link class="sreach iconfont iconsousuo" :to="{name: 'search_type'}"> 搜索</router-link>
         </div>
       </div>
-      <div class="search_wrap" :class="{sreach_fixed: isSearchFixed}" ref="search">
-        <router-link class="sreach iconfont iconsousuo" :to="{name: 'search_type'}"> 搜索</router-link>
-      </div>
-    </div>
-    <div class="hot_sort">
-      <div class="head">
-        热·门·分·类
-      </div>
-      <div class="content clearfix">
-        <a class="item" href="javascript:;"><img src="./img/hot_sort1.png"></a>
-        <a class="item" href="javascript:;"><img src="./img/hot_sort2.png"></a>
-        <a class="item" href="javascript:;"><img src="./img/hot_sort3.png"></a>
-      </div>
-    </div>
-    <div id="brand" class="vux-1px-t">
-      <div class="head">
-        大·品·牌
-      </div>
-      <div class="brand_list" v-if="brandList.length">
-        <div class="swiper-wrapper">
-          <router-link :to="{ name:'search', query:{id: item.ref_factor_id} }" v-for="item in brandList" :key="item.id" class="swiper-slide">
-            <img :src="item.bar_image_url">
-            <div>{{item.bar_name}}</div>
-          </router-link>
+      <div class="hot_sort">
+        <div class="head">
+          热·门·分·类
+        </div>
+        <div class="content clearfix">
+          <a class="item" href="javascript:;"><img src="./img/hot_sort1.png"></a>
+          <a class="item" href="javascript:;"><img src="./img/hot_sort2.png"></a>
+          <a class="item" href="javascript:;"><img src="./img/hot_sort3.png"></a>
         </div>
       </div>
-      <img src="./img/brand.svg" v-else>
+      <div id="brand" class="vux-1px-t">
+        <div class="head">
+          大·品·牌
+        </div>
+        <div class="brand_list" v-if="brandList.length">
+          <div class="swiper-wrapper">
+            <router-link :to="{ name:'search', query:{id: item.ref_factor_id} }" v-for="item in brandList" :key="item.id" class="swiper-slide">
+              <img :src="item.bar_image_url">
+              <div>{{item.bar_name}}</div>
+            </router-link>
+          </div>
+        </div>
+        <img src="./img/brand.svg" v-else>
+      </div>
+      <div class="sale" :class="{sale_height: !goodsList.length}">
+        <div class="head">促·销·商·品</div>
+        <Goods2 :goodsList="goodsList"></Goods2>
+      </div>
+      <div class="footer_text">~~~~到底了 (ˉ▽ˉ；)</div>
     </div>
-    <div class="sale" :class="{sale_height: !goodsList.length}">
-      <div class="head">促·销·商·品</div>
-      <Goods2 :goodsList="goodsList"></Goods2>
-    </div>
-    <div class="footer_text">~~~~到底了 (ˉ▽ˉ；)</div>
-  </div>
+  </scroller>
 </template>
 
 <script>

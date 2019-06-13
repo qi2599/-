@@ -9,7 +9,7 @@ if (process.env.NODE_ENV == 'development'){
   axios.defaults.baseURL = 'http://139.159.204.137/wapback/app/';
 }
 //设置超时时间
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 2000;
 // post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 //对外接口

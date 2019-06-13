@@ -1,8 +1,8 @@
 <template>
-  <div class="goods3" @click="goto">
+  <div class="goods3" @click="$goods_toast(info.id)">
     <div class="img">
       <img :src="info.tab_image_url">
-      <div class="mask" v-if="info.store_amount === 0">补货中</div>
+      <div class="mask" v-if="info.store_amount < 0">补货中</div>
     </div>
     <div class="name">
       <div class="ellipsis">{{info.product_name}}</div>
@@ -20,12 +20,7 @@
   export default {
     props: [
       'info'
-    ],
-    methods:{
-      goto(){
-        this.$router.push({name: 'goods_detail', query: {id:this.info.id}})
-      }
-    }
+    ]
   }
 </script>
 

@@ -50,6 +50,7 @@ export default {
 <style lang="less" scoped>
 .tabbar-wrap{
   position: fixed;
+  z-index: 2;
   bottom: -130/@rem;
   width: 100%;
   height: 122/@rem;

@@ -26,6 +26,9 @@
   export default {
     components: {
       Goods_car
+    },
+    created() {
+      window.scrollTo(0,0)
     }
   }
 </script>

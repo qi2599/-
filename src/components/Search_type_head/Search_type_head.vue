@@ -2,7 +2,7 @@
   <div class="head" @touchstart.prevent="">
     <slot name='iconfont'></slot>
     <div class="content">
-      <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @click="set_focus"/>
+      <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @touchstart.stop="set_focus"/>
       <a href="javascript:;">搜索</a>
     </div>
   </div>

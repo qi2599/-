@@ -30,7 +30,7 @@
     methods:{
       queryAll(){
         this.goodsList=[]
-        this.$vux.loading.show({text: 'loading...'})
+        this.$vux.loading.show({text: '加载中...'})
         queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
           this.goodsList = res.result
           this.$vux.loading.hide()
@@ -84,7 +84,7 @@
       let pageSize = 10
       let ref_factor_id=''
       if(this.$route.query.id){
-        this.$vux.loading.show({text: 'loading...'})
+        this.$vux.loading.show({text: '加载中...'})
         ref_factor_id = this.ref_factor_id = this.$route.query.id
         queryGoods({ref_factor_id, pageNumber, pageSize}).then(res => {
           this.goodsList = res.result
