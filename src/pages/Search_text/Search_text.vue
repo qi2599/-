@@ -1,5 +1,5 @@
 <template>
-  <div class="search_text">
+  <div id="search_text">
     <Search_head>
       <div class="iconfont iconarrow-left" slot='iconfont' @click="goback"></div>
     </Search_head>
@@ -39,7 +39,7 @@
 </script>
 
 <style lang="less" scoped>
-  .search_text{
+  #search_text{
     padding-top: 200/@rem;
     .iconarrow-left{
       width: 70/@rem;
