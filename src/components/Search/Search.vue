@@ -3,8 +3,8 @@
     <div class="head">
       <div class="back iconfont iconarrow-left" @click="goBack"></div>
       <div class="content">
-        <input type="text" placeholder="饮料 / 酒 / 零食等" ref="search_input" @touchend="getFocus"/>
-        <a href="javascript:;">搜索</a>
+        <input type="text" placeholder="饮料 / 酒 / 零食等" ref="search_input" @touchend="getFocus" @change="reqGoods" v-model="keyword"/>
+        <a href="javascript:;" @click="reqGoods">搜索</a>
       </div>
       <div class="sort" @click="isMask = !isMask">
         <div></div>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="class2 clearfix vux-1px-t" :class="{class2_active: classList2.length}">
-          <div class="item" v-for="(item, index) in classList2" :key="index" @click="get_id(item.id)">{{item.name}}</div>
+          <div class="item" v-for="(item, index) in classList2" :key="index" @click="reqGoods({id:item.id})">{{item.name}}</div>
         </div>
       </div>
     </div>
@@ -33,198 +33,208 @@
 </template>
 
 <script>
-import {queryClass} from "../../api";
-import BScroll from 'better-scroll'
-export default {
-  data () {
-    return {
-      isMask: false,
-      isClass: false,
-      classList: [],
-      classList2: [],
-      id: '',
-      parent_id: '',
-    }
-  },
-  props:{
-    queryGoods: Function,
-    queryAll: Function
-  },
-  methods: {
-    goBack(){
-      this.$router.go(-1)
-    },
-    addActive(index){
-      this.isActive=index
-    },
-    getFocus(ev){
-      ev.target.focus()
-    },
-    get_class2(id){
-      this.isClass=true
-      if(id !== '0'){
-        queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
-          if (res.result[0]){
-            this.classList2 = res.result
-          }else {
-            this.classList2 = []
-            this.isMask=false
-          }
-          this.queryGoods({pageNumber: 1, pageSize: 10, classId: id})
-          this.parent_id = id
-          this.id=''
-        })
-      }else {
-        this.parent_id = '0'
-        this.id = ''
-        this.classList2 = []
-        this.queryAll()
-        this.isMask=false
+  import {queryClass} from "../../api";
+  import BScroll from 'better-scroll'
+  export default {
+    data () {
+      return {
+        isMask: false,
+        flag: false,
+        classList: [],
+        classList2: [],
+        id: '',
+        parent_id: '',
+        keyword: ''
       }
     },
-    get_id(id){
-      this.id = id
-      this.isMask=false
-      this.queryGoods({pageNumber: 1, pageSize: 10, classId: id})
-    }
-  },
-  mounted() {
-    queryClass({pageNumber : 1, pageSize : 50}).then(res => {
-      this.classList = [{id:'0', name:'所有商品'},...res.result]
-      this.$nextTick(() => {
-        new BScroll('.class1',{
-          startX: 0,
-          click: true,
-          scrollX: true,
-          // 忽略竖直方向的滚动
-          scrollY: false,
-          eventPassthrough: "vertical"
+    props:{
+      queryGoods: Function,
+      queryAll: Function
+    },
+    methods: {
+      goBack(){
+        this.$router.go(-1)
+      },
+      getFocus(ev){
+        ev.target.focus()
+      },
+      get_class2(id){
+        this.flag=true
+        this.keyword = ''
+        if(id !== '0'){
+          queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
+            if (res.result[0]){
+              this.classList2 = res.result
+            }else {
+              this.classList2 = []
+              this.isMask=false
+            }
+            this.queryGoods({pageNumber: 1, pageSize: 10, classId: id})
+            this.parent_id = id
+            this.id=''
+          })
+        }else {
+          this.parent_id = '0'
+          this.id = ''
+          this.classList2 = []
+          this.queryAll()
+          this.isMask=false
+        }
+      },
+      reqGoods({id}){
+        this.flag=true
+        if(id){
+          this.id = id
+          this.keyword=''
+        }else if(this.keyword){
+          this.id = ''
+          this.parent_id = ''
+          this.classList2 = ''
+        }else {
+          this.$vux.toast.text('请输入搜索词', 'middle')
+          return
+        }
+        this.isMask=false
+        this.queryGoods({pageNumber: 1, pageSize: 10, classId: this.id, keyword: this.keyword})
+      }
+    },
+    mounted() {
+      queryClass({pageNumber : 1, pageSize : 50}).then(res => {
+        this.classList = [{id:'0', name:'所有商品'},...res.result]
+        this.$nextTick(() => {
+          new BScroll('.class1',{
+            startX: 0,
+            click: true,
+            scrollX: true,
+            // 忽略竖直方向的滚动
+            scrollY: false,
+            eventPassthrough: "vertical"
+          })
         })
       })
-    })
+    }
   }
-}
 </script>
 
 <style lang="less" scoped>
-#search{
-  position: fixed;
-  top: 0;
-  z-index: 1;
-  &.show{
-    height: 100%;
-  }
-  .head{
-    background: @c1;
-    height: 97/@rem;
-    display: flex;
-    align-items: center;
-    .back{
-      width: 110/@rem;
-      color: white;
-      font-size: 1.5rem;
-      text-align: center;
+  #search{
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    &.show{
+      height: 100%;
     }
-    .content{
-      background: tan;
-      width: 530/@rem;
-      height: 60/@rem;
-      border-radius: 35/@rem;
-      overflow: hidden;
-      input{
-        width: 390/@rem;
+    .head{
+      background: @c1;
+      height: 97/@rem;
+      display: flex;
+      align-items: center;
+      .back{
+        width: 110/@rem;
+        color: white;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+      .content{
+        background: tan;
+        width: 530/@rem;
         height: 60/@rem;
-        padding-left: 20/@rem;
-        border-radius: 0;
-        border: none;
-        outline: none;
-        float: left;
-        background: @gray2;
-        &:focus{
-          background: white;
+        border-radius: 35/@rem;
+        overflow: hidden;
+        input{
+          width: 390/@rem;
+          height: 60/@rem;
+          padding-left: 20/@rem;
+          border-radius: 0;
+          border: none;
+          outline: none;
+          float: left;
+          background: @gray2;
+          &:focus{
+            background: white;
+          }
+        }
+        a{
+          float: right;
+          display: block;
+          line-height: 60/@rem;
+          text-align: center;
+          width: 120/@rem;
+          background: @c3;
+          color: white;
         }
       }
-      a{
-        float: right;
-        display: block;
-        line-height: 60/@rem;
-        text-align: center;
-        width: 120/@rem;
-        background: @c3;
-        color: white;
+      .sort{
+        width: 110/@rem;
+        div{
+          width: 50/@rem;
+          height: 1px;
+          margin: 0 auto;
+          margin-bottom: 10/@rem;
+          background: white;
+        }
+        p{
+          color: white;
+          font-size: 0.8rem;
+          text-align: center;
+        }
       }
     }
-    .sort{
-      width: 110/@rem;
-      div{
-        width: 50/@rem;
-        height: 1px;
-        margin: 0 auto;
-        margin-bottom: 10/@rem;
-        background: white;
-      }
-      p{
-        color: white;
-        font-size: 0.8rem;
-        text-align: center;
-      }
-    }
-  }
-  .mask{
-    position: absolute;
-    top: 97/@rem;
-    width: 100%;
-    height: 0;
-    overflow: hidden;
-    background: rgba(0,0,0,0.5);
-    .class_wrap{
+    .mask{
+      position: absolute;
+      top: 97/@rem;
+      width: 100%;
+      height: 0;
       overflow: hidden;
-      background: white;
-      .class1{
-        padding: 30/@rem 0;
-        height: 60/@rem;
-        position: relative;
-        .content{
-          position: absolute;
-          display: flex;
-          white-space: nowrap;
-          div{
-            line-height: 60/@rem;
-            padding: 0 20/@rem;
+      background: rgba(0,0,0,0.5);
+      .class_wrap{
+        overflow: hidden;
+        background: white;
+        .class1{
+          padding: 30/@rem 0;
+          height: 60/@rem;
+          position: relative;
+          .content{
+            position: absolute;
+            display: flex;
+            white-space: nowrap;
+            div{
+              line-height: 60/@rem;
+              padding: 0 20/@rem;
+            }
+            > :first-child{
+              margin-left: 20/@rem;
+            }
+            > :last-child{
+              margin-right: 20/@rem;
+            }
+            .active{
+              background: @c3;
+              color: white;
+              border-radius: 30/@rem;
+            }
           }
-          > :first-child{
-            margin-left: 20/@rem;
-          }
-          > :last-child{
-            margin-right: 20/@rem;
-          }
-          .active{
-            background: @c3;
-            color: white;
+        }
+        .class2{
+          .item{
+            color: @c1;
+            background: @gray2;
+            float: left;
+            width: 151.5/@rem;
+            margin: 20/@rem 18/@rem;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 15/@rem 0;
             border-radius: 30/@rem;
           }
         }
-      }
-      .class2{
-        .item{
-          color: @c1;
-          background: @gray2;
-          float: left;
-          width: 151.5/@rem;
-          margin: 20/@rem 18/@rem;
-          font-size: 0.9rem;
-          text-align: center;
-          padding: 15/@rem 0;
-          border-radius: 30/@rem;
+        .class2_active{
+          padding: 50/@rem 0;
         }
       }
-      .class2_active{
-        padding: 50/@rem 0;
-      }
+    }
+    .mask_show{
+      height: 100%;
     }
   }
-  .mask_show{
-    height: 100%;
-  }
-}
 </style>

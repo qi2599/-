@@ -2,18 +2,38 @@
   <div class="head" @touchstart.prevent="">
     <slot name='iconfont'></slot>
     <div class="content">
-      <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @touchstart.stop="set_focus"/>
-      <a href="javascript:;">搜索</a>
+      <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @change="to_search" @touchstart.stop="set_focus" v-model="keyword"/>
+      <a href="javascript:;" @click="to_search">搜索</a>
     </div>
   </div>
 </template>
 
 <script>
   export default {
+    data(){
+      return{
+        keyword: ''
+      }
+    },
+    props:[
+      'focus'
+    ],
     methods: {
       set_focus(ev){
         ev.target.focus()
       },
+      to_search(){
+        if(this.keyword){
+          this.$router.push({name: 'search', query:{keyword: this.keyword}})
+        }else {
+          this.$vux.toast.text('请输入搜索词', 'middle')
+        }
+      }
+    },
+    mounted() {
+      if(this.focus){
+        this.$refs.sort_inp.focus()
+      }
     }
   }
 </script>

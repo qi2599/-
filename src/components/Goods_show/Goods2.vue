@@ -3,8 +3,8 @@
     <div class="content">
       <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="$goods_toast(info.id)">
         <div class="img" >
-          <img :src="info.tab_image_url">
-          <div class="mask" v-if="info.store_amount < 0">补货中</div>
+          <img :src="info.tab_image_url" v-if="info.tab_image_url">
+          <div class="mask" v-if="info.store_amount <= 0">补货中</div>
         </div>
         <div class="name vux-1px-b">
           <span class="att" v-if="info.support_virtual === '2'">积分</span>
@@ -46,6 +46,7 @@ export default {
       border-radius: 5px;
       .img{
         position: relative;
+        height: 330/@rem;
         img{
           width: 100%;
           height: 330/@rem;

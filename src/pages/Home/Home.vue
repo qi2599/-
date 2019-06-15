@@ -1,139 +1,140 @@
 <template>
-  <scroller>
-    <div id="home">
-      <div class="back_img">
-        <div class="horn">
-          <div class="iconfont iconhorn1"></div>
-          <div class="text">天天饮百津，健康又开心。——百津饮料</div>
-        </div>
-        <div id="swiper_wrap">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" >
-                <img src="./img/1.jpg">
-              </div>
-              <div class="swiper-slide" >
-                <img src="./img/2.jpg">
-              </div>
-              <div class="swiper-slide" >
-                <img src="./img/3.jpg">
-              </div>
-              <div class="swiper-slide" >
-                <img src="./img/4.jpg">
-              </div>
-              <div class="swiper-slide" >
-                <img src="./img/5.jpg">
-              </div>
-            </div>
-            <div class="swiper-pagination"></div>
-          </div>
-        </div>
-        <div class="search_wrap" :class="{sreach_fixed: isSearchFixed}" ref="search">
-          <router-link class="sreach iconfont iconsousuo" :to="{name: 'search_type'}"> 搜索</router-link>
-        </div>
+  <div id="home">
+    <div class="back_img">
+      <div class="horn">
+        <div class="iconfont iconhorn1"></div>
+        <div class="text">天天饮百津，健康又开心。——百津饮料</div>
       </div>
-      <div class="hot_sort">
-        <div class="head">
-          热·门·分·类
-        </div>
-        <div class="content clearfix">
-          <a class="item" href="javascript:;"><img src="./img/hot_sort1.png"></a>
-          <a class="item" href="javascript:;"><img src="./img/hot_sort2.png"></a>
-          <a class="item" href="javascript:;"><img src="./img/hot_sort3.png"></a>
-        </div>
-      </div>
-      <div id="brand" class="vux-1px-t">
-        <div class="head">
-          大·品·牌
-        </div>
-        <div class="brand_list" v-if="brandList.length">
+      <div id="swiper_wrap">
+        <div class="swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="{ name:'search', query:{id: item.ref_factor_id} }" v-for="item in brandList" :key="item.id" class="swiper-slide">
-              <img :src="item.bar_image_url">
-              <div>{{item.bar_name}}</div>
-            </router-link>
+            <div class="swiper-slide" >
+              <img src="./img/1.jpg">
+            </div>
+            <div class="swiper-slide" >
+              <img src="./img/2.jpg">
+            </div>
+            <div class="swiper-slide" >
+              <img src="./img/3.jpg">
+            </div>
+            <div class="swiper-slide" >
+              <img src="./img/4.jpg">
+            </div>
+            <div class="swiper-slide" >
+              <img src="./img/5.jpg">
+            </div>
           </div>
+          <div class="swiper-pagination"></div>
         </div>
-        <img src="./img/brand.svg" v-else>
       </div>
-      <div class="sale" :class="{sale_height: !goodsList.length}">
-        <div class="head">促·销·商·品</div>
-        <Goods2 :goodsList="goodsList"></Goods2>
+      <div class="search_wrap" :class="{sreach_fixed: isSearchFixed}" ref="search">
+        <router-link class="sreach iconfont iconsousuo" :to="{name: 'search_text'}"> 搜索</router-link>
       </div>
-      <div class="footer_text">~~~~到底了 (ˉ▽ˉ；)</div>
     </div>
-  </scroller>
+    <div class="hot_sort">
+      <div class="head">
+        热·门·分·类
+      </div>
+      <div class="content clearfix">
+        <a class="item" href="javascript:;"><img src="./img/hot_sort1.png"></a>
+        <a class="item" href="javascript:;"><img src="./img/hot_sort2.png"></a>
+        <a class="item" href="javascript:;"><img src="./img/hot_sort3.png"></a>
+      </div>
+    </div>
+    <div id="brand" class="vux-1px-t">
+      <div class="head">
+        大·品·牌
+      </div>
+      <div class="brand_list">
+        <div class="swiper-wrapper" v-if="brandList">
+          <router-link :to="{ name:'search', query:{id: item.ref_factor_id} }" v-for="item in brandList" :key="item.id" class="swiper-slide">
+            <img :src="item.bar_image_url">
+            <div>{{item.bar_name}}</div>
+          </router-link>
+        </div>
+        <div v-else class="svg_wrap" style="padding-bottom: 0px; padding-top: 20px">
+          <svg class="svg_spinner" style="stroke: #edd1b7;" slot="infinite-spinner" viewBox="0 0 64 64">
+            <g stroke-width="7" stroke-linecap="round"><line x1="10" x2="10" y1="27.3836" y2="36.4931"><animate attributeName="y1" dur="750ms" values="16;18;28;18;16;16" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="48;46;36;44;48;48" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values="1;.4;.5;.8;1;1" repeatCount="indefinite"></animate></line><line x1="24" x2="24" y1="18.6164" y2="45.3836"><animate attributeName="y1" dur="750ms" values="16;16;18;28;18;16" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="48;48;46;36;44;48" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values="1;1;.4;.5;.8;1" repeatCount="indefinite"></animate></line><line x1="38" x2="38" y1="16.1233" y2="47.8767"><animate attributeName="y1" dur="750ms" values="18;16;16;18;28;18" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="44;48;48;46;36;44" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values=".8;1;1;.4;.5;.8" repeatCount="indefinite"></animate></line><line x1="52" x2="52" y1="16" y2="48"><animate attributeName="y1" dur="750ms" values="28;18;16;16;18;28" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="36;44;48;48;46;36" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values=".5;.8;1;1;.4;.5" repeatCount="indefinite"></animate></line></g></svg>
+        </div>
+      </div>
+    </div>
+    <div class="sale">
+      <div class="head">促·销·商·品</div>
+      <Goods2 :goodsList="goodsList" v-if="goodsList"></Goods2>
+      <div v-else class="svg_wrap" style="padding-bottom: 500px; padding-top: 30px">
+        <svg class="svg_spinner" style="stroke: #edd1b7;" slot="infinite-spinner" viewBox="0 0 64 64">
+          <g stroke-width="7" stroke-linecap="round"><line x1="10" x2="10" y1="27.3836" y2="36.4931"><animate attributeName="y1" dur="750ms" values="16;18;28;18;16;16" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="48;46;36;44;48;48" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values="1;.4;.5;.8;1;1" repeatCount="indefinite"></animate></line><line x1="24" x2="24" y1="18.6164" y2="45.3836"><animate attributeName="y1" dur="750ms" values="16;16;18;28;18;16" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="48;48;46;36;44;48" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values="1;1;.4;.5;.8;1" repeatCount="indefinite"></animate></line><line x1="38" x2="38" y1="16.1233" y2="47.8767"><animate attributeName="y1" dur="750ms" values="18;16;16;18;28;18" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="44;48;48;46;36;44" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values=".8;1;1;.4;.5;.8" repeatCount="indefinite"></animate></line><line x1="52" x2="52" y1="16" y2="48"><animate attributeName="y1" dur="750ms" values="28;18;16;16;18;28" repeatCount="indefinite"></animate><animate attributeName="y2" dur="750ms" values="36;44;48;48;46;36" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" dur="750ms" values=".5;.8;1;1;.4;.5" repeatCount="indefinite"></animate></line></g></svg>
+      </div>
+    </div>
+    <div class="footer_text">~~~~到底了 (ˉ▽ˉ；)</div>
+  </div>
 </template>
 
 <script>
-import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
-import Goods2 from '../../components/Goods_show/Goods2'
-import {queryWapBar, getHomeGoods} from '../../api'
-export default {
-  data () {
-    return {
-      bannerImg: [],
-      brandList:[],
-      goodsList: [],
-      searchTop: 0,
-      isSearchFixed: false
-    }
-  },
-  components: {
-    Goods2
-  },
-  methods: {
-    homeScroll(){
-      if(window.scrollY>this.searchTop){
-        this.isSearchFixed = true
-      }else {
-        this.isSearchFixed = false
+  import Swiper from 'swiper'
+  import 'swiper/dist/css/swiper.min.css'
+  import Goods2 from '../../components/Goods_show/Goods2'
+  import {queryWapBar, getHomeGoods} from '../../api'
+  export default {
+    data () {
+      return {
+        bannerImg: [],
+        brandList: '',
+        goodsList: '',
+        searchTop: '',
+        isSearchFixed: false
       }
     },
-    refresh(){},
-    infinite(){},
-    store_amount(){}
-  },
-  created(){
-    queryWapBar().then(res => {
-      this.brandList = res.result
-      this.$nextTick(()=>{
-        // logo列表滑动
-        new Swiper('#brand .brand_list', {
-          freeMode: true,
-          slidesPerView: 'auto',
-          freeModeSticky: true,
+    components: {
+      Goods2
+    },
+    methods: {
+      homeScroll(){
+        if(window.scrollY>this.searchTop){
+          this.isSearchFixed = true
+        }else {
+          this.isSearchFixed = false
+        }
+      }
+    },
+    created(){
+      queryWapBar().then(res => {
+        this.brandList = res.result
+        this.$nextTick(()=>{
+          // logo列表滑动
+          new Swiper('#brand .brand_list', {
+            freeMode: true,
+            slidesPerView: 'auto',
+            freeModeSticky: true,
+          })
         })
       })
-    })
-    getHomeGoods().then(res => {
-      this.goodsList = res.result
-    })
-  },
-  mounted () {
-    // 监听滚动条、设置搜索元素到顶部的距离
-    window.addEventListener('scroll', this.homeScroll)
-    this.searchTop=this.$refs.search.offsetTop
-    // 轮播图
-    new Swiper('#swiper_wrap .swiper-container', {
-      loop: true,
-      observer:true, //修改swiper自己或子元素时，自动初始化swiper
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-      },
-      pagination: {
-        el: '.swiper-pagination'
-      }
-    })
+      getHomeGoods().then(res => {
+        this.goodsList = res.result
+      })
+    },
+    mounted () {
+      // 监听滚动条、设置搜索元素到顶部的距离
+      window.addEventListener('scroll', this.homeScroll)
+      this.searchTop=this.$refs.search.offsetTop
+      // 轮播图
+      new Swiper('#swiper_wrap .swiper-container', {
+        loop: true,
+        observer:true, //修改swiper自己或子元素时，自动初始化swiper
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: '.swiper-pagination'
+        }
+      })
+    }
   }
-}
 </script>
 
 <style lang="less" scoped>
   #home{
-    padding-bottom: 140/@rem;
     .back_img{
       height: 550/@rem;
       margin-bottom: -90/@rem;
@@ -228,6 +229,7 @@ export default {
           margin-left: 16.5/@rem;
           img{
             width: 218/@rem;
+            height: 144/@rem;
           }
         }
       }
@@ -249,10 +251,11 @@ export default {
       }
       .brand_list{
         padding: 0 20/@rem 20/@rem 20/@rem;
+        height: 140/@rem;
         .swiper-wrapper{
+          height: 140/@rem;
           .swiper-slide{
-            width: 120/@rem;
-            margin: 0 20/@rem;
+            width: 160/@rem;
             text-align: center;
             font-size: 0.8rem;
             img{
@@ -277,13 +280,10 @@ export default {
         background-position: center center;
       }
     }
-    .sale_height{
-      height: 1500px;
-    }
     .footer_text{
       text-align: center;
       color: @gray5;
-      line-height: 100/@rem;
+      line-height: 120/@rem;
     }
   }
 </style>

@@ -5,7 +5,7 @@ import Sort from '../pages/Sort/Sort.vue'
 import Car from '../pages/Car/Car.vue'
 import Me from '../pages/Me/Me.vue'
 import Search from '../pages/Search/Search.vue'
-import Search_type from '../pages/Search_type/Search_type.vue'
+import Search_text from '../pages/Search_text/Search_text.vue'
 import Goods_detail from '../pages/Goods_detail/Goods_detail'
 Vue.use(VueRouter)
 
@@ -17,7 +17,7 @@ export default new VueRouter({
     { path: '/car', component: Car },
     { path: '/me', component: Me },
     { path: '/search', name:'search', component: Search },
-    { path: '/search_type', name:'search_type', component: Search_type },
+    { path: '/search_text', name:'search_text', component: Search_text },
     { path: '/goods_detail', name:'goods_detail', component: Goods_detail }
   ]
 })

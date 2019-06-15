@@ -1,6 +1,6 @@
 <template>
   <div id="search_text">
-    <Search_head>
+    <Search_head :focus="true">
       <div class="iconfont iconarrow-left" slot='iconfont' @click="goback"></div>
     </Search_head>
     <div class="recent_search">
@@ -34,6 +34,9 @@
       goback(){
         this.$router.go(-1)
       }
+    },
+    mounted() {
+      window.scrollTo(0,0)
     }
   }
 </script>

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import VueScroller from 'vue-scroller'
 import {ToastPlugin} from 'vux'
 import  { LoadingPlugin } from 'vux'
@@ -14,7 +15,8 @@ Vue.use(Goods_toast)
 new Vue({
   el: '#app',
   render: c => c(App),
-  router
+  router,
+  store
 })
 
 Vue.directive('focus',{
