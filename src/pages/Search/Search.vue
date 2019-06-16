@@ -102,7 +102,7 @@
   #search_page{
     .scro_wrap{
       position: absolute;
-      top: 95/@rem;
+      top: 105/@rem;
       bottom: 0;
       width: 100%;
     }

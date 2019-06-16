@@ -90,6 +90,19 @@
           this.id = ''
           this.parent_id = ''
           this.classList2 = ''
+          // 更新本地搜索词
+          let flag = true
+          let localSearch=JSON.parse(localStorage.getItem('search'));
+          localSearch.some(item=>{
+            if(item===this.keyword){
+              flag=false
+              return true
+            }
+          })
+          if (flag){
+            localSearch.push(this.keyword)
+            window.localStorage.setItem('search',JSON.stringify(localSearch))
+          }
         }else {
           this.$vux.toast.text('请输入搜索词', 'middle')
           return
@@ -119,34 +132,34 @@
 <style lang="less" scoped>
   #search{
     position: fixed;
+    width: 100%;
     top: 0;
     z-index: 1;
     &.show{
       height: 100%;
     }
     .head{
-      background: @c1;
-      height: 97/@rem;
       display: flex;
+      width: 100%;
+      background: @c1;
+      height: 107/@rem;
       align-items: center;
       .back{
-        width: 110/@rem;
+        width: 100/@rem;
         color: white;
         font-size: 1.5rem;
         text-align: center;
       }
       .content{
-        background: tan;
         width: 530/@rem;
-        height: 60/@rem;
-        border-radius: 35/@rem;
-        overflow: hidden;
+        height: 70/@rem;
         input{
-          width: 390/@rem;
-          height: 60/@rem;
+          width: 400/@rem;
+          height: 70/@rem;
           padding-left: 20/@rem;
-          border-radius: 0;
-          border: none;
+          box-sizing: border-box;
+          border: 2px solid #4f79b2;
+          border-radius: 10/@rem 0 0 10/@rem;
           outline: none;
           float: left;
           background: @gray2;
@@ -157,10 +170,11 @@
         a{
           float: right;
           display: block;
-          line-height: 60/@rem;
+          line-height: 70/@rem;
           text-align: center;
           width: 120/@rem;
-          background: @c3;
+          background: #4F79B2;
+          border-radius: 0 10/@rem 10/@rem 0;
           color: white;
         }
       }
@@ -182,7 +196,7 @@
     }
     .mask{
       position: absolute;
-      top: 97/@rem;
+      top: 107/@rem;
       width: 100%;
       height: 0;
       overflow: hidden;

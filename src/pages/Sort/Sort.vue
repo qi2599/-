@@ -4,14 +4,15 @@
       <div class="iconfont iconsousuo" slot='iconfont'></div>
     </Search_head>
     <div id="class_list">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide vux-1px-b"
-             :class="{active: id == item.id}"
-             v-for="(item, index) in class1"
-             :key="index" @click="get_class1(item.id)">
-          {{item.name}}
+      <scroller class="scroll_wrap" ref="myscroll">
+        <div class="content">
+          <div class="item" :class="{class_open: parent_id == item.id}" v-for="(item, index) in class1" :key="index">
+            <div :class="{active: parent_id == item.id && parent_id==id}" @click="get_class1(item.id)">{{item.name}}</div>
+            <div class="vux-1px-b"></div>
+            <div class="vux-1px-b" :class="{active: id == cla.id}" v-for="(cla,i) in item.class2" :key="i"  @click="get_goods(cla.id)">{{cla.name}}</div>
+          </div>
         </div>
-      </div>
+      </scroller>
     </div>
     <div class="goods_wrap">
       <scroller :on-infinite="infinite" ref="myscroller" >
@@ -27,7 +28,6 @@
   import {queryClass, queryGoods} from '../../api'
   import Goods3 from '../../components/Goods_show/Goods3.vue'
   import Search_head from '../../components/Search_type_head/Search_type_head'
-  import Swiper from 'swiper'
   export default {
     data(){
       return {
@@ -35,7 +35,7 @@
         goodsList: '',
         pageNumber: 1,
         id: '0',
-        parent_id: 0
+        parent_id: '0'
       }
     },
     components:{
@@ -43,12 +43,25 @@
       Search_head
     },
     methods:{
-      get_class1(id){
+      get_goods(id){
         this.pageNumber=1
         this.goodsList=[]
+        this.$vux.loading.show({text: '加载中...'})
         queryGoods({pageNumber: 1, pageSize: 10, classId:id}).then(res => {
           this.goodsList = res.result
           this.id = id
+          this.$vux.loading.hide()
+        })
+      },
+      get_class1(id,event){
+        let ev = event || window.event
+        this.pageNumber=1
+        this.goodsList=[]
+        this.id = id
+        this.$vux.loading.show({text: '加载中...'})
+        queryGoods({pageNumber: 1, pageSize: 10, classId:this.id=='0'? '':this.id}).then(res => {
+          this.goodsList = res.result
+          this.$vux.loading.hide()
         })
         if(id !== 0){
           queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
@@ -59,14 +72,19 @@
                   return true
                 }
               })
+              this.parent_id = res.result[0].parent_id
+            }else {
+              this.parent_id = id
             }
+            this.$nextTick(()=>{
+              this.$refs.myscroll.scrollTo(0,ev.target.offsetTop)
+            })
           })
         }
       },
       infinite(done){
         if(this.goodsList.length){
-          let classId = this.id=='0'? '':this.id
-          queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId}).then(res => {
+          queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId: this.id=='0'? '':this.id}).then(res => {
             if(res.result.length!=0){
               this.goodsList = [...this.goodsList,...res.result]
               this.pageNumber++
@@ -85,19 +103,11 @@
     created(){
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
         this.class1 = [{id:'0', name:'所有商品'},...res.result]
-        this.$nextTick(() => {
-          new Swiper('#class_list', {
-            direction: 'vertical',
-            freeMode: true,
-            slidesPerView: 'auto',
-            freeModeSticky: true
-          })
-        })
       })
       queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
         this.goodsList = res.result
       })
-    },
+    }
   }
 </script>
 
@@ -122,19 +132,29 @@
       background: white;
       text-align: center;
       overflow: hidden;
-      .swiper-wrapper{
+      .scroll_wrap{
         height: auto;
         top: 0/@rem;
         bottom: 150/@rem;
-        .swiper-slide{
-          margin: 0 auto;
-          height: 100/@rem;
-          line-height: 100/@rem;
-        }
-        .active{
-          background: @gray2;
-          box-sizing: border-box;
-          border-left: 10/@rem solid @c3;
+        .content{
+          .item{
+            margin: 0 auto;
+            height: 100/@rem;
+            overflow: hidden;
+            line-height: 100/@rem;
+            .active{
+              background: white;
+              box-sizing: border-box;
+              border-left: 10/@rem solid @c3;
+              height: auto;
+              color: @c3;
+            }
+          }
+          .class_open{
+            height: auto;
+            background: @gray1;
+            color: @c1;
+          }
         }
       }
     }

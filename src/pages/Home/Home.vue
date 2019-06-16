@@ -108,10 +108,17 @@
             freeModeSticky: true,
           })
         })
+      }).catch(err=>{
+        this.$vux.toast.show({text: err, type: 'cancel'})
       })
       getHomeGoods().then(res => {
         this.goodsList = res.result
       })
+      if(localStorage){
+        if(!localStorage.search){
+          localStorage.setItem('search',JSON.stringify([]))
+        }
+      }
     },
     mounted () {
       // 监听滚动条、设置搜索元素到顶部的距离

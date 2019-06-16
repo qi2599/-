@@ -63,7 +63,7 @@ export default {
         }
       }
       .name{
-        padding: 15/@rem 0;
+        height: 56/@rem;
         .att{
           background: @c2;
           color: white;
@@ -73,9 +73,11 @@ export default {
           line-height: 1rem;
           font-size: 0.7rem;
           border-radius: 2px;
+          margin-top: 10/@rem;
         }
         .ellipsis{
           font-size: 0.9rem;
+          line-height: 56/@rem;
           padding-left: 5px;
         }
       }

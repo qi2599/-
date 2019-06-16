@@ -27,7 +27,7 @@ function get(url, data){
     axios.get(url).then(res =>{
       resolve(res.data);
     }).catch(err =>{
-      reject(err.data);
+      reject(err);
     })
   });
 }
@@ -38,7 +38,7 @@ function post(url, data){
     axios.post(url, data).then(res =>{
       resolve(res.data);
     }).catch(err =>{
-      reject(err.data);
+      reject(err);
     })
   });
 }

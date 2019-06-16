@@ -1,5 +1,6 @@
 <template>
   <div id="goods_toast" v-if="showWrap" :class="showContent?'fadein':'fadeout'" @touchstart.prevent="">
+    <div class="box">
       <div class="content">
         <div class="img">
           <img :src="img_url" v-if="img_url">
@@ -55,6 +56,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -71,97 +73,106 @@
     opacity: 0;
     transform: scale(0.3);
     transition: all 0.2s;
-    .content{
-      width: 650/@rem;
-      height: 832/@rem;
-      background: white;
-      border-radius: 50/@rem;
-      margin: 50/@rem auto;
-      .img{
-        width: 570/@rem;
-        height: 570/@rem;
-        padding: 10/@rem 40/@rem 0;
-        img{
-          width: 100%;
+    .box{
+      position: absolute;
+      height: 1032/@rem;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      .content{
+        width: 650/@rem;
+        height: 832/@rem;
+        background: white;
+        border-radius: 55/@rem;
+        margin: 0 auto 50/@rem;
+        .img{
+          width: 520/@rem;
+          height: 520/@rem;
+          padding: 30/@rem 65/@rem 20/@rem;
+          img{
+            width: 100%;
+          }
         }
-      }
-      .head{
-        color: @c2;
-        height: 50/@rem;
-        line-height: 50/@rem;
-        font-size: 1.2rem;
-        .price{
-          width: 30%;
-          float: left;
-          text-align: center;
-        }
-        .name{
-          width: 70%;
-          float: right;
-          text-align: center;
-        }
-      }
-      .th{
-        background: @gray6;
-        text-align: center;
-        color: white;
-        height: 50/@rem;
-        line-height: 50/@rem;
-        font-size: 0.8rem;
-      }
-      .tbody{
-        height: 132/@rem;
-        padding: 15/@rem 10/@rem;
-        background: @c1;
-        color: white;
-        line-height: 1.5rem;
-        border-radius: 0 0 50/@rem 50/@rem;
-        div{
-          float: left;
-          font-size: 0.85rem;
-        }
-        > :nth-child(odd){
-          width: 23%;
-          text-align: right;
-          color: @gray4;
-        }
-        > :nth-child(even){
-          width: 30%;
-          height: 45/@rem;
-        }
-        > :nth-child(4n+2){
-          width: 20%;
-        }
-      }
-    }
-    .button{
-      padding: 0 50/@rem;
-      .close, .to_car, .add_car{
-        width: 216.6/@rem;
-        text-align: center;
-        line-height: 2.5rem;
-        font-size: 0.9rem;
-        color: @c4;
-        float: left;
-      }
-      .iconfont_box{
-        width: 100/@rem;
-        height: 100/@rem;
-        border-radius: 50/@rem;
-        background: @gray7;
-        margin: 0 auto;
-        transition: 0.1s;
-        &:active {
-          background: @gray10;
-          transform: scale(1.5);
-        }
-        .iconfont{
-          line-height: 100/@rem;
-          text-align: center;
+        .head{
+          color: @c2;
+          height: 50/@rem;
+          line-height: 50/@rem;
           font-size: 1.2rem;
+          .price{
+            width: 30%;
+            float: left;
+            text-align: center;
+          }
+          .name{
+            width: 70%;
+            float: right;
+            text-align: center;
+          }
         }
-        .iconaddcart{
-          font-size: 1.9rem;
+        .th{
+          background: @gray6;
+          text-align: center;
+          color: white;
+          height: 50/@rem;
+          line-height: 50/@rem;
+          font-size: 0.8rem;
+        }
+        .tbody{
+          height: 132/@rem;
+          padding: 15/@rem 10/@rem;
+          background: @c1;
+          color: white;
+          line-height: 1.5rem;
+          border-radius: 0 0 50/@rem 50/@rem;
+          div{
+            float: left;
+            font-size: 0.85rem;
+          }
+          > :nth-child(odd){
+            width: 23%;
+            text-align: right;
+            color: @gray4;
+          }
+          > :nth-child(even){
+            width: 32%;
+            height: 45/@rem;
+          }
+          > :nth-child(4n+2){
+            width: 20%;
+          }
+        }
+      }
+      .button{
+        padding: 0 50/@rem;
+        .close, .to_car, .add_car{
+          width: 216.5/@rem;
+          text-align: center;
+          line-height: 50/@rem;
+          font-size: 0.9rem;
+          color: @c4;
+          float: left;
+        }
+        .iconfont_box{
+          width: 100/@rem;
+          height: 100/@rem;
+          border-radius: 50/@rem;
+          background: @gray7;
+          margin: 0 auto;
+          transition: 0.1s;
+          &:active {
+            background: @gray10;
+            transform: scale(1.5);
+          }
+          .iconfont{
+            line-height: 100/@rem;
+            text-align: center;
+            font-size: 1.2rem;
+          }
+          .iconaddcart{
+            font-size: 1.9rem;
+          }
         }
       }
     }

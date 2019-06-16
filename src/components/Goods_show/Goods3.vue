@@ -6,7 +6,7 @@
     </div>
     <div class="name">
       <div class="ellipsis">{{info.product_name}}</div>
-      <div class="norm">规格：{{info.specifications}}</div>
+      <div class="norm">{{info.specifications}}</div>
     </div>
     <div class="footer">
       <div class="price">￥{{info.wap_price}}/{{info.unit}}</div>
