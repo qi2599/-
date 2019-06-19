@@ -1,21 +1,19 @@
 // 直接更新state的多个方法对象
 import {
-  RECEIVE_CLASS1,
-  RECEIVE_CLASS2,
-  RECEIVE_GOODS,
-  SET_PARENT_ID
+  REQ_LOGIN,
+  REQ_ADDCAR
 } from './mutation-types'
 export default {
-  [SET_PARENT_ID](state, {id}){
-    state.class_parent_id=id
+  [REQ_LOGIN](state,{userInfo}){
+    state.userInfo=userInfo
   },
-  [RECEIVE_CLASS1](state,{class1}){
-    state.class1 = class1
+  [REQ_ADDCAR](state, {cartsum}){
+    state.cartsum=cartsum
   },
-  [RECEIVE_CLASS2](state,{class2}){
-    state.class2 = class2
+  setCarNum(state,{unm}){
+    state.cartsum=unm
   },
-  [RECEIVE_GOODS](state,{goods}){
-    state.goods = goods
-  },
+  setCustId(state){
+    state.custId=''
+  }
 }

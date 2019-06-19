@@ -101,11 +101,13 @@
       }
     },
     created(){
+      this.$vux.loading.show({text: '加载中...'})
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
         this.class1 = [{id:'0', name:'所有商品'},...res.result]
       })
       queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
         this.goodsList = res.result
+        this.$vux.loading.hide()
       })
     }
   }

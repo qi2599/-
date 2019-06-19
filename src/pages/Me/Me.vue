@@ -1,21 +1,41 @@
 <template>
-  <div style="height: 100%">
-  
+  <div>
+    <button @click="to_login">前往登录</button>
+    <button @click="logout">退出登录</button>
   </div>
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {queryLogout,queryCarNum} from '../../api'
   export default {
     methods:{
-      ...mapActions(['getClass'])
+      to_login(){
+        this.$router.push('/login')
+      },
+      logout(){
+        queryLogout({cust_id: localStorage.app_uid})
+        localStorage.isLogin = ''
+        localStorage.app_uid = ''
+        this.$store.commit('setCustId')
+        this.$router.replace('/login')
+      }
     },
-    mounted() {
-      this.getClass()
-      // this.$store.dispatch('getClass')
+    created() {
+      if(localStorage.isLogin){
+        queryCarNum({custId: localStorage.app_uid}).then(res => {
+          if (res.result.cartsum){
+            this.$store.commit('setCarNum', {unm: res.result.cartsum})
+          }else {
+            this.$store.commit('setCarNum', {unm: ''})
+          }
+        })
+      }else {
+        this.$router.replace('/login')
+      }
     }
   }
 </script>
 
 <style lang="less" scoped>
+
 </style>

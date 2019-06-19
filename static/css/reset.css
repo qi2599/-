@@ -94,6 +94,9 @@ body {
   touch-action: pan-y;
   touch-action: manipulation;
 }
+input{
+  outline: none;
+}
 
 /*显示省略号*/
 .ellipsis{

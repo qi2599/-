@@ -15,7 +15,7 @@
       <div class="iconfont" :class="{iconcar_active: '/car' === $route.path}"></div>
       <span>购物车</span>
     </div>
-    <div class="item" :class="{active: '/me' === $route.path}" @click="goTo('/me')">
+    <div class="item" :class="{active: '/me' === $route.path}" @click="toMe('/me')">
       <div class="iconfont" :class="{iconpersonal: '/me' !== $route.path}"></div>
       <div class="iconfont" :class="{iconpersonal_active: '/me' === $route.path}"></div>
       <span>个人中心</span>
@@ -32,6 +32,9 @@ export default {
   },
   methods: {
     goTo (path) {
+      this.$router.push(path)
+    },
+    toMe (path) {
       this.$router.replace(path)
     }
   },

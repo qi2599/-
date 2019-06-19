@@ -8,8 +8,10 @@ if (process.env.NODE_ENV == 'development'){
 } else if (process.env.NODE_ENV == 'production') {
   axios.defaults.baseURL = 'http://139.159.204.137/wapback/app/';
 }
+// 跨域发送cookie
+axios.defaults.withCredentials=true
 //设置超时时间
-axios.defaults.timeout = 2000;
+axios.defaults.timeout = 10000;
 // post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 //对外接口
@@ -42,6 +44,25 @@ function post(url, data){
     })
   });
 }
+
+// //添加响应拦截器
+// axios.interceptors.response.use(function(response){
+//   //对响应数据做些事
+//   console.log(response);
+//   return response;
+// },function(error){
+//   //请求错误时做些事
+//   return Promise.reject(error);
+// })
+//
+// //添加请求拦截器
+// axios.interceptors.request.use(function(config){
+//   //在发送请求之前做某事
+//   return config;
+// },function(error){
+//   //请求错误时做些事
+//   return Promise.reject(error);
+// })
 
 //数据拼接字符串
 function dataStr(data) {

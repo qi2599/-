@@ -37,12 +37,19 @@
         this.$router.go(-1)
       },
       del_local(){
-        localStorage.removeItem("search");
         this.localSearch= []
         localStorage.setItem('search',JSON.stringify([]))
       },
       hot_local(keyword){
         this.$refs.search_head.keyword=keyword
+      }
+    },
+    created(){
+      // 是否创建本地搜索词
+      if(localStorage){
+        if(!localStorage.search){
+          localStorage.setItem('search',JSON.stringify([]))
+        }
       }
     },
     mounted() {

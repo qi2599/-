@@ -23,22 +23,26 @@
       set_focus(ev){
         ev.target.focus()
       },
+      add_local_search(){
+        let flag = true
+        let localSearch=JSON.parse(localStorage.getItem('search'));
+        localSearch.some(item=>{
+          if(item===this.keyword){
+            flag=false
+            return true
+          }
+        })
+        if (flag){
+          localSearch.push(this.keyword)
+          localStorage.setItem('search',JSON.stringify(localSearch))
+        }
+      },
       to_search(){
-        this.keyword=event.target.value
+        // this.flag 解决失去焦点和点击搜索触发两次
         if(this.flag){
+          this.keyword=event.target.value
           if(this.keyword){
-            let flag = true
-            let localSearch=JSON.parse(localStorage.getItem('search'));
-            localSearch.some(item=>{
-              if(item===this.keyword){
-                flag=false
-                return true
-              }
-            })
-            if (flag){
-              localSearch.push(this.keyword)
-              localStorage.setItem('search',JSON.stringify(localSearch))
-            }
+            this.add_local_search()
             this.$router.push({name: 'search', query:{keyword: this.keyword}})
             this.flag=false
           }else {
@@ -66,6 +70,7 @@
   .head{
     position: fixed;
     top: 0;
+    z-index: 2;
     background: @c1;
     height: 70/@rem;
     padding: 18.5/@rem;

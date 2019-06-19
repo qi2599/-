@@ -1,5 +1,6 @@
 import vue from 'vue'
 import router from '../../router'
+import store from '../../store'
 import {queryDetail} from "../../api"
 
 import toastComponent from './Goods_toast'
@@ -13,6 +14,7 @@ function showToast(id) {
   const toastDom = new ToastConstructor({
     el: document.createElement('div'),
     router,
+    store,
     data() {
       return {
         id:id,
@@ -31,9 +33,17 @@ function showToast(id) {
         } ,200)
       },
       add_car(){
-        this.$vux.toast.show({
-          text: '添加成功'
-        })
+        if(localStorage.isLogin){
+          let {info} = toastDom
+          let callback = ()=>{
+            this.$vux.toast.show({
+              text: '添加成功'
+            })
+          }
+          this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
+        }else {
+          this.$vux.toast.text('请先登录', 'middle')
+        }
       },
       to_car(){
         this.$router.replace('/car')

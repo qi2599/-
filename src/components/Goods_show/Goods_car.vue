@@ -4,17 +4,17 @@
       <CheckIcon :value="check_icon"></CheckIcon>
     </div>
     <div class="img">
-      <img src="../../common/img/2044_0.jpg">
-      <div class="mask">补货中</div>
+      <img :src="info.tab_image_url">
+      <div v-if="info.store_amount <= 0" class="mask">补货中</div>
     </div>
     <div class="goods_info">
       <div class="name">
-        <div class="att">积分</div>
-        <span class="ellipsis">500ml8度漓泉啤酒1998888888</span>
+        <div v-if="info.support_virtual === '2'" class="att">积分</div>
+        <span class="ellipsis">{{info.product_name}}</span>
       </div>
-      <div class="norm">建议零售:2元/包  箱规:15g*30包/盒</div>
+      <div class="norm"><div>建议零售:{{info.retail_price}} 规格: {{info.specifications}}</div></div>
       <div class="footer">
-        <div class="price">￥56/件</div>
+        <div class="price">￥{{info.wap_price}}/{{info.unit}}</div>
         <x-number fillable ></x-number>
       </div>
     </div>
@@ -29,6 +29,9 @@
       return {
         check_icon: true
       }
+    },
+    props:{
+      info: Object
     },
     components: {
       XNumber,
@@ -91,8 +94,15 @@
       }
       .norm{
         font-size: 0.8rem;
-        line-height: 3rem;
+        line-height: 30/@rem;
         color: @gray5;
+        position: relative;
+        height: 90/@rem;
+        div{
+          position: absolute;
+          top: 20/@rem;
+          margin: auto;
+        }
       }
       .footer{
         position: relative;
