@@ -11,7 +11,7 @@
     <div class="footer">
       <div class="price">￥{{info.wap_price}}/{{info.unit}}</div>
       <div class="att" v-if="info.support_virtual === '2'">积分</div>
-      <div class="iconfont iconaddcart"></div>
+      <div class="iconfont iconaddcart" @click.stop="add_car"></div>
     </div>
   </div>
 </template>
@@ -20,7 +20,26 @@
   export default {
     props: [
       'info'
-    ]
+    ],
+    methods:{
+      add_car(){
+        let info = this.info
+        if(info.store_amount <= 0){
+          this.$vux.toast.text('无库存，补货中', 'middle')
+          return
+        }
+        if(localStorage.isLogin){
+          this.$vux.loading.show({text: '加载中...'})
+          let callback = ()=>{
+            this.$vux.loading.hide()
+            this.$vux.toast.show({text: '添加成功'})
+          }
+          this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
+        }else {
+          this.$vux.toast.text('请先登录', 'middle')
+        }
+      }
+    }
   }
 </script>
 

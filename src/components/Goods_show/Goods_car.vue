@@ -1,7 +1,7 @@
 <template>
 	<div class="goods_car">
-    <div class="check" @click="check_icon=!check_icon">
-      <CheckIcon :value="check_icon"></CheckIcon>
+    <div class="check" @click="togole_chack">
+      <CheckIcon type="plain" :value="info.isChack"></CheckIcon>
     </div>
     <div class="img">
       <img :src="info.tab_image_url">
@@ -31,7 +31,14 @@
       }
     },
     props:{
-      info: Object
+      info: Object,
+      chack_item: Function
+    },
+    methods:{
+      togole_chack(){
+        this.info.isChack=!this.info.isChack
+        this.chack_item()
+      }
     },
     components: {
       XNumber,

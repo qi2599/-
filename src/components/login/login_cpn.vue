@@ -29,10 +29,13 @@
         ev.target.focus()
       },
       to_login(){
-        let callback = () => {
+        let success = () => {
           this.$router.push('/me')
         }
-        this.$store.dispatch('getUserInfo',{queryData:{type:'1', mobile:this.mobile, passwd:this.passwd},callback})
+        let fail = err => {
+          this.$vux.toast.show({text: err, type: 'cancel', width: '10rem'})
+        }
+        this.$store.dispatch('getUserInfo',{queryData:{type:'1', mobile:this.mobile, passwd:this.passwd},success,fail})
       }
     }
   }
@@ -55,7 +58,6 @@
     width: 85%;
     float: right;
     height: 3rem;
-    font-size: 0.9rem;
   }
   .login_wrap div:first-child{
     border-bottom: 1px solid #eee;

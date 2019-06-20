@@ -13,7 +13,7 @@
         <div class="footer">
           <div class="price">￥{{info.wap_price}}/{{info.unit}}</div>
           <div class="del_price" v-if="info.wap_price !== info.sale_price">￥{{info.sale_price}}</div>
-          <div class="car iconfont iconaddcart"></div>
+          <div class="car iconfont iconaddcart" @click.stop="add_car(info)"></div>
         </div>
       </div>
     </div>
@@ -25,6 +25,26 @@
 export default {
   props: {
     goodsList: Array
+  },
+  methods:{
+    add_car(info){
+      if(info.store_amount <= 0){
+        this.$vux.toast.text('无库存，补货中', 'middle')
+        return
+      }
+      if(localStorage.isLogin){
+        this.$vux.loading.show({text: '加载中...'})
+        let callback = ()=>{
+          this.$vux.loading.hide()
+          this.$vux.toast.show({
+            text: '添加成功'
+          })
+        }
+        this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
+      }else {
+        this.$vux.toast.text('请先登录', 'middle')
+      }
+    }
   }
 }
 </script>

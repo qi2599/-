@@ -11,15 +11,17 @@ import {
 } from '../api'
 
 export default {
-  async getUserInfo({commit,state},{queryData,callback}){
+  async getUserInfo({commit,state},{queryData,success,fail}){
     const res = await queryLogin(queryData)
     if(res.result_code === '00'){
       const userInfo = res.result
-      setCookie('JSESSIONID',res.sessionId,1)
+      setCookie('JSESSIONID',res.sessionId)
       localStorage.app_uid = state.custId = res.result.id
       localStorage.isLogin = 'true'
-      callback()
+      success()
       commit(REQ_LOGIN, {userInfo})
+    }else if(res.result_code === '1062'){
+      fail(res.result_desc)
     }
   },
   async addCar({commit,state},{queryData,callback}){

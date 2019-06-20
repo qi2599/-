@@ -33,9 +33,15 @@ function showToast(id) {
         } ,200)
       },
       add_car(){
+        let {info} = toastDom
+        if(info.product_time == '无库存'){
+          this.$vux.toast.text('无库存，补货中', 'middle')
+          return
+        }
         if(localStorage.isLogin){
-          let {info} = toastDom
+          this.$vux.loading.show({text: '加载中...'})
           let callback = ()=>{
+            this.$vux.loading.hide()
             this.$vux.toast.show({
               text: '添加成功'
             })
