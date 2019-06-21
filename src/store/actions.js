@@ -27,9 +27,9 @@ export default {
   async addCar({commit,state},{queryData,callback}){
     const res = await queryAddCar(queryData)
     if(res.result_code === '00'){
-      let res = await queryCarNum({custId:state.userInfo.id})
+      let res = await queryCarNum({custId:localStorage.app_uid})
       if(res.result_code === '00'){
-        const cartsum = res.result.cartsum
+        let cartsum = res.result.cartsum
         callback()
         commit(REQ_ADDCAR, {cartsum})
       }

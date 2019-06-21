@@ -9,7 +9,7 @@ import toastComponent from './Goods_toast'
 const ToastConstructor = vue.extend(toastComponent)
 
 // 定义弹出组件的函数 接收商品id
-function showToast(id) {
+function showToast(id,isCar=false) {
   // 实例化一个 toast.vue
   const toastDom = new ToastConstructor({
     el: document.createElement('div'),
@@ -21,18 +21,24 @@ function showToast(id) {
         info: '',
         img_url: '',
         showWrap:true,
-        showContent:false
+        trans:false,
+        boxout: false,
       }
     },
     methods:{
       toggle_show(){
-        toastDom.showContent = false
+        toastDom.trans = false
+        toastDom.boxout = true
         // 等动画完成后关闭页面
         setTimeout(() => {
           toastDom.showWrap=false
         } ,200)
       },
       add_car(){
+        if(isCar){
+          this.$vux.toast.text('已经加入购物了', 'middle')
+          return;
+        }
         let {info} = toastDom
         if(info.product_time == '无库存'){
           this.$vux.toast.text('无库存，补货中', 'middle')
@@ -48,7 +54,7 @@ function showToast(id) {
           }
           this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
         }else {
-          this.$vux.toast.text('请先登录', 'middle')
+          this.$vux.toast.text('您还没有登录哦', 'middle')
         }
       },
       to_car(){
@@ -59,7 +65,7 @@ function showToast(id) {
   })
   // 由于元素首次渲染还没有结束，延迟添加opcity: 1
   setTimeout(() => {
-    toastDom.showContent=true
+    toastDom.trans=true
   } ,10)
   
   queryDetail({id:toastDom.id}).then(res =>　{

@@ -36,14 +36,14 @@
         热·门·分·类
       </div>
       <div class="content clearfix">
-        <a class="item" href="javascript:;"><img src="./img/hot_sort1.png"></a>
-        <a class="item" href="javascript:;"><img src="./img/hot_sort2.png"></a>
-        <a class="item" href="javascript:;"><img src="./img/hot_sort3.png"></a>
+        <a class="item" @click="to_class_goods('1e3559091a6347e2828d4d98a016dc5d')" href="javascript:;"><img src="./img/hot_sort1.png"></a>
+        <a class="item" @click="to_class_goods('9fd092db0e25488ba5b1579ea0687e99')" href="javascript:;"><img src="./img/hot_sort2.png"></a>
+        <a class="item" @click="to_class_goods('d4a37107ab944329ae1f3ac28629891b')" href="javascript:;"><img src="./img/hot_sort3.png"></a>
       </div>
     </div>
     <div id="brand" class="vux-1px-t">
       <div class="head">
-        大·品·牌
+        大·牌·臻·选
       </div>
       <div class="brand_list">
         <div class="swiper-wrapper" v-if="brandList">
@@ -74,7 +74,7 @@
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
   import Goods2 from '../../components/Goods_show/Goods2'
-  import {queryWapBar, getHomeGoods} from '../../api'
+  import {queryWapBar, getHomeGoods, queryCarNum} from '../../api'
   export default {
     data () {
       return {
@@ -89,6 +89,9 @@
       Goods2
     },
     methods: {
+      to_class_goods(classId){
+        this.$router.push({name:'search', query:{classId}})
+      },
       homeScroll(){
         if(window.scrollY>this.searchTop){
           this.isSearchFixed = true
@@ -114,6 +117,15 @@
       getHomeGoods().then(res => {
         this.goodsList = res.result
       })
+      if(localStorage.isLogin){
+        queryCarNum({custId: localStorage.app_uid}).then(res => {
+          if (res.result.cartsum){
+            this.$store.commit('setCarNum', {unm: res.result.cartsum})
+          }else {
+            this.$store.commit('setCarNum', {unm: ''})
+          }
+        })
+      }
     },
     mounted () {
       // 监听滚动条、设置搜索元素到顶部的距离

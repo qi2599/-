@@ -10,10 +10,11 @@
       <div class="iconfont" :class="{iconsort_active: '/sort' === $route.path}"></div>
       <span>分类</span>
     </div>
-    <div class="item" :class="{active: '/car' === $route.path}" @click="goTo('/car')">
+    <div class="item car" :class="{active: '/car' === $route.path}" @click="goTo('/car')">
       <div class="iconfont" :class="{iconcar: '/car' !== $route.path}"></div>
       <div class="iconfont" :class="{iconcar_active: '/car' === $route.path}"></div>
       <span>购物车</span>
+      <div class="icon" v-show="$store.state.cartsum"><div>{{$store.state.cartsum}}</div></div>
     </div>
     <div class="item" :class="{active: '/me' === $route.path}" @click="toMe('/me')">
       <div class="iconfont" :class="{iconpersonal: '/me' !== $route.path}"></div>
@@ -62,7 +63,7 @@ export default {
   background: white;
   display: flex;
   color: @c1;
-  transition: 0.5s bottom;
+  transition: 0.3s bottom;
   .item{
     flex-grow: 1;
     margin: 0 auto;
@@ -71,6 +72,24 @@ export default {
     div{
       font-size: 1.5rem;
       line-height: 2rem;
+    }
+    &.car{
+      position: relative;
+      .icon{
+        position: absolute;
+        background: @c2;
+        top: 0;
+        min-width: 31.34/@rem;
+        right: 50/@rem;
+        border-radius: 20/@rem;
+        div{
+          font-size: 0.7rem;
+          line-height: 22/@rem;
+          color: white;
+          padding: 5/@rem;
+          font-family: Helvetica;
+        }
+      }
     }
   }
   .active{

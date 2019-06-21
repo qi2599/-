@@ -28,6 +28,12 @@
           <div class="item" v-for="(item, index) in classList2" :key="index" @click="reqGoods({id:item.id})">{{item.name}}</div>
         </div>
       </div>
+      <div class="to_car" @click="$router.push('/car')">
+        <div class="iconfont_box">
+          <div class="iconfont iconcar_active"></div>
+        </div>
+        <div>前往购物车</div>
+      </div>
     </div>
   </div>
 </template>
@@ -244,6 +250,36 @@
         }
         .class2_active{
           padding: 50/@rem 0;
+        }
+      }
+      .to_car{
+        position: absolute;
+        bottom: 225/@rem;
+        right: 225/@rem;
+        width: 300/@rem;
+        text-align: center;
+        line-height: 50/@rem;
+        font-size: 0.9rem;
+        color: @c4;
+        .iconfont_box{
+          width: 100/@rem;
+          height: 100/@rem;
+          border-radius: 50/@rem;
+          background: @gray7;
+          margin: 0 auto;
+          transition: 0.1s;
+          &:active {
+            background: @gray10;
+            transform: scale(1.5);
+          }
+          .iconfont{
+            line-height: 100/@rem;
+            text-align: center;
+            font-size: 1.2rem;
+          }
+          .iconaddcart{
+            font-size: 1.9rem;
+          }
         }
       }
     }

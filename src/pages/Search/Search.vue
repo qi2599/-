@@ -19,6 +19,7 @@
         goodsList: [],
         pageNumber: 1,
         ref_factor_id: '',
+        classId: '',
         keyword: '',
         flag: true,
       }
@@ -51,12 +52,13 @@
           if(this.$refs.search_id.flag){
             this.ref_factor_id = ''
             this.keyword = ''
+            this.classId = ''
             this.pageNumber=1
             // 只重置一次，点击分类或搜索组件内会设置为true
             this.$refs.search_id.flag=false
           }
-          // 获取子搜索组件的classid
-          let classId = this.$refs.search_id.id || this.$refs.search_id.parent_id
+          // 获取子搜索组件的 classid 或些组件的classId
+          let classId = this.$refs.search_id.id || this.$refs.search_id.parent_id || this.classId
           if(this.$refs.search_id.keyword){
             this.keyword = this.$refs.search_id.keyword
           }
@@ -90,6 +92,14 @@
         this.$vux.loading.show({text: '加载中...'})
         let keyword = this.keyword = this.$route.query.keyword
         queryGoods({keyword, pageNumber:1, pageSize:10}).then(res => {
+          this.goodsList = res.result
+          this.$vux.loading.hide()
+        })
+      }
+      if(this.$route.query.classId){
+        this.$vux.loading.show({text: '加载中...'})
+        let classId = this.classId = this.$route.query.classId
+        queryGoods({classId, pageNumber:1, pageSize:10}).then(res => {
           this.goodsList = res.result
           this.$vux.loading.hide()
         })

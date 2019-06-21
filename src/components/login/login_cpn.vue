@@ -29,11 +29,18 @@
         ev.target.focus()
       },
       to_login(){
+        if(!this.mobile || !this.passwd){
+          this.$vux.toast.text('请输入账号或密码')
+          return
+        }
+        this.$vux.loading.show({text: '登录中'})
         let success = () => {
           this.$router.push('/me')
+          this.$vux.loading.hide()
         }
         let fail = err => {
           this.$vux.toast.show({text: err, type: 'cancel', width: '10rem'})
+          this.$vux.loading.hide()
         }
         this.$store.dispatch('getUserInfo',{queryData:{type:'1', mobile:this.mobile, passwd:this.passwd},success,fail})
       }

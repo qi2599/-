@@ -1,6 +1,6 @@
 <template>
-  <div id="goods_toast" v-if="showWrap" :class="showContent?'fadein':'fadeout'" @touchstart.prevent="">
-    <div class="box">
+  <div id="goods_toast" v-if="showWrap" :class="trans?'maskin':'maskout'" @touchstart.prevent="">
+    <div class="box" :class="{boxin: trans, boxout: boxout}">
       <div class="content">
         <div class="img">
           <img :src="img_url" v-if="img_url">
@@ -36,19 +36,19 @@
         </div>
       </div>
       <div class="button clearfix">
-        <div class="close" @click="toggle_show">
+        <div class="close" @click.stop="toggle_show">
           <div class="iconfont_box">
             <div class="iconfont iconguanbi"></div>
           </div>
           <div>关闭</div>
         </div>
-        <div class="to_car" @click="to_car">
+        <div class="to_car" @click.stop="to_car">
           <div class="iconfont_box">
             <div class="iconfont iconcar_active"></div>
           </div>
           <div>前往购物车</div>
         </div>
-        <div class="add_car" @click="add_car">
+        <div class="add_car" @click.stop="add_car">
           <div class="iconfont_box">
             <div class="iconfont iconaddcart"></div>
           </div>
@@ -69,11 +69,12 @@
     top: 0;
     bottom: 0;
     z-index: 2;
-    background: rgba(0,0,0,0.9);
-    opacity: 0;
-    transform: scale(0.3);
-    transition: all 0.2s;
+    background: rgba(0,0,0,0.8);
+    transition: opacity 0.5s;
     .box{
+      transform: scale(1.5);
+      opacity: 0;
+      transition: all 0.2s;
       position: absolute;
       height: 1032/@rem;
       top: 0;
@@ -177,12 +178,21 @@
       }
     }
   }
-  #goods_toast.fadein {
+  #goods_toast.maskin {
     opacity: 1;
-    transform: scale(1);
   }
-  #goods_toast.fadeout {
+  #goods_toast.maskout {
     opacity: 0;
-    transform: scale(0.3);
   }
+  #goods_toast {
+    .boxin{
+      transform: scale(1);
+      opacity: 1;
+    }
+    .boxout{
+      transform: scale(0.2);
+      opacity: 0;
+    }
+  }
+  
 </style>

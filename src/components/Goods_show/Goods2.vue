@@ -42,7 +42,7 @@ export default {
         }
         this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
       }else {
-        this.$vux.toast.text('请先登录', 'middle')
+        this.$vux.toast.text('您还没有登录哦', 'middle')
       }
     }
   }
