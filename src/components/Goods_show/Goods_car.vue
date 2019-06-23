@@ -48,10 +48,10 @@
         ev = ev || event
         let num= +ev.target.value
         if(num<this.info.buy_lower_limit){
-          this.$vux.toast.text(this.info.buy_lower_limit+'件起购', 'middle')
+          this.$myToast.show({text:this.info.buy_lower_limit+'件起购'})
           num= ev.target.value =this.info.buy_lower_limit
         }else if(num>this.info.buy_upper_limit){
-          this.$vux.toast.text('限购'+this.info.buy_upper_limit+'件', 'middle')
+          this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件'})
           num= ev.target.value =this.info.buy_upper_limit
         }
         this.info.qty=num
@@ -65,10 +65,10 @@
           this.info.qty++
         }
         if(this.info.qty<this.info.buy_lower_limit){
-          this.$vux.toast.text(this.info.buy_lower_limit+'件起购', 'middle')
+          this.$myToast.show({text:this.info.buy_lower_limit+'件起购'})
           this.info.qty = this.$refs.c_num.num =this.info.buy_lower_limit
         }else if(this.info.qty>this.info.buy_upper_limit){
-          this.$vux.toast.text('限购'+this.info.buy_upper_limit+'件', 'middle')
+          this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件'})
           this.info.qty = this.$refs.c_num.num = this.info.buy_upper_limit
         }
         this.set_total()

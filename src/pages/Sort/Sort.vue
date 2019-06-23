@@ -46,11 +46,11 @@
       get_goods(id){
         this.pageNumber=1
         this.goodsList=[]
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         queryGoods({pageNumber: 1, pageSize: 10, classId:id}).then(res => {
           this.goodsList = res.result
           this.id = id
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
       },
       get_class1(id,event){
@@ -58,10 +58,10 @@
         this.pageNumber=1
         this.goodsList=[]
         this.id = id
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         queryGoods({pageNumber: 1, pageSize: 10, classId:this.id=='0'? '':this.id}).then(res => {
           this.goodsList = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
         if(id !== 0){
           queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
@@ -101,13 +101,13 @@
       }
     },
     created(){
-      this.$vux.loading.show({text: '加载中...'})
+      this.$myLoading.show('加载中...')
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
         this.class1 = [{id:'0', name:'所有商品'},...res.result]
       })
       queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
         this.goodsList = res.result
-        this.$vux.loading.hide()
+        this.$myLoading.hide()
       })
     }
   }
@@ -124,7 +124,6 @@
       float: left;
       color: white;
       font-size: 1.3rem;
-      
     }
     #class_list{
       position: fixed;

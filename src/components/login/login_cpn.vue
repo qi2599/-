@@ -30,13 +30,13 @@
       },
       to_login(){
         if(!this.mobile || !this.passwd){
-          this.$vux.toast.text('请输入账号或密码')
+          this.$myToast.show({text:'请输入账号或密码'})
           return
         }
-        this.$vux.loading.show({text: '登录中'})
+        this.$myLoading.show('登录中...')
         let success = () => {
           this.$router.push('/me')
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         }
         let fail = err => {
           this.$vux.toast.show({text: err, type: 'cancel', width: '10rem'})

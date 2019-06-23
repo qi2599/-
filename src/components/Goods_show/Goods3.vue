@@ -25,18 +25,18 @@
       add_car(){
         let info = this.info
         if(info.store_amount <= 0){
-          this.$vux.toast.text('无库存，补货中', 'middle')
+          this.$myToast.show({text:'无库存，补货中'})
           return
         }
         if(localStorage.isLogin){
-          this.$vux.loading.show({text: '加载中...'})
+          this.$myLoading.show('正在添加...')
           let callback = ()=>{
-            this.$vux.loading.hide()
-            this.$vux.toast.show({text: '添加成功'})
+            this.$myLoading.hide()
+            this.$myToast.show({text:'添加成功',icon: 'success'})
           }
           this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
         }else {
-          this.$vux.toast.text('您还没有登录哦', 'middle')
+          this.$myToast.show({text:'您还没有登录哦'})
         }
       }
     }

@@ -31,18 +31,18 @@
     methods:{
       queryAll(){
         this.goodsList=[]
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
           this.goodsList = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
       },
       queryGoods(queryData){
         this.goodsList=[]
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         queryGoods(queryData).then(res => {
           this.goodsList = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
       },
       infinite(done){
@@ -81,27 +81,27 @@
     },
     created() {
       if(this.$route.query.id){
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         let ref_factor_id = this.ref_factor_id = this.$route.query.id
         queryGoods({ref_factor_id, pageNumber:1, pageSize:10}).then(res => {
           this.goodsList = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
       }
       if(this.$route.query.keyword){
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         let keyword = this.keyword = this.$route.query.keyword
         queryGoods({keyword, pageNumber:1, pageSize:10}).then(res => {
           this.goodsList = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
       }
       if(this.$route.query.classId){
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         let classId = this.classId = this.$route.query.classId
         queryGoods({classId, pageNumber:1, pageSize:10}).then(res => {
           this.goodsList = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
         })
       }
     }

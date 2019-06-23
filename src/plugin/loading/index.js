@@ -1,45 +1,47 @@
-import vue from 'vue'
-import loadingComponent from './loading'
-
-// 返回一个 扩展实例构造器,
-const vm = vue.extend(loadingComponent)
-
-// 定义弹出组件的函数 接收商品id
-function loading(id) {
-  // 实例化一个 toast.vue
-  const loading = new vm({
-    el: document.createElement('div'),
-    data() {
-      return {
-        showWrap:true,
-        trans:false,
-      }
-    },
-    methods:{
-      toggle_show(){
-        loading.trans = false
-        // 等动画完成后关闭页面
-        setTimeout(() => {
-          loading.showWrap=false
-        } ,200)
+import loadingComponent from './loading.vue'
+let myLoading = null
+export default {
+  // 开发插件的 Vue 方法 install, 第一个参数为 Vue
+  install(Vue) {
+    if(!myLoading){
+      let loading=Vue.extend(loadingComponent)
+      myLoading = new loading({
+        el: document.createElement('div'),
+        // 如果需要可以引入router、store, 只能在 new 这里访问
+      })
+      document.body.appendChild(myLoading.$el)
+    }
+    let loadingMethods = {
+      show(text) {
+        myLoading.icon = 'loading'
+        myLoading.isShow = true
+        myLoading.text = text
+        setTimeout(()=>{
+          myLoading.trans = true
+        },20)
+        setTimeout(()=>{
+          myLoading.text = '网络不给力'
+          myLoading.icon = 'depressed'
+        },8000)
+        setTimeout(()=>{
+          myLoading.icon = 'loading'
+          myLoading.text = text
+          myLoading.isShow = false
+        },10000)
+      },
+      hide(){
+        myLoading.trans=false
+        setTimeout(()=>{
+          myLoading.icon = 'loading'
+          myLoading.text = '加载中...'
+          myLoading.isShow = false
+        },300)
       }
     }
-  })
-  // 由于元素首次渲染还没有结束，延迟添加opcity: 1
-  setTimeout(() => {
-    loading.trans=true
-  } ,20)
-  
-  // 把 实例化的 toast.vue 添加到 body 里
-  document.body.appendChild(toastDom.$el)
-  
+    if(!Vue.prototype.$myLoading){
+      Vue.prototype.$myLoading = loadingMethods
+    }else {
+      console.log('$myLoading 已被占用');
+    }
+  }
 }
-
-// 注册为全局组件的函数
-export default function(){
-  // 将组件注册到 vue 的 原型链里去,
-  // 这样就可以在所有 vue 的实例里面使用 this.$goods_toast()
-  vue.prototype.$goods_toast = loading
-}
-
-

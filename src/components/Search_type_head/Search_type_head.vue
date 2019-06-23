@@ -46,7 +46,7 @@
             this.$router.push({name: 'search', query:{keyword: this.keyword}})
             this.flag=false
           }else {
-            this.$vux.toast.text('请输入搜索词', 'middle')
+            this.$myToast.show({text:'请输入搜索词'})
           }
         }
       }

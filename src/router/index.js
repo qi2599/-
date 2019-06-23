@@ -11,6 +11,7 @@ import Login from '../pages/Login/Login'
 Vue.use(VueRouter)
 
 export default new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/', redirect: '/home' },
     { path: '/home', component: Home },

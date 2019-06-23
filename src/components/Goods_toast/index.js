@@ -36,25 +36,23 @@ function showToast(id,isCar=false) {
       },
       add_car(){
         if(isCar){
-          this.$vux.toast.text('已经加入购物了', 'middle')
+          this.$myToast.show({text:'已经加入购物了'})
           return;
         }
         let {info} = toastDom
         if(info.product_time == '无库存'){
-          this.$vux.toast.text('无库存，补货中', 'middle')
+          this.$myToast.show({text:'无库存，补货中'})
           return
         }
         if(localStorage.isLogin){
-          this.$vux.loading.show({text: '加载中...'})
+          this.$myLoading.show('正在添加...')
           let callback = ()=>{
-            this.$vux.loading.hide()
-            this.$vux.toast.show({
-              text: '添加成功'
-            })
+            this.$myLoading.hide()
+            this.$myToast.show({text:'添加成功',icon: 'success'})
           }
           this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
         }else {
-          this.$vux.toast.text('您还没有登录哦', 'middle')
+          this.$myToast.show({text:'您还没有登录哦'})
         }
       },
       to_car(){
@@ -66,7 +64,7 @@ function showToast(id,isCar=false) {
   // 由于元素首次渲染还没有结束，延迟添加opcity: 1
   setTimeout(() => {
     toastDom.trans=true
-  } ,10)
+  } ,20)
   
   queryDetail({id:toastDom.id}).then(res =>　{
     toastDom.info=res.result

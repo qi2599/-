@@ -112,7 +112,7 @@
           })
         })
       }).catch(err=>{
-        this.$vux.toast.show({text: err, type: 'cancel'})
+        this.$myToast.show({text: '网络连接超时', icon: 'error', time:2000})
       })
       getHomeGoods().then(res => {
         this.goodsList = res.result

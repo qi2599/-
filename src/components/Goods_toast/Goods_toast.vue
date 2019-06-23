@@ -70,7 +70,7 @@
     bottom: 0;
     z-index: 2;
     background: rgba(0,0,0,0.8);
-    transition: opacity 0.5s;
+    transition: opacity 0.2s;
     .box{
       transform: scale(1.5);
       opacity: 0;
@@ -190,7 +190,7 @@
       opacity: 1;
     }
     .boxout{
-      transform: scale(0.2);
+      transform: scale(0.6);
       opacity: 0;
     }
   }

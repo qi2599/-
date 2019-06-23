@@ -13,3 +13,6 @@ export const queryLogout = (queryData) => ajax('cust/logout',queryData)
 export const queryCar = (queryData) => ajax('cart/query',queryData)
 export const queryDelCar = (queryData) => ajax('cart/del',queryData)
 export const queryUpdata = (queryData) => ajax('cart/update',queryData)
+export const queryAuthCode = (queryData) => ajax('other/verifyImageCode',queryData)
+export const queryRegister = (queryData) => ajax('cust/regist',queryData)
+

@@ -110,7 +110,7 @@
             window.localStorage.setItem('search',JSON.stringify(localSearch))
           }
         }else {
-          this.$vux.toast.text('请输入搜索词', 'middle')
+          this.$myToast.show({text:'请输入搜索词'})
           return
         }
         this.isMask=false
@@ -254,7 +254,7 @@
       }
       .to_car{
         position: absolute;
-        bottom: 225/@rem;
+        bottom: 280/@rem;
         right: 225/@rem;
         width: 300/@rem;
         text-align: center;

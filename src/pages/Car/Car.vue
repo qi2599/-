@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <loading></loading>
+  <div style="width: 100%">
     <div id="car" @touchstart="head_bar">
       <div class="head" :class="{is_head: is_head_bar}">
         <div class="title">购物车</div>
@@ -46,16 +45,16 @@
               return
             },
             onConfirm : () => {
-              this.$vux.loading.show({text: '删除中...'})
+              this.$myLoading.show('正在删除...')
               queryDelCar({custId: localStorage.app_uid,ids:this.chack_id}).then(()=>{
-                this.$vux.loading.hide()
+                this.$myLoading.hide()
                 this.getCarNum()
                 this.get_car_list()
               })
             }
           })
         }else {
-          this.$vux.toast.text('商品选择了咩？', 'middle')
+          this.$myToast.show({text:'商品选择了咩?'})
         }
       },
       set_total(){
@@ -128,13 +127,13 @@
         if(!localStorage.isLogin){
           return
         }
-        this.$vux.loading.show({text: '加载中...'})
+        this.$myLoading.show('加载中...')
         queryCar({custId: localStorage.app_uid}).then(res => {
           res.result.forEach(item=>{
             item.isChack=true
           })
           this.car_list = res.result
-          this.$vux.loading.hide()
+          this.$myLoading.hide()
           this.set_total()
           this.toggle_all()
         })
@@ -208,7 +207,7 @@
         font-size: 5rem;
         text-align: center;
         color: @gray3;
-        margin-top: 100/@rem;
+        margin-top: 120/@rem;
       }
       .text{
         text-align: center;
