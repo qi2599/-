@@ -36,12 +36,12 @@ function showToast(id,isCar=false) {
       },
       add_car(){
         if(isCar){
-          this.$myToast.show({text:'已经加入购物了'})
+          this.$myToast.show({text:'已经加入购物了',time:2000})
           return;
         }
         let {info} = toastDom
         if(info.product_time == '无库存'){
-          this.$myToast.show({text:'无库存，补货中'})
+          this.$myToast.show({text:'无库存，补货中',time:2000})
           return
         }
         if(localStorage.isLogin){
@@ -52,7 +52,7 @@ function showToast(id,isCar=false) {
           }
           this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
         }else {
-          this.$myToast.show({text:'您还没有登录哦'})
+          this.$myToast.show({text:'您还没有登录哦',time:2000})
         }
       },
       to_car(){

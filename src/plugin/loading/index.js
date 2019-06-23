@@ -13,26 +13,21 @@ export default {
     }
     let loadingMethods = {
       show(text) {
-        myLoading.icon = 'loading'
         myLoading.isShow = true
         myLoading.text = text
         setTimeout(()=>{
           myLoading.trans = true
         },20)
         setTimeout(()=>{
-          myLoading.text = '网络不给力'
-          myLoading.icon = 'depressed'
+          myLoading.text = '网络不稳定'
         },8000)
         setTimeout(()=>{
-          myLoading.icon = 'loading'
-          myLoading.text = text
-          myLoading.isShow = false
+          this.hide()
         },10000)
       },
       hide(){
         myLoading.trans=false
         setTimeout(()=>{
-          myLoading.icon = 'loading'
           myLoading.text = '加载中...'
           myLoading.isShow = false
         },300)

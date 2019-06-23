@@ -93,6 +93,7 @@ body {
   background: #eeeeee;
   touch-action: pan-y;
   touch-action: manipulation;
+  font-family: Helvetica;
 }
 input{
   outline: none;
@@ -109,6 +110,10 @@ input{
   content: "";
   display: block;
   clear: both;
+}
+.mar-t:before{
+  content:"";
+  display: table;
 }
 
 .svg_wrap, .svg_spinner{

@@ -1,5 +1,5 @@
 <template>
-	<div class="loading" v-if="isShow" :class="trans?'in':'out'">
+	<div class="loading" v-show="isShow" :class="trans?'in':'out'">
     <div class="loading_wrap">
       <div v-if="icon === 'loading'" class="svg">
         <svg class="lds-message" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><g transform="translate(20 50)">

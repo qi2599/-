@@ -30,7 +30,7 @@
       },
       to_login(){
         if(!this.mobile || !this.passwd){
-          this.$myToast.show({text:'请输入账号或密码'})
+          this.$myToast.show({text:'请输入账号或密码',time:2000})
           return
         }
         this.$myLoading.show('登录中...')

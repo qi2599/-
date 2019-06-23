@@ -1,5 +1,5 @@
 <template>
-  <div id="goods_toast" v-if="showWrap" :class="trans?'maskin':'maskout'" @touchstart.prevent="">
+  <div id="goods_toast" v-show="showWrap" :class="trans?'maskin':'maskout'" @touchstart.prevent="">
     <div class="box" :class="{boxin: trans, boxout: boxout}">
       <div class="content">
         <div class="img">
@@ -100,16 +100,17 @@
           color: @c2;
           height: 50/@rem;
           line-height: 50/@rem;
-          font-size: 1.2rem;
           .price{
             width: 30%;
             float: left;
             text-align: center;
+            font-size: 1.2rem;
           }
           .name{
             width: 70%;
             float: right;
             text-align: center;
+            font-size: 1rem;
           }
         }
         .th{

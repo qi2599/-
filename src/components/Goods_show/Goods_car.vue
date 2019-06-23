@@ -48,10 +48,10 @@
         ev = ev || event
         let num= +ev.target.value
         if(num<this.info.buy_lower_limit){
-          this.$myToast.show({text:this.info.buy_lower_limit+'件起购'})
+          this.$myToast.show({text:this.info.buy_lower_limit+'件起购',time:2000})
           num= ev.target.value =this.info.buy_lower_limit
         }else if(num>this.info.buy_upper_limit){
-          this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件'})
+          this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件',time:2000})
           num= ev.target.value =this.info.buy_upper_limit
         }
         this.info.qty=num
@@ -65,10 +65,10 @@
           this.info.qty++
         }
         if(this.info.qty<this.info.buy_lower_limit){
-          this.$myToast.show({text:this.info.buy_lower_limit+'件起购'})
+          this.$myToast.show({text:this.info.buy_lower_limit+'件起购',time:2000})
           this.info.qty = this.$refs.c_num.num =this.info.buy_lower_limit
         }else if(this.info.qty>this.info.buy_upper_limit){
-          this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件'})
+          this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件',time:2000})
           this.info.qty = this.$refs.c_num.num = this.info.buy_upper_limit
         }
         this.set_total()
@@ -134,9 +134,11 @@
       float: left;
       width: 425.6/@rem;
       .name{
-        padding-top: 20/@rem;
+        padding-top: 15/@rem;
+        line-height: 1.2rem;
         .att{
           float: left;
+          margin-top: 0.1rem;
           font-size: 0.7rem;
           line-height: 1rem;
           padding: 0 3/@rem;

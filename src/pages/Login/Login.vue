@@ -1,5 +1,6 @@
 <template>
   <div style="height: 100%; width: 100%">
+    <div class="back iconfont iconarrow-left" @click="go_back"></div>
     <img class='bg_img' src='../../common/img/login.jpg'>
     <div class='img'></div>
     <img class='logo_img' src='../../common/img/logo.png'>
@@ -24,14 +25,30 @@
         toggle_cpn: true
       }
     },
+    methods:{
+      go_back(){
+        this.$router.replace('/home')
+      }
+    },
     components: {
       login_cpn,
       register
-    },
+    }
   }
 </script>
 
 <style lang="less" scoped>
+  .back{
+    position: absolute;
+    top: 40/@rem;
+    left: 40/@rem;
+    width: 70/@rem;
+    height: 70/@rem;
+    line-height: 70/@rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: white;
+  }
   .logo{
     text-align: center;
   }

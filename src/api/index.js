@@ -15,4 +15,5 @@ export const queryDelCar = (queryData) => ajax('cart/del',queryData)
 export const queryUpdata = (queryData) => ajax('cart/update',queryData)
 export const queryAuthCode = (queryData) => ajax('other/verifyImageCode',queryData)
 export const queryRegister = (queryData) => ajax('cust/regist',queryData)
+export const queryCustVirtual = (queryData) => ajax('cust/getCustVirtual',queryData)
 
