@@ -8,19 +8,58 @@
       <p>合计：<span>￥{{total}}</span> 元</p>
       <p>可得积分：{{total_virtual}}</p>
     </div>
-    <div class="buy_btn">结算({{all_qty}})</div>
+    <div class="buy_btn" @click="to_pay">结算({{all_qty}})</div>
   </div>
 </template>
 
 <script>
   import { CheckIcon } from 'vux'
+  import {queryUpdata} from '../../api'
   export default {
     props:{
+      car_list: Array,
+      chack_id: String,
       chack_all: Boolean,
       toggle_all: Function,
       total: Number,
       all_qty: Number,
       total_virtual: Number
+    },
+    methods:{
+      to_pay(){
+        if (this.chack_id){
+          let all_flag=true
+          let flag=0
+          let length=0
+          this.$myLoading.show('加载中...')
+          this.car_list.forEach(item =>{
+            if(item.qtyChanged){
+              length++
+              all_flag=false
+            }
+          })
+          if(all_flag){
+            this.$myLoading.hide()
+            this.$store.commit('setToPay',{val:true})
+            this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
+            return
+          }
+          this.car_list.forEach(item =>{
+            if(item.qtyChanged){
+              queryUpdata({id:item.ref_product_id, custId:localStorage.app_uid, qty:item.qty, sendQty:2}).then(()=>{
+                flag++
+                if(flag === length){
+                  this.$myLoading.hide()
+                  this.$store.commit('setToPay',{val:true})
+                  this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
+                }
+              })
+            }
+          })
+        }else {
+          this.$myToast.show({text:'商品选择了咩?',time:2000})
+        }
+      }
     },
     components:{
       CheckIcon

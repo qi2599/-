@@ -15,5 +15,8 @@ export default {
   },
   setCustId(state){
     state.custId=''
+  },
+  setToPay(state,{val}){
+    state.isToPay=val
   }
 }

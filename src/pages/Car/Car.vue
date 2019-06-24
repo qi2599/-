@@ -13,7 +13,7 @@
         <div class="text">购物车里没有商品哦~~~</div>
         <router-link to="/home">添加商品</router-link>
       </div>
-      <Car_bar v-if="car_list.length" :chack_all="chack_all" :toggle_all="toggle_all" :total="total" :total_virtual="total_virtual" :all_qty="all_qty"></Car_bar>
+      <Car_bar v-if="car_list.length" :chack_all="chack_all" :toggle_all="toggle_all" :total="total" :total_virtual="total_virtual" :all_qty="all_qty" :chack_id="chack_id" :car_list="car_list"></Car_bar>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@
         total_virtual: 0,
         all_qty: 0,
         chack_id: '',
+        no_updata: false
       }
     },
     methods:{
@@ -54,7 +55,7 @@
             }
           })
         }else {
-          this.$myToast.show({text:'商品选择了咩?'})
+          this.$myToast.show({text:'商品选择了咩?',time:2000})
         }
       },
       set_total(){
@@ -131,6 +132,7 @@
         queryCar({custId: localStorage.app_uid}).then(res => {
           res.result.forEach(item=>{
             item.isChack=true
+            item.qtyChanged=false
           })
           this.car_list = res.result
           this.$myLoading.hide()

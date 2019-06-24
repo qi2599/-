@@ -11,21 +11,24 @@ export default {
       })
       document.body.appendChild(myLoading.$el)
     }
+    let timeId=0
     let loadingMethods = {
       show(text) {
+        clearInterval(timeId)
         myLoading.isShow = true
         myLoading.text = text
         setTimeout(()=>{
           myLoading.trans = true
         },20)
-        setTimeout(()=>{
+        timeId=setTimeout(()=>{
           myLoading.text = '网络不稳定'
-        },8000)
+        },6000)
         setTimeout(()=>{
           this.hide()
-        },10000)
+        },8000)
       },
       hide(){
+        clearInterval(timeId)
         myLoading.trans=false
         setTimeout(()=>{
           myLoading.text = '加载中...'

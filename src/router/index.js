@@ -8,6 +8,7 @@ import Search from '../pages/Search/Search.vue'
 import Search_text from '../pages/Search_text/Search_text.vue'
 import Goods_detail from '../pages/Goods_detail/Goods_detail'
 import Login from '../pages/Login/Login'
+import Pay from '../pages/Pay/Pay'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -21,5 +22,6 @@ export default new VueRouter({
     { path: '/search_text', name:'search_text', component: Search_text },
     { path: '/goods_detail', name:'goods_detail', component: Goods_detail },
     { path: '/login', name:'login', component: Login },
+    { path:'/pay', name:'pay', component: Pay }
   ]
 })

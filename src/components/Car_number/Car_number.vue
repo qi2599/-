@@ -9,8 +9,6 @@
 <script>
   export default {
     props:{
-      min: Number,
-      max: Number,
       num: Number,
       set_num: Function,
       add_cut: Function

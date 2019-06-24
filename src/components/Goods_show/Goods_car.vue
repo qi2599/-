@@ -31,7 +31,6 @@
     data(){
       return {
         check_icon: true,
-        updata_qty: false
       }
     },
     props:{
@@ -56,7 +55,7 @@
         }
         this.info.qty=num
         this.set_total()
-        this.updata_qty=true
+        this.info.qtyChanged=true
       },
       add_cut(type){
         if (type === 'cut'){
@@ -72,7 +71,7 @@
           this.info.qty = this.$refs.c_num.num = this.info.buy_upper_limit
         }
         this.set_total()
-        this.updata_qty=true
+        this.info.qtyChanged=true
       }
     },
     components: {
@@ -80,19 +79,18 @@
       CheckIcon
     },
     beforeDestroy() {
-      if(this.updata_qty){
-        let info=this.info
-        queryUpdata({id:info.ref_product_id, custId:localStorage.app_uid, qty:info.qty, sendQty:2}).then(()=>{
-          queryCarNum({custId: localStorage.app_uid}).then(res => {
-            if (res.result.cartsum){
-              this.$store.commit('setCarNum', {unm: res.result.cartsum})
-            }else {
-              this.$store.commit('setCarNum', {unm: ''})
-            }
-          })
+      if(!this.info.qtyChanged){return}
+      if(this.$store.state.isToPay){return}
+      let info=this.info
+      queryUpdata({id:info.ref_product_id, custId:localStorage.app_uid, qty:info.qty, sendQty:2}).then(()=>{
+        queryCarNum({custId: localStorage.app_uid}).then(res => {
+          if (res.result.cartsum){
+            this.$store.commit('setCarNum', {unm: res.result.cartsum})
+          }else {
+            this.$store.commit('setCarNum', {unm: ''})
+          }
         })
-        
-      }
+      })
     }
   }
 </script>
