@@ -17,4 +17,6 @@ export const queryAuthCode = (queryData) => ajax('other/verifyImageCode',queryDa
 export const queryRegister = (queryData) => ajax('cust/regist',queryData)
 export const queryCustVirtual = (queryData) => ajax('cust/getCustVirtual',queryData)
 export const queryAddr = (queryData) => ajax('addr/query',queryData)
+export const queryCreateBill = (queryData) => ajax('cust/createBill',queryData)
+export const queryBill = (queryData) => ajax('cust/queryBill',queryData)
 

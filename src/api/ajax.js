@@ -6,7 +6,7 @@ if (process.env.NODE_ENV == 'development'){
 } else if (process.env.NODE_ENV == 'debug'){
   axios.defaults.baseURL = '/api';
 } else if (process.env.NODE_ENV == 'production') {
-  axios.defaults.baseURL = 'http://139.159.204.137/wapback/app/';
+  axios.defaults.baseURL = 'http://test.gkshwap.com/wapback/app/';
 }
 // 跨域发送cookie
 axios.defaults.withCredentials=true

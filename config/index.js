@@ -57,7 +57,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'http://139.159.204.137/dist/',
+    assetsPublicPath: 'http://test.gkshwap.com/dist/',
 
     /**
      * Source Maps

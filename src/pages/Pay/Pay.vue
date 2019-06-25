@@ -31,18 +31,19 @@
     </div>
     <div class="bar">
       <div class="total">总金额: <span> {{total}}</span> 元，获得 {{total_virtual}} 积分</div>
-      <div class="box">结算</div>
+      <div class="box" @click="to_apy">结算</div>
     </div>
   </div>
 </template>
 
 <script>
   import Car_number from '../../components/Car_number/Car_number'
-  import {queryCar,queryCustVirtual,queryAddr} from '../../api'
+  import {queryCar,queryCustVirtual,queryAddr,queryCreateBill} from '../../api'
   import Goods_pay from '../../components/Goods_show/Goods_pay'
   export default {
     data(){
       return {
+        ids:'',
         num: 0,
         cust_coin: 0,
         car_goods: [],
@@ -75,6 +76,11 @@
           num = ev.target.value = this.cust_coin
         }
         this.num = num
+      },
+      to_apy(){
+        queryCreateBill({custId:localStorage.app_uid,productIds:this.ids,coin:this.num}).then(res=>{
+          if (res.result_code === '00') this.$myToast.show({text:'下单成功'})
+        })
       }
     },
     components:{
@@ -83,8 +89,9 @@
     },
     created() {
       let custId = localStorage.app_uid
+      let ids=this.ids=this.$route.query.ids
       this.$myLoading.show('加载中...')
-      queryCar({custId,ids:this.$route.query.ids}).then(res => {
+      queryCar({custId}).then(res => {
         this.car_goods=res.result
         this.$myLoading.hide()
       })

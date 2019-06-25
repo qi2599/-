@@ -98,6 +98,17 @@
         }else {
           this.isSearchFixed = false
         }
+      },
+      buffer(fn, ms) {
+        var timeout;
+        return function() {
+          if (timeout) return;
+          var args = arguments;
+          timeout = setTimeout(function() {
+            timeout = null;
+            fn.apply(null, args);
+          }, ms);
+        }
       }
     },
     created(){
@@ -129,7 +140,7 @@
     },
     mounted () {
       // 监听滚动条、设置搜索元素到顶部的距离
-      window.addEventListener('scroll', this.homeScroll)
+      window.onscroll=this.buffer(this.homeScroll,100)
       this.searchTop=this.$refs.search.offsetTop
       // 轮播图
       new Swiper('#swiper_wrap .swiper-container', {

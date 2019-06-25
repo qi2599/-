@@ -29,7 +29,7 @@
     </div>
     <div class="list">
       <div class="order">
-        <div>
+        <div @click="to_order">
           <p>全部订单</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
@@ -90,6 +90,9 @@
             this.$router.replace('/login')
           }
         })
+      },
+      to_order(){
+        this.$router.push('/order')
       }
     },
     created() {
