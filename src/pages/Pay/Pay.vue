@@ -5,7 +5,7 @@
       <div>订单确认</div>
     </div>
     <div class="content">
-      <div class="addr">
+      <div class="addr" @click="$router.push('/addr')">
         <div class="icon"><div class="iconfont icondingwei"></div></div>
         <div class="info">
           <div class="up">
@@ -20,7 +20,7 @@
         <Goods_pay :car_goods="car_goods"></Goods_pay>
       </div>
       <div class="remark">
-        <textarea placeholder="若您有其他要求或有需要注意的事项，请在此备注：" @click="get_focus"></textarea>
+        <textarea placeholder="若您有其他要求或有需要注意的事项，请在此备注：" @click="get_focus" v-model="remarks"></textarea>
       </div>
       <div class="gold">
         <div class="num">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="bar">
-      <div class="total">总金额: <span> {{total}}</span> 元，获得 {{total_virtual}} 积分</div>
+      <div class="total">总金额: <span> {{total}}</span> 元，得 {{total_virtual}} 积分</div>
       <div class="box" @click="to_apy">结算</div>
     </div>
   </div>
@@ -43,6 +43,7 @@
   export default {
     data(){
       return {
+        remarks:'',
         ids:'',
         num: 0,
         cust_coin: 0,
@@ -78,8 +79,13 @@
         this.num = num
       },
       to_apy(){
-        queryCreateBill({custId:localStorage.app_uid,productIds:this.ids,coin:this.num}).then(res=>{
-          if (res.result_code === '00') this.$myToast.show({text:'下单成功'})
+        this.$myLoading.show('加载中...')
+        queryCreateBill({custId:localStorage.app_uid,productIds:this.ids,coin:this.num,remarks:this.remarks}).then(res=>{
+          if (res.result_code === '00'){
+            this.$myLoading.hide()
+            this.$myToast.show({text:'下单成功'})
+            this.$router.replace({name:'order',query:{index:1}})
+          }
         })
       }
     },
@@ -91,7 +97,7 @@
       let custId = localStorage.app_uid
       let ids=this.ids=this.$route.query.ids
       this.$myLoading.show('加载中...')
-      queryCar({custId}).then(res => {
+      queryCar({custId,ids}).then(res => {
         this.car_goods=res.result
         this.$myLoading.hide()
       })

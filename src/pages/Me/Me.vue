@@ -29,33 +29,33 @@
     </div>
     <div class="list">
       <div class="order">
-        <div @click="to_order">
+        <div @click="to_order(0)">
           <p>全部订单</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
         <p class="vux vux-1px-b"></p>
-        <div>
+        <div @click="to_order(1)">
           <p>订单提交</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
         <p class="vux vux-1px-b"></p>
-        <div>
+        <div @click="to_order(2)">
           <p>已出单</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
         <p class="vux vux-1px-b"></p>
-        <div>
+        <div @click="to_order(3)">
           <p>已发货</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
       </div>
       <div class="addr">
-        <div>
+        <div @click="$router.push('/addr')">
           <p>收货地址</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
         <p class="vux vux-1px-b"></p>
-        <div>
+        <div @click="$router.push('/change_pwd')">
           <p>修改密码</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
@@ -91,8 +91,8 @@
           }
         })
       },
-      to_order(){
-        this.$router.push('/order')
+      to_order(index){
+        this.$router.push({name:'order',query:{index}})
       }
     },
     created() {

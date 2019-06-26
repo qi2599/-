@@ -18,5 +18,8 @@ export default {
   },
   setToPay(state,{val}){
     state.isToPay=val
+  },
+  setDetails(state,{val}){
+    state.details=val
   }
 }

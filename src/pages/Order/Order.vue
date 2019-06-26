@@ -16,16 +16,19 @@
       </tab>
     </div>
     <Swiper_page :tab_index="index" :add_cut="add_cut"></Swiper_page>
+    <Order_detail></Order_detail>
   </div>
 </template>
 
 <script>
   import { Tab, TabItem } from 'vux'
   import Swiper_page from '../../components/Swiper_page/Swiper_page'
+  import Order_detail from '../../components/Order_cpn/Order_detail'
   export default {
     data(){
       return {
-        index:0
+        index:0,
+        details:[]
       }
     },
     methods:{
@@ -47,10 +50,14 @@
     components:{
       Tab,
       TabItem,
-      Swiper_page
+      Swiper_page,
+      Order_detail
+    },
+    created() {
+      this.index=this.$route.query.index
     },
     mounted() {
-      this.$refs.tabBox.index=0
+      this.$refs.tabBox.index=this.$route.query.index
     }
   }
 </script>

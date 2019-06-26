@@ -108,7 +108,7 @@ input{
 
 .clearfix:after{
   content: "";
-  display: block;
+  display: table;
   clear: both;
 }
 .mar-t:before{

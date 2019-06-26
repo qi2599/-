@@ -3,4 +3,5 @@ export default {
   userInfo: '',
   cartsum: '',
   isToPay: false,
+  details: '',
 }

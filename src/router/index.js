@@ -6,10 +6,11 @@ import Car from '../pages/Car/Car.vue'
 import Me from '../pages/Me/Me.vue'
 import Search from '../pages/Search/Search.vue'
 import Search_text from '../pages/Search_text/Search_text.vue'
-import Goods_detail from '../pages/Goods_detail/Goods_detail'
 import Login from '../pages/Login/Login'
 import Pay from '../pages/Pay/Pay'
 import Order from '../pages/Order/Order'
+import Addr from '../pages/Me/Addr'
+import Change_pwd from '../pages/Me/Change_pwd'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -21,9 +22,10 @@ export default new VueRouter({
     { path: '/me', component: Me },
     { path: '/search', name:'search', component: Search },
     { path: '/search_text', name:'search_text', component: Search_text },
-    { path: '/goods_detail', name:'goods_detail', component: Goods_detail },
     { path: '/login', name:'login', component: Login },
     { path: '/pay', name:'pay', component: Pay },
     { path: '/order', name:'order', component: Order },
+    { path: '/addr', name:'addr', component: Addr },
+    { path: '/change_pwd', name:'change_pwd', component: Change_pwd },
   ]
 })

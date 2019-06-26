@@ -7,7 +7,7 @@ import { ConfirmPlugin } from 'vux'
 import myLoading from './plugin/loading'
 import myToast from './plugin/toast'
 import Goods_toast from './components/Goods_toast'
-Vue.use(VueScroller )
+Vue.use(VueScroller)
 Vue.use(ConfirmPlugin)
 Vue.use(Goods_toast)
 Vue.use(myLoading)

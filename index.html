@@ -29,15 +29,11 @@
       // 滑动窗口input失去焦点
       set_blur()
       function set_blur() {
-        if ('addEventListener' in document) {
-          let inp = document.getElementsByTagName("input")
-          if(inp){
-            window.addEventListener('touchstart',foo)
-            function foo() {
-              for (let i=0,lenght=inp.length; i<lenght; i++){
-                inp[i].blur()
-              }
-              window.removeEventListener('touchstart',foo)
+        let inp = document.getElementsByTagName("input")
+        if(inp){
+          window.ontouchstart=function () {
+            for (let i=0,lenght=inp.length; i<lenght; i++){
+              inp[i].blur()
             }
           }
         }
