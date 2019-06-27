@@ -29,11 +29,6 @@
 
 <script>
   export default {
-    data(){
-      return {
-        isShow: false
-      }
-    },
     computed:{
       details(){
         return this.$store.state.details

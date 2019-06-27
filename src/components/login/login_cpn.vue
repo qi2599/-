@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class='login_btn' @click="to_login">登 录</div>
-    <a class='forget_psd'>忘记密码?</a>
+    <a class='forget_psd' @click="$router.push('/resetpwd')">忘记密码?</a>
   </div>
 </template>
 
@@ -39,8 +39,8 @@
           this.$myLoading.hide()
         }
         let fail = err => {
-          this.$vux.toast.show({text: err, type: 'cancel', width: '10rem'})
-          this.$vux.loading.hide()
+          this.$myToast.show({text:err,time:2000})
+          this.$myLoading.hide()
         }
         this.$store.dispatch('getUserInfo',{queryData:{type:'1', mobile:this.mobile, passwd:this.passwd},success,fail})
       }
@@ -77,13 +77,16 @@
     line-height: 2.5rem;
     color: white;
     border-radius: 50/@rem;
+    &:active{
+      background-color: #7fc730;
+    }
   }
   .forget_psd{
     display: block;
     text-align: center;
-    font-size: 0.8rem;
-    color: rgb(92, 92, 92);
-    line-height: 5rem;
+    font-size: 0.9rem;
+    color: @gray6;
+    margin-top: 150/@rem;
     letter-spacing: 1px;
   }
 </style>

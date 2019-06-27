@@ -31,7 +31,7 @@
     </div>
     <div class="bar">
       <div class="total">总金额: <span> {{total}}</span> 元，得 {{total_virtual}} 积分</div>
-      <div class="box" @click="to_apy">结算</div>
+      <div class="box" @click="to_apy">提交订单</div>
     </div>
   </div>
 </template>
@@ -98,7 +98,7 @@
       let ids=this.ids=this.$route.query.ids
       this.$myLoading.show('加载中...')
       queryCar({custId,ids}).then(res => {
-        this.car_goods=res.result
+        this.car_goods=res.result.reverse()
         this.$myLoading.hide()
       })
       queryCustVirtual({uid: custId}).then(res => {

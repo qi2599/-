@@ -8,7 +8,7 @@
         </div>
         <div class="no_goods" v-else>
           <img src="../../common/img/order_icon.svg">
-          <div>{{order}}</div>
+          <div>{{no_order}}</div>
         </div>
       </div>
       <div class="right"></div>
@@ -38,7 +38,7 @@
       add_cut: Function
     },
     computed:{
-      order(){
+      no_order(){
         switch (this.tab_index) {
           case 0:return '您暂时没有订单哦~~~快去下单吧'
           case 1:return '您暂时没有提交订单哦~~~快去下单吧'

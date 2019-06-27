@@ -1,6 +1,7 @@
 // 与后台交互模块
 import ajax from './ajax'
 export const queryWapBar = () => ajax('prod/getWapBars')
+export const querySwiper = () => ajax('other/getHomeRunImgPicList')
 export const queryClass = (queryData) => ajax('prod/queryClass', queryData)
 export const queryGoods = (queryData) => ajax('prod/query', queryData)
 export const getHomeGoods = () => ajax('prod/getIndexProducts')
@@ -19,4 +20,7 @@ export const queryCustVirtual = (queryData) => ajax('cust/getCustVirtual',queryD
 export const queryAddr = (queryData) => ajax('addr/query',queryData)
 export const queryCreateBill = (queryData) => ajax('cust/createBill',queryData)
 export const queryBill = (queryData) => ajax('cust/queryBill',queryData)
+export const updataPwd = (queryData) => ajax('cust/updatePwd',queryData)
+export const sendSMS = (queryData) => ajax('sms/sendSMS',queryData)
+export const resetPassword = (queryData) => ajax('cust/resetPassword',queryData)
 

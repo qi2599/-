@@ -134,7 +134,7 @@
             item.isChack=true
             item.qtyChanged=false
           })
-          this.car_list = res.result
+          this.car_list = res.result.reverse()
           this.$myLoading.hide()
           this.set_total()
           this.toggle_all()

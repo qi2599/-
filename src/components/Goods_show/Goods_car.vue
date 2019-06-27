@@ -79,8 +79,8 @@
       CheckIcon
     },
     beforeDestroy() {
-      if(!this.info.qtyChanged){return}
-      if(this.$store.state.isToPay){return}
+      if(!this.info.qtyChanged) return
+      if(this.$store.state.isToPay) return
       let info=this.info
       queryUpdata({id:info.ref_product_id, custId:localStorage.app_uid, qty:info.qty, sendQty:2}).then(()=>{
         queryCarNum({custId: localStorage.app_uid}).then(res => {

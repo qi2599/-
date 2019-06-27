@@ -27,38 +27,36 @@
     },
     methods:{
       to_pay(){
-        if (this.chack_id){
-          let all_flag=true
-          let flag=0
-          let length=0
-          this.$myLoading.show('加载中...')
-          this.car_list.forEach(item =>{
-            if(item.qtyChanged){
-              length++
-              all_flag=false
-            }
-          })
-          if(all_flag){
-            this.$myLoading.hide()
-            this.$store.commit('setToPay',{val:true})
-            this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
-            return
-          }
-          this.car_list.forEach(item =>{
-            if(item.qtyChanged){
-              queryUpdata({id:item.ref_product_id, custId:localStorage.app_uid, qty:item.qty, sendQty:2}).then(()=>{
-                flag++
-                if(flag === length){
-                  this.$myLoading.hide()
-                  this.$store.commit('setToPay',{val:true})
-                  this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
-                }
-              })
-            }
-          })
-        }else {
+        if (!this.chack_id){
           this.$myToast.show({text:'商品选择了咩?',time:2000})
+          return
         }
+        this.$store.commit('setToPay',{val:true})
+        
+        let flag=0
+        let length=0
+        this.$myLoading.show('加载中...')
+        this.car_list.forEach(item =>{
+          if(item.qtyChanged){
+            length++
+          }
+        })
+        if(!length){
+          this.$myLoading.hide()
+          this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
+          return
+        }
+        this.car_list.forEach(item =>{
+          if(item.qtyChanged){
+            queryUpdata({id:item.ref_product_id, custId:localStorage.app_uid, qty:item.qty, sendQty:2}).then(()=>{
+              flag++
+              if(flag === length){
+                this.$myLoading.hide()
+                this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
+              }
+            })
+          }
+        })
       }
     },
     components:{

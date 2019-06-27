@@ -134,6 +134,9 @@
     line-height: 2.5rem;
     color: white;
     border-radius: 50/@rem;
+    &:active{
+      background-color: #7fc730;
+    }
   }
   .footer{
     height: 170px;

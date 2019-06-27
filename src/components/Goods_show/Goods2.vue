@@ -3,7 +3,7 @@
     <div class="content">
       <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="$goods_toast(info.id)">
         <div class="img" >
-          <img :src="info.tab_image_url" v-if="info.tab_image_url">
+          <img  v-lazy="info.tab_image_url">
           <div class="mask" v-if="info.store_amount <= 0">补货中</div>
         </div>
         <div class="name vux-1px-b">
@@ -23,9 +23,7 @@
 
 <script>
 export default {
-  props: {
-    goodsList: Array
-  },
+  props: ['goodsList'],
   methods:{
     add_car(info){
       if(info.store_amount <= 0){

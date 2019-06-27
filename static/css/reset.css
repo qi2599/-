@@ -116,8 +116,3 @@ input{
   display: table;
 }
 
-.svg_wrap, .svg_spinner{
-  width: 30px;
-  height: 30px;
-  margin: auto;
-}
