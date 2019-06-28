@@ -3,7 +3,7 @@
     <div class="bg">
       <div class="content mar-t">
         <div class="portrait">
-          <img src="../../common/img/portrait.png">
+          <img src="../../common/img/logo.svg">
         </div>
         <div class="info">
           <div class="name">
@@ -127,15 +127,15 @@
           position: absolute;
           top: 40/@rem;
           left: 50/@rem;
-          width: 160/@rem;
-          height: 160/@rem;
-          border: 3px rgba(255,255,255,0.3) solid;
+          width: 163/@rem;
+          height: 163/@rem;
+          /*border: 3px rgba(255,255,255,0.3) solid;*/
           background-color: rgba(255,255,255,0.3);
           border-radius: 100/@rem;
           overflow: hidden;
           img{
-            margin-top: -1.5px;
-            margin-left: -1.5px;
+            /*margin-top: -1.5px;*/
+            /*margin-left: -1.5px;*/
             width: 163/@rem;
             height: 163/@rem;
           }

@@ -37,7 +37,7 @@
     </div>
     <div class="sale">
       <div class="head">促·销·商·品</div>
-      <Goods2 :goodsList="goodsList"></Goods2>
+      <Goods_home :goodsList="goodsList" ref="home_goods"></Goods_home>
     </div>
     <div class="iconfont" :class="{iconhuidaodingbu:is_to_top}" @click="to_top"></div>
     <div class="footer_text">~~~~到底了 (ˉ▽ˉ；)</div>
@@ -45,10 +45,11 @@
 </template>
 
 <script>
-  import Goods2 from '../../components/Goods_show/Goods2'
+  import Goods_home from '../../components/Goods_show/Goods_home'
   import {queryWapBar, getHomeGoods, queryCarNum,querySwiper} from '../../api'
   import BScroll from 'better-scroll'
   import { Swiper } from 'vux'
+  
   export default {
     data () {
       return {
@@ -57,11 +58,11 @@
         goodsList: '',
         searchTop: '',
         is_to_top: false,
-        isSearchFixed: false
+        isSearchFixed: false,
       }
     },
     components: {
-      Goods2,
+      Goods_home,
       Swiper
     },
     methods: {
@@ -85,6 +86,8 @@
         
         if(window.scrollY>1500) this.is_to_top=true
         else this.is_to_top=false
+  
+        if(this.$refs.home_goods)this.$refs.home_goods.lazyloadFn()
       },
       buffer(fn, ms) {
         var timeout;
@@ -117,6 +120,10 @@
       })
       getHomeGoods().then(res => {
         this.goodsList = res.result
+        this.$nextTick(()=>{
+          this.$refs.home_goods.get_img_node()
+          this.$refs.home_goods.lazyloadFn()
+        })
       })
       querySwiper().then(res => {
         this.bannerImg=[]
@@ -133,11 +140,22 @@
           }
         })
       }
+      window.scrollTo(0,this.scrolly)
     },
     mounted () {
       // 监听滚动条、设置搜索元素到顶部的距离
-      window.onscroll=this.buffer(this.homeScroll,100)
+      window.onscroll=this.buffer(this.homeScroll,200)
       this.searchTop=this.$refs.search.offsetTop
+    },
+    watch: {
+      '$route' (to, from) {
+        if(!sessionStorage.homePositon || from.path == '/') sessionStorage.homePositon = ''
+        if(to.path === "/home") window.scrollTo(0,sessionStorage.homePositon)
+      }
+    },
+    beforeRouteLeave(to,from,next){//记录离开时的位置
+      sessionStorage.homePositon = window.scrollY
+      next()
     }
   }
 </script>

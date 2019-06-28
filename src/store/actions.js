@@ -15,7 +15,7 @@ export default {
     const res = await queryLogin(queryData)
     if(res.result_code === '00'){
       const userInfo = res.result
-      setCookie('JSESSqueryCustVirtualIONID',res.sessionId)
+      setCookie('JSESSIONID',res.sessionId)
       localStorage.app_uid = state.custId = res.result.id
       localStorage.cust_name = res.result.cust_name
       localStorage.isLogin = 'true'

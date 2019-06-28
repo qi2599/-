@@ -9,7 +9,7 @@
         <div class="specification">规格：{{info.specifications}}，保质期：{{info.quality_time}}</div>
         <div class="footer">
           <div class="num">X {{info.qty}}</div>
-          <div class="price">￥{{info.wap_price}}</div>
+          <div class="price">￥{{info.wap_price}}/{{info.unit}}</div>
         </div>
       </div>
       <div class="clear"></div>

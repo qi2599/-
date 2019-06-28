@@ -42,7 +42,6 @@
           }
         })
         if(!length){
-          this.$myLoading.hide()
           this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
           return
         }
@@ -51,7 +50,6 @@
             queryUpdata({id:item.ref_product_id, custId:localStorage.app_uid, qty:item.qty, sendQty:2}).then(()=>{
               flag++
               if(flag === length){
-                this.$myLoading.hide()
                 this.$router.push({name:'pay',query:{ids:this.chack_id,total:this.total,total_virtual:this.total_virtual}})
               }
             })

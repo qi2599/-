@@ -29,7 +29,7 @@
         <div class="my_gold">我的金币{{cust_coin}}，本次使用:</div>
       </div>
     </div>
-    <div class="bar">
+    <div class="bar" v-show="car_goods.length">
       <div class="total">总金额: <span> {{total}}</span> 元，得 {{total_virtual}} 积分</div>
       <div class="box" @click="to_apy">提交订单</div>
     </div>

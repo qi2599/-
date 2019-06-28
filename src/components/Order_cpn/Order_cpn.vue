@@ -39,11 +39,11 @@
     margin: 20/@rem 10/@rem;
     background: white;
     border-radius: 10/@rem;
-    color: @gray6;
+    color: @gray5;
     overflow: hidden;
     .head{
-      line-height: 60/@rem;
-      color: @c1;
+      line-height: 80/@rem;
+      color: @gray5;
       span{
         padding: 0 20/@rem;
       }

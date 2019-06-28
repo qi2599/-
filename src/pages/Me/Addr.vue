@@ -42,7 +42,7 @@
     width: 700/@rem;
     padding: 10/@rem;
     background: white;
-    margin: 10/@rem auto;
+    margin: 30/@rem auto;
     border-radius: 10/@rem;
     display: flex;
     align-items: center;

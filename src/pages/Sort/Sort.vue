@@ -35,7 +35,7 @@
         goodsList: '',
         pageNumber: 1,
         id: '0',
-        parent_id: '0'
+        parent_id: '0',
       }
     },
     components:{
@@ -109,6 +109,18 @@
         this.goodsList = res.result
         this.$myLoading.hide()
       })
+    },
+    watch: {
+      '$route' (to, from) {
+        if(!sessionStorage.sortPositon || from.path == '/') sessionStorage.sortPositon = ''
+        if(to.path === "/sort"){
+          setTimeout(()=>this.$refs.myscroller.scrollTo(0,sessionStorage.sortPositon),50) //同步转异步操作
+        }
+      }
+    },
+    beforeRouteLeave(to,from,next){//记录离开时的位置
+      sessionStorage.sortPositon = this.$refs.myscroller && this.$refs.myscroller.getPosition() && this.$refs.myscroller.getPosition().top;
+      next()
     }
   }
 </script>

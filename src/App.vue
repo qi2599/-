@@ -1,7 +1,12 @@
 <template>
   <div style="height: 100%">
     <transition>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+    <transition>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </transition>
     <Tabbar></Tabbar>
   </div>

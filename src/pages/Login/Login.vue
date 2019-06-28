@@ -3,7 +3,7 @@
     <div class="back iconfont iconarrow-left" @click="go_back"></div>
     <img class='bg_img' src='../../common/img/login.jpg'>
     <div class='img'></div>
-    <img class='logo_img' src='../../common/img/logo.png'>
+    <img class='logo_img' src='../../common/img/logo.svg'>
     <div class='logo'>
       <span>双 华 商 城</span>
       <span>批发 | 代理 | 配送</span>

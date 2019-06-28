@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="content">
+    <div class="content" ref="content">
       <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="$goods_toast(info.id)">
         <div class="img">
-          <img  :src="info.tab_image_url">
+          <img  :data-src="info.tab_image_url" src="../../common/img/img_loading.svg">
           <div class="mask" v-if="info.store_amount <= 0">补货中</div>
         </div>
         <div class="name vux-1px-b">
@@ -18,13 +18,36 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
+  var imgs
+  
   export default {
+    data(){
+      return{
+        for_j:0,
+        scrolly:0,
+        winHeight: window.innerHeight,
+      }
+    },
     props: ['goodsList'],
     methods:{
+      get_img_node(){
+        imgs = document.querySelectorAll('[data-src]')
+      },
+      lazyloadFn() {
+        if(!imgs)return
+        if(window.scrollY>this.scrolly)this.scrolly = window.scrollY
+        if(window.scrollY<this.scrolly)return
+        let lenght=imgs.length-this.for_j
+        for(var i=0; i<lenght; i++){
+          if (imgs[this.for_j].getBoundingClientRect().top-this.winHeight<0) {
+            imgs[this.for_j].src = imgs[this.for_j].getAttribute("data-src")
+            this.for_j++
+          }
+        }
+      },
       add_car(info){
         if(info.store_amount <= 0){
           this.$myToast.show({text:'无库存，补货中',time:2000})
@@ -52,6 +75,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     .goods2{
+      position: relative;
       width: 353/@rem;
       height: 480/@rem;
       box-sizing: border-box;
@@ -61,7 +85,6 @@
       box-shadow: 0 0 10px @gray2;
       border-radius: 5px;
       .img{
-        position: relative;
         height: 330/@rem;
         img{
           width: 100%;
@@ -69,8 +92,9 @@
         }
         .mask{
           position: absolute;
-          bottom: 0;
-          width: 100%;
+          top: 260/@rem;
+          left: 0;
+          width: 353/@rem;
           background: rgba(0,0,0,0.5);
           text-align: center;
           font-size: 1.2rem;
