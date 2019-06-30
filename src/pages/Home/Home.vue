@@ -121,7 +121,6 @@
       getHomeGoods().then(res => {
         this.goodsList = res.result
         this.$nextTick(()=>{
-          this.$refs.home_goods.get_img_node()
           this.$refs.home_goods.lazyloadFn()
         })
       })

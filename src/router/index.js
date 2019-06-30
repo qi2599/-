@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../pages/Home/Home.vue'
-// import Sort from '../pages/Sort/Sort.vue'
-// import Car from '../pages/Car/Car.vue'
-// import Me from '../pages/Me/Me.vue'
-const Home = () => import('../pages/Home/Home.vue')
-const Sort = () => import('../pages/Sort/Sort.vue')
-const Car = () => import('../pages/Car/Car.vue')
-const Me = () => import('../pages/Me/Me.vue')
+import Home from '../pages/Home/Home.vue'
+import Sort from '../pages/Sort/Sort.vue'
+import Car from '../pages/Car/Car.vue'
+import Me from '../pages/Me/Me.vue'
+// const Home = () => import('../pages/Home/Home.vue')
+// const Sort = () => import('../pages/Sort/Sort.vue')
+// const Car = () => import('../pages/Car/Car.vue')
+// const Me = () => import('../pages/Me/Me.vue')
 import Search from '../pages/Search/Search.vue'
 import Search_text from '../pages/Search_text/Search_text.vue'
 import Login from '../pages/Login/Login'
 import Resetpwd from '../pages/Login/Resetpwd'
 import Pay from '../pages/Pay/Pay'
-// import Order from '../pages/Order/Order'
-const Order = () => import('../pages/Order/Order')
+import Order from '../pages/Order/Order'
+// const Order = () => import('../pages/Order/Order')
 import Addr from '../pages/Me/Addr'
 import Change_pwd from '../pages/Me/Change_pwd'
 Vue.use(VueRouter)

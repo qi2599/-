@@ -3,7 +3,7 @@
     <div class="content" ref="content">
       <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="$goods_toast(info.id)">
         <div class="img">
-          <img  :data-src="info.tab_image_url" src="../../common/img/img_loading.svg">
+          <img ref="imgs" :data-src="info.tab_image_url" src="../../common/img/img_loading.svg">
           <div class="mask" v-if="info.store_amount <= 0">补货中</div>
         </div>
         <div class="name vux-1px-b">
@@ -21,8 +21,6 @@
 </template>
 
 <script>
-  var imgs
-  
   export default {
     data(){
       return{
@@ -33,16 +31,14 @@
     },
     props: ['goodsList'],
     methods:{
-      get_img_node(){
-        imgs = document.querySelectorAll('[data-src]')
-      },
       lazyloadFn() {
-        if(!imgs)return
-        if(window.scrollY>this.scrolly)this.scrolly = window.scrollY
-        if(window.scrollY<this.scrolly)return
-        let lenght=imgs.length-this.for_j
-        for(var i=0; i<lenght; i++){
-          if (imgs[this.for_j].getBoundingClientRect().top-this.winHeight<0) {
+        let imgs=this.$refs.imgs
+        if (!imgs) return;
+        if(window.scrollY>this.scrolly) this.scrolly = window.scrollY
+        if(window.scrollY<this.scrolly) return
+        for(let i=0; i<2; i++){
+          if(this.for_j>=imgs.length) return;
+          if(imgs[this.for_j].getBoundingClientRect().top-this.winHeight<0) {
             imgs[this.for_j].src = imgs[this.for_j].getAttribute("data-src")
             this.for_j++
           }
