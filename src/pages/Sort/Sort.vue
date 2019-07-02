@@ -3,10 +3,10 @@
     <Search_head>
       <div class="iconfont iconsousuo" slot='iconfont'></div>
     </Search_head>
-    <div id="class_list">
+    <div id="class_list" ref="class_list">
       <scroller class="scroll_wrap" ref="myscroll">
-        <div class="content">
-          <div class="item" :class="{class_open: parent_id == item.id}" v-for="(item, index) in class1" :key="index">
+        <div class="content" ref="content">
+          <div class="item" :class="{class_open: parent_id == item.id && isOpen}" v-for="(item, index) in class1" :key="index">
             <div :class="{active: parent_id == item.id && parent_id==id}" @click="get_class1(item.id)">{{item.name}}</div>
             <div class="vux-1px-b"></div>
             <div class="vux-1px-b" :class="{active: id == cla.id}" v-for="(cla,i) in item.class2" :key="i"  @click="get_goods(cla.id)">{{cla.name}}</div>
@@ -31,6 +31,7 @@
   export default {
     data(){
       return {
+        isOpen: false,
         class1: '',
         goodsList: '',
         pageNumber: 1,
@@ -53,8 +54,8 @@
           this.$myLoading.hide()
         })
       },
-      get_class1(id,event){
-        let ev = event || window.event
+      get_class1(id,ev){
+        ev = ev || window.event
         this.pageNumber=1
         this.goodsList=[]
         this.id = id
@@ -66,6 +67,7 @@
         if(id !== 0){
           queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
             if(res.result[0]){
+              this.isOpen = !this.isOpen
               this.class1.some(item => {
                 if(item.id === res.result[0].parent_id){
                   item.class2 = res.result
@@ -77,6 +79,7 @@
               this.parent_id = id
             }
             this.$nextTick(()=>{
+              if(this.$refs.content.offsetHeight-ev.target.offsetTop<this.$refs.class_list.offsetHeight) return
               this.$refs.myscroll.scrollTo(0,ev.target.offsetTop)
             })
           })
@@ -116,6 +119,9 @@
         if(to.path === "/sort"){
           setTimeout(()=>this.$refs.myscroller.scrollTo(0,sessionStorage.sortPositon),50) //同步转异步操作
         }
+      },
+      parent_id(){
+        this.isOpen = true
       }
     },
     beforeRouteLeave(to,from,next){//记录离开时的位置
@@ -129,10 +135,10 @@
   #sort{
     height: 100%;
     .iconsousuo{
-      width: 70/@rem;
+      width: 85/@rem;
       height: 70/@rem;
       line-height: 70/@rem;
-      padding-left: 20/@rem;
+      padding-left: 35/@rem;
       float: left;
       color: white;
       font-size: 1.3rem;
@@ -165,7 +171,7 @@
           }
           .class_open{
             height: auto;
-            background: @gray1;
+            background: @gray2;
             color: @c1;
           }
         }

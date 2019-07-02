@@ -11,7 +11,7 @@
             <div class="name">{{info.product_name}}</div>
             <div class="specification">{{info.specifications}} 产地：{{info.producing_area}}</div>
             <div class="footer">
-              <div class="num"><span>x{{info.sale_qty}}</span> {{info.product_sale_unit}}，小计：<span>{{info.price_total}}元</span></div>
+              <div class="num">x{{info.sale_qty}} {{info.product_sale_unit}}，小计：<span>{{info.price_total}}元</span></div>
               <div class="price">￥{{info.product_sale_price}}</div>
             </div>
           </div>

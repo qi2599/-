@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='login_wrap'>
-      <div>
+      <div class="vux-1px-b">
         <input type='span' placeholder='手机号/用户名' @click.stop="get_focus" v-model="mobile"/>
         <span class='iconfont iconpersonal_active'></span>
       </div>
@@ -54,7 +54,7 @@
     border-radius: 0.5rem;
     padding: 0 0.5rem;
     overflow: hidden;
-    margin: 10/@rem 30/@rem 50/@rem;
+    margin: 10/@rem 30/@rem 100/@rem;
   }
   .login_wrap .iconfont{
     line-height: 3rem;
@@ -65,9 +65,6 @@
     width: 85%;
     float: right;
     height: 3rem;
-  }
-  .login_wrap div:first-child{
-    border-bottom: 1px solid #eee;
   }
   .login_btn{
     text-align: center;
@@ -86,7 +83,7 @@
     text-align: center;
     font-size: 0.9rem;
     color: @gray6;
-    margin-top: 150/@rem;
+    margin-top: 100/@rem;
     letter-spacing: 1px;
   }
 </style>

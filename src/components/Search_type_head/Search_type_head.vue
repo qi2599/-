@@ -40,7 +40,7 @@
       to_search(){
         // this.flag 解决失去焦点和点击搜索触发两次
         if(this.flag){
-          this.keyword=event.target.value
+          this.keyword=this.$refs.sort_inp.value
           if(this.keyword){
             this.add_local_search()
             this.$router.push({name: 'search', query:{keyword: this.keyword}})
@@ -61,6 +61,12 @@
         if(this.keyword){
           this.$router.push({name: 'search', query:{keyword: this.keyword}})
         }
+      },
+      '$route' (to) {
+        if(to.path === "/sort"){
+          this.$refs.sort_inp.value=""
+          this.flag=true
+        }
       }
     }
   }
@@ -78,7 +84,7 @@
     .content{
       width: 680/@rem;
       input{
-        width: 460/@rem;
+        width: 430/@rem;
         height: 70/@rem;
         box-sizing: border-box;
         padding-left: 20/@rem;

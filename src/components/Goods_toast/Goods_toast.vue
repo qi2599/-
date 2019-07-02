@@ -35,19 +35,19 @@
         </div>
       </div>
       <div class="button clearfix">
-        <div class="close" @click.stop="toggle_show">
+        <div class="close" @click="toggle_show">
           <div class="iconfont_box">
             <div class="iconfont iconguanbi"></div>
           </div>
           <div>关闭</div>
         </div>
-        <div class="to_car" @click.stop="to_car">
+        <div class="to_car" @click="to_car">
           <div class="iconfont_box">
             <div class="iconfont iconcar_active"></div>
           </div>
           <div>前往购物车</div>
         </div>
-        <div class="add_car" @click.stop="add_car">
+        <div class="add_car" @click="add_car">
           <div class="iconfont_box">
             <div class="iconfont iconaddcart"></div>
           </div>

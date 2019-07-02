@@ -1,10 +1,10 @@
 <template>
   <div id="search" :class="{show: isMask}">
     <div class="head">
-      <div class="back iconfont iconarrow-left" @click="goBack"></div>
+      <div class="back iconfont iconarrow-left" @touchend="goBack"></div>
       <div class="content">
         <input type="text" placeholder="饮料 / 酒 / 零食等" ref="search_input" @touchend="getFocus" @change="reqGoods" v-model="keyword"/>
-        <a href="javascript:;" @click="reqGoods">搜索</a>
+        <a href="javascript:;" @touchend="reqGoods">搜索</a>
       </div>
       <div class="sort" @click="isMask = !isMask">
         <div></div>
@@ -151,16 +151,16 @@
       height: 107/@rem;
       align-items: center;
       .back{
-        width: 100/@rem;
+        width: 130/@rem;
         color: white;
         font-size: 1.5rem;
         text-align: center;
       }
       .content{
-        width: 530/@rem;
+        width: 500/@rem;
         height: 70/@rem;
         input{
-          width: 400/@rem;
+          width: 370/@rem;
           height: 70/@rem;
           padding-left: 20/@rem;
           box-sizing: border-box;

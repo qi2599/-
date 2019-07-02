@@ -117,6 +117,7 @@
 <style lang="less" scoped>
   #me{
     width: 100%;
+    padding-bottom: 122/@rem;
     .bg{
       background: @c1;
       height: 320/@rem;

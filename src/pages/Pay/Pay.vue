@@ -1,5 +1,5 @@
 <template>
-	<div id="pay">
+	<div id="pay" @touchstart="set_blur">
     <div class="head">
       <div class="back iconfont iconarrow-left" @click="$router.go(-1)"></div>
       <div>订单确认</div>
@@ -20,7 +20,7 @@
         <Goods_pay :car_goods="car_goods"></Goods_pay>
       </div>
       <div class="remark">
-        <textarea placeholder="若您有其他要求或有需要注意的事项，请在此备注：" @click="get_focus" v-model="remarks"></textarea>
+        <textarea placeholder="若您有其他要求或有需要注意的事项，请在此备注：" ref="t_area" @click.stop="get_focus" v-model="remarks"></textarea>
       </div>
       <div class="gold">
         <div class="num">
@@ -58,6 +58,9 @@
       get_focus(ev){
         ev=ev || event
         ev.target.focus()
+      },
+      set_blur(){
+        this.$refs.t_area.blur()
       },
       add_cut(type){
         let {num} = this

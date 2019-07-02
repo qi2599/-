@@ -1,7 +1,7 @@
 <template>
   <div id="search_text">
     <search_head :focus="true" ref="search_head">
-      <div class="iconfont iconarrow-left" slot='iconfont' @click="goback"></div>
+      <div class="iconfont iconarrow-left" slot='iconfont' @touchend="goback"></div>
     </search_head>
     <div class="local_search">
       <div class="title">最近搜索</div>
@@ -44,14 +44,6 @@
         this.$refs.search_head.keyword=keyword
       }
     },
-    created(){
-      // 是否创建本地搜索词
-      if(localStorage){
-        if(!localStorage.search){
-          localStorage.setItem('search',JSON.stringify([]))
-        }
-      }
-    },
     mounted() {
       window.scrollTo(0,0)
       queryHotSearch().then(res=>{
@@ -66,7 +58,7 @@
   #search_text{
     padding-top: 200/@rem;
     .iconarrow-left{
-      width: 70/@rem;
+      width: 100/@rem;
       height: 70/@rem;
       line-height: 70/@rem;
       padding-left: 20/@rem;

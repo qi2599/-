@@ -28,10 +28,10 @@
       </div>
       <div class="brand_list">
         <div class="brand_wrap">
-          <router-link :to="{ name:'search', query:{id: item.ref_factor_id} }" v-for="item in brandList" :key="item.id">
+          <div class="brand_item" v-for="item in brandList" :key="item.id" @click="$router.push({ name:'search', query:{id: item.ref_factor_id} })">
             <img :src="item.bar_image_url">
             <div>{{item.bar_name}}</div>
-          </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
         
         if(window.scrollY>1500) this.is_to_top=true
         else this.is_to_top=false
-  
+        // 触发懒加载
         if(this.$refs.home_goods)this.$refs.home_goods.lazyloadFn()
       },
       buffer(fn, ms) {
@@ -139,17 +139,36 @@
           }
         })
       }
+      // 是否创建本地搜索词
+      if(localStorage){
+        if(!localStorage.search){
+          localStorage.setItem('search',JSON.stringify([]))
+        }
+      }
       window.scrollTo(0,this.scrolly)
     },
     mounted () {
-      // 监听滚动条、设置搜索元素到顶部的距离
-      window.onscroll=this.buffer(this.homeScroll,200)
+      // 监听滚动条事件，限制触发频率
+      window.onscroll=this.buffer(this.homeScroll,100)
       this.searchTop=this.$refs.search.offsetTop
     },
     watch: {
       '$route' (to, from) {
         if(!sessionStorage.homePositon || from.path == '/') sessionStorage.homePositon = ''
-        if(to.path === "/home") window.scrollTo(0,sessionStorage.homePositon)
+        if(to.path === "/home"){
+          window.scrollTo(0,sessionStorage.homePositon)
+          this.$nextTick(()=>{
+            // logo列表滑动
+            new BScroll('.brand_list',{
+              startX: 0,
+              click: true,
+              scrollX: true,
+              // 忽略竖直方向的滚动
+              scrollY: false,
+              eventPassthrough: "vertical"
+            })
+          })
+        }
       }
     },
     beforeRouteLeave(to,from,next){//记录离开时的位置
@@ -198,7 +217,7 @@
         height: 280/@rem;
         margin: 0 auto;
         border-radius: 10/@rem;
-        background: @gray2;
+        background: @c1;
         overflow: hidden;
       }
       .search_wrap{
@@ -272,7 +291,7 @@
         .brand_wrap{
           position: absolute;
           white-space: nowrap;
-          a{
+          .brand_item{
             display: inline-block;
             width: 160/@rem;
             text-align: center;
