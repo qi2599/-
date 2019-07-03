@@ -1,10 +1,10 @@
 <template>
   <div id="search" :class="{show: isMask}">
     <div class="head">
-      <div class="back iconfont iconarrow-left" @touchend="goBack"></div>
+      <div class="back iconfont iconarrow-left" @click="goBack"></div>
       <div class="content">
         <input type="text" placeholder="饮料 / 酒 / 零食等" ref="search_input" @touchend="getFocus" @change="reqGoods" v-model="keyword"/>
-        <a href="javascript:;" @touchend="reqGoods">搜索</a>
+        <a href="javascript:;" @click="reqGoods">搜索</a>
       </div>
       <div class="sort" @click="isMask = !isMask">
         <div></div>
