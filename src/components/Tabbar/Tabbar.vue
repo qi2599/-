@@ -41,11 +41,8 @@ export default {
   },
   watch:{
     $route(to){
-      if(!(to.path=='/home' || to.path=='/sort' || to.path=='/car' || to.path=='/me')){
-        this.isShow=false
-      }else {
-        this.isShow=true
-      }
+      if(to.path=='/home' || to.path=='/sort' || to.path=='/car' || to.path=='/me') this.isShow=true
+      else this.isShow=false
     }
   }
 }

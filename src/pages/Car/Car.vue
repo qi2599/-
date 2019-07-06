@@ -74,9 +74,7 @@
             }
           }
         })
-        if (chack_id !== '') {
-          chack_id = chack_id.substring(0, chack_id.lastIndexOf(','))
-        }
+        if (chack_id !== '') chack_id = chack_id.substring(0, chack_id.lastIndexOf(','))
         this.chack_id = chack_id
       },
       chack_item(){

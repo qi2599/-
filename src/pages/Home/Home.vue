@@ -89,15 +89,15 @@
         // 触发懒加载
         if(this.$refs.home_goods)this.$refs.home_goods.lazyloadFn()
       },
-      buffer(fn, ms) {
-        var timeout;
-        return function() {
-          if (timeout) return;
-          var args = arguments;
-          timeout = setTimeout(function() {
-            timeout = null;
-            fn.apply(null, args);
-          }, ms);
+      // 函数节流
+      throttle(fn, ms) {
+        let lastTime = 0  // 记录上一次函数触发时间
+        return function () {  // 使用闭包保存 lastTime
+          let nowTime = Date.now()
+          if(nowTime - lastTime > ms){
+            fn.call(this)     // 修正 this 指向
+            lastTime = nowTime // 同步时间
+          }
         }
       }
     },
@@ -149,7 +149,7 @@
     },
     mounted () {
       // 监听滚动条事件，限制触发频率
-      window.onscroll=this.buffer(this.homeScroll,100)
+      window.onscroll=this.throttle(this.homeScroll,100)
       this.searchTop=this.$refs.search.offsetTop
     },
     watch: {

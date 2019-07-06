@@ -1,5 +1,5 @@
 <template>
-  <div id="goods_toast" v-if="showWrap" :class="trans?'maskin':'maskout'" @touchstart.prevent="">
+  <div id="goods_toast" v-show="showWrap" :class="trans?'maskin':'maskout'" @touchstart.prevent="">
     <div class="box" :class="{boxin: trans, boxout: boxout}">
       <div class="content">
         <div class="img">
@@ -59,6 +59,56 @@
 </template>
 
 <script>
+  export default {
+    data() {
+      return {
+        info: '',
+        img_url: '',
+        showWrap:false,
+        trans:false,
+        boxout: false,
+        isCar: false
+      }
+    },
+    methods:{
+      toggle_show(){
+        this.trans = false
+        this.boxout = true
+        this.info = ''
+        this.img_url = ''
+        // 等动画完成后关闭页面
+        setTimeout(() => {
+          this.showWrap=false
+          this.boxout = false
+        } ,200)
+      },
+      add_car(){
+        if(this.isCar){
+          this.$myToast.show({text:'已经加入购物了',time:2000})
+          return;
+        }
+        let {info} = this
+        if(info.product_time == '无库存'){
+          this.$myToast.show({text:'无库存，补货中',time:2000})
+          return
+        }
+        if(localStorage.isLogin){
+          this.$myLoading.show('正在添加...')
+          let callback = ()=>{
+            this.$myLoading.hide()
+            this.$myToast.show({text:'添加成功',icon: 'success'})
+          }
+          this.$store.dispatch('addCar',{queryData:{id:info.id, qty:1, price:info.wap_price,custId:localStorage.app_uid},callback})
+        }else {
+          this.$myToast.show({text:'您还没有登录哦',time:2000})
+        }
+      },
+      to_car(){
+        this.$router.replace('/car')
+        this.toggle_show()
+      }
+    }
+  }
 </script>
 
 <style lang="less" scoped>

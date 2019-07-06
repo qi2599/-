@@ -30,10 +30,7 @@ export default {
         },300)
       }
     }
-    if(!Vue.prototype.$myToast){
-      Vue.prototype.$myToast = toastMethods
-    }else {
-      console.log('$myToast 已被占用');
-    }
+    if(!Vue.prototype.$myToast) Vue.prototype.$myToast = toastMethods
+    else console.log('$myToast 已被占用');
   }
 }
