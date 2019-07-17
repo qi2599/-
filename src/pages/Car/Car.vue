@@ -23,7 +23,6 @@
   import Car_bar from '../../components/Car_bar/Car_bar'
   import {queryCar, queryCarNum, queryDelCar} from  '../../api'
   import floatObj from '../../../static/js/floatObj.js'
-  import loading from '../../plugin/loading/loading'
   export default {
     data(){
       return {
@@ -40,20 +39,20 @@
     methods:{
       del(){
         if(this.chack_id){
-          this.$vux.confirm.show({
-            content: '确认删除选中商品吗？',
-            onCancel : () => {
-              return
-            },
-            onConfirm : () => {
-              this.$myLoading.show('正在删除...')
-              queryDelCar({custId: localStorage.app_uid,ids:this.chack_id}).then(()=>{
-                this.$myLoading.hide()
-                this.getCarNum()
-                this.get_car_list()
-              })
-            }
+          this.$myConfirm.show({
+            text: '确定删除选中商品吗？',
+              onConfirm : () => {
+                this.$myLoading.show('正在删除...')
+                queryDelCar({custId: localStorage.app_uid,ids:this.chack_id}).then(()=>{
+                  this.getCarNum()
+                  this.get_car_list()
+                })
+              }
           })
+          // this.$vux.confirm.show({
+          //   content: '确认删除选中商品吗？',
+
+          // })
         }else {
           this.$myToast.show({text:'商品选择了咩?',time:2000})
         }
@@ -160,7 +159,6 @@
     components: {
       Goods_car,
       Car_bar,
-      loading
     },
     created() {
       window.scrollTo(0,0)

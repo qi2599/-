@@ -1,5 +1,5 @@
 <template>
-  <div class="tabbar-wrap vux-1px-t" :class="{barShow: isShow}">
+  <div class="tabbar-wrap my-1px-t" :class="{barShow: isShow}">
     <div class="item" :class="{active: '/home' === $route.path}" @click="goTo('/home')">
       <div class="iconfont" :class="{iconhome: '/home' !== $route.path}"></div>
       <div class="iconfont" :class="{iconhome_active: '/home' === $route.path}"></div>

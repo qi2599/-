@@ -32,7 +32,7 @@
     transition: all 0.3s;
     .loading_wrap{
       position: fixed;
-      z-index: 5;
+      z-index: 9999;
       top: 30%;
       right: 0;
       left: 0;

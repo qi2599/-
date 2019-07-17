@@ -22,7 +22,7 @@
         <a class="item" @click="to_class_goods('d4a37107ab944329ae1f3ac28629891b')" href="javascript:;"><img src="./img/hot_sort3.png"></a>
       </div>
     </div>
-    <div id="brand" class="vux-1px-t">
+    <div id="brand" class="my-1px-t">
       <div class="head">
         大·牌·臻·选
       </div>
@@ -72,13 +72,13 @@
       to_top(){
         let a = document.documentElement.scrollTop + document.body.scrollTop  // 滚动条位置
         let time_id = setInterval(()=>{
-          a -= 25
+          a -= 150
           if(a <= 0){
             a=0
             clearInterval(time_id)
           }
           window.scrollTo(0,a)
-        },(1))
+        },20)
       },
       homeScroll(){
         if(window.scrollY>this.searchTop) this.isSearchFixed = true

@@ -3,16 +3,15 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueScroller from 'vue-scroller'
-import { ConfirmPlugin } from 'vux'
 import myLoading from './plugin/loading'
 import myToast from './plugin/toast'
 import Goods_toast from './components/Goods_toast'
-
+import myConfirm from './plugin/confirm'
 Vue.use(VueScroller)
-Vue.use(ConfirmPlugin)
 Vue.use(Goods_toast)
 Vue.use(myLoading)
 Vue.use(myToast)
+Vue.use(myConfirm)
 
 /* eslint-disable no-new */
 new Vue({

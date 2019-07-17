@@ -33,17 +33,17 @@
           <p>全部订单</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
-        <p class="vux vux-1px-b"></p>
+        <p class="vux my-1px-b"></p>
         <div @click="to_order(1)">
           <p>订单提交</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
-        <p class="vux vux-1px-b"></p>
+        <p class="vux my-1px-b"></p>
         <div @click="to_order(2)">
           <p>已出单</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
-        <p class="vux vux-1px-b"></p>
+        <p class="vux my-1px-b"></p>
         <div @click="to_order(3)">
           <p>已发货</p>
           <p class="iconfont iconarrow-left"></p>
@@ -54,7 +54,7 @@
           <p>收货地址</p>
           <p class="iconfont iconarrow-left"></p>
         </div>
-        <p class="vux vux-1px-b"></p>
+        <p class="vux my-1px-b"></p>
         <div @click="$router.push('/change_pwd')">
           <p>修改密码</p>
           <p class="iconfont iconarrow-left"></p>
@@ -69,18 +69,15 @@
   export default {
     data(){
       return{
-        CustVirtual:'',
+        CustVirtual:{},
         cust_name: localStorage.cust_name,
         isLogin: localStorage.isLogin
       }
     },
     methods:{
       logout(){
-        this.$vux.confirm.show({
-          content: '确认退出登录吗？',
-          onCancel : () => {
-            return
-          },
+        this.$myConfirm.show({
+          text: '确定退出登录吗？',
           onConfirm : () => {
             queryLogout({cust_id: localStorage.app_uid})
             localStorage.isLogin = ''
@@ -109,6 +106,7 @@
       })
       queryCustVirtual({uid: localStorage.app_uid}).then(res => {
         this.CustVirtual = res
+        if(!res.cust_coin) this.CustVirtual.cust_coin=0
       })
     }
   }

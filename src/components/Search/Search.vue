@@ -13,7 +13,7 @@
         <p>分类</p>
       </div>
     </div>
-    <div class="mask" :class="{mask_show: isMask}" @touchstart.self="isMask = !isMask" @touchstart.prevent="">
+    <div class="mask" :class="{mask_show: isMask}" @touchstart.self="isMask = !isMask">
       <div class="class_wrap">
         <div class="class1">
           <div class="content">
@@ -66,6 +66,7 @@
       },
       get_class2(id){
         this.flag=true
+        this.parent_id = id
         this.keyword = ''
         if(id !== '0'){
           queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
@@ -76,7 +77,6 @@
               this.isMask=false
             }
             this.queryGoods({pageNumber: 1, pageSize: 10, classId: id})
-            this.parent_id = id
             this.id=''
           })
         }else {
@@ -254,7 +254,7 @@
       }
       .to_car{
         position: absolute;
-        bottom: 280/@rem;
+        bottom: 180/@rem;
         right: 225/@rem;
         width: 300/@rem;
         text-align: center;

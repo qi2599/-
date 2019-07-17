@@ -1,5 +1,5 @@
 <template>
-  <div id="goods_toast" v-show="showWrap" :class="trans?'maskin':'maskout'" @touchstart.prevent="">
+  <div id="goods_toast" v-show="showWrap" :class="trans?'maskin':'maskout'" @touchmove.prevent>
     <div class="box" :class="{boxin: trans, boxout: boxout}">
       <div class="content">
         <div class="img">

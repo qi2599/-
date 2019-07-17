@@ -1,5 +1,5 @@
 <template>
-  <div class="head" @touchstart.prevent="">
+  <div class="head">
     <slot name='iconfont'></slot>
     <div class="content">
       <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @change="to_search" @touchstart.stop="set_focus"/>

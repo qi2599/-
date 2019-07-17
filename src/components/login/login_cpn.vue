@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='login_wrap'>
-      <div class="vux-1px-b">
+      <div class="my-1px-b">
         <input type='span' placeholder='手机号/用户名' @click.stop="get_focus" v-model="mobile"/>
         <span class='iconfont iconpersonal_active'></span>
       </div>

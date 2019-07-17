@@ -11,12 +11,12 @@ import {
 } from '../api'
 
 export default {
-  async getUserInfo({commit,state},{queryData,success,fail}){
+  async getUserInfo({commit},{queryData,success,fail}){
     const res = await queryLogin(queryData)
     if(res.result_code === '00'){
       const userInfo = res.result
       setCookie('JSESSIONID',res.sessionId)
-      localStorage.app_uid = state.custId = res.result.id
+      localStorage.app_uid = res.result.id
       localStorage.cust_name = res.result.cust_name
       localStorage.isLogin = 'true'
       success()

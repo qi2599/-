@@ -6,7 +6,7 @@
           <img  :src="info.tab_image_url">
           <div class="mask" v-if="info.store_amount <= 0">补货中</div>
         </div>
-        <div class="name vux-1px-b">
+        <div class="name my-1px-b">
           <span class="att" v-if="info.support_virtual === '2'">积分</span>
           <div class="ellipsis">{{info.product_name}}</div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-	<div id="order_detail" :class="{show:details}" @touchstart.prevent="">
+	<div id="order_detail" :class="{show:details}" @touchmove.prevent>
     <div class="order_goods">
       <scroller>
         <div class="clearfix"></div>

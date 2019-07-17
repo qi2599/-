@@ -89,6 +89,10 @@
             this.$myToast.show({text:'下单成功'})
             this.$router.replace({name:'order',query:{index:1}})
           }
+          if (res.result_code === '1046'){
+            this.$myLoading.hide()
+            this.$myToast.show({text: res.result_desc, time:2000})
+          }
         })
       }
     },
@@ -105,7 +109,7 @@
         this.$myLoading.hide()
       })
       queryCustVirtual({uid: custId}).then(res => {
-        this.cust_coin=res.cust_coin
+        if(res.cust_coin) this.cust_coin=res.cust_coin
       })
       queryAddr({custId,isDefault: 1}).then(res => {
         this.addr=res.result[0]

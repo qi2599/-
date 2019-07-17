@@ -11,7 +11,7 @@
         <div class="validation">
           <div class="text">验证码</div>
           <input type="number" placeholder="输入验证码" v-model="validation" v-focus>
-          <div class="time" v-if="time!==45">{{time}} 秒</div>
+          <div class="time" v-if="time!==50">{{time}} 秒</div>
           <div class="get_sms" v-else @click="get_sms">重新获取</div>
         </div>
         <div class="pwd vux-1px-t vux-1px-b">
@@ -39,7 +39,7 @@
         confirmPwd:'',
         pwd:'',
         validation:'',
-        time:44
+        time:49
       }
     },
     components:{
@@ -68,14 +68,17 @@
       get_sms(){
         this.$myLoading.show('加载中...')
         sendSMS({mobile:this.mobile}).then(res=>{
-          this.isResetpwd1=false
           this.$myLoading.hide()
-          if(res.result_code==='00') this.$myToast.show({text:'验证码发送成功',time:2000})
+          if(res.result_code==='00') {
+            this.isResetpwd1=false
+            this.$myToast.show({text:'验证码发送成功',time:2000})
+          }
+          if(res.result_code==='2007') this.$myToast.show({text: res.result_desc,time:3000})
         })
         let timeId = setInterval(()=>{
           if (this.time) this.time--
           else {
-            this.time=45
+            this.time=50
             clearInterval(timeId)
           }
         },1000)

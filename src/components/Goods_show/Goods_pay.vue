@@ -1,6 +1,6 @@
 <template>
 	<div id="goods_pay">
-    <div class="item vux-1px-b" v-for="(info, index) in car_goods" :key="index">
+    <div class="item my-1px-b" v-for="(info, index) in car_goods" :key="index">
       <div class="img">
         <img :src="info.tab_image_url">
       </div>
@@ -32,7 +32,7 @@
     margin: 10/@rem auto;
     background: white;
     border-radius: 10/@rem;
-    .vux-1px-b:last-child:after{
+    .my-1px-b:last-child:after{
       opacity: 0;
     }
     .item{

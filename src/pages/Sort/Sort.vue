@@ -4,22 +4,22 @@
       <div class="iconfont iconsousuo" slot='iconfont'></div>
     </Search_head>
     <div id="class_list" ref="class_list">
-      <scroller class="scroll_wrap" ref="myscroll">
+      <infinite class="scroll_wrap" ref="myscroll">
         <div class="content" ref="content">
           <div class="item" :class="{class_open: parent_id == item.id && isOpen}" v-for="(item, index) in class1" :key="index">
+            <div class="my-1px-t"></div>
             <div :class="{active: parent_id == item.id && parent_id==id}" @click="get_class1(item.id)">{{item.name}}</div>
-            <div class="vux-1px-b"></div>
-            <div class="vux-1px-b" :class="{active: id == cla.id}" v-for="(cla,i) in item.class2" :key="i"  @click="get_goods(cla.id)">{{cla.name}}</div>
+            <div class="my-1px-t" :class="{active: id == cla.id}" v-for="(cla,i) in item.class2" :key="i"  @click="get_goods(cla.id)">{{cla.name}}</div>
           </div>
         </div>
-      </scroller>
+      </infinite>
     </div>
     <div class="goods_wrap">
-      <scroller :on-infinite="infinite" ref="myscroller" >
+      <infinite :on_infinite="infinite" :on_refresh="refresh" ref="myscroller" >
         <div class="list_wrap">
           <Goods3 v-for="(item, index) in goodsList" :key="index" :info="item"></Goods3>
         </div>
-      </scroller>
+      </infinite>
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@
   import {queryClass, queryGoods} from '../../api'
   import Goods3 from '../../components/Goods_show/Goods3.vue'
   import Search_head from '../../components/Search_type_head/Search_type_head'
+  import infinite from '../../components/infinite/infinite'
   export default {
     data(){
       return {
@@ -41,33 +42,38 @@
     },
     components:{
       Goods3,
-      Search_head
+      Search_head,
+      infinite
     },
     methods:{
       get_goods(id){
+        if(this.id == id) return
+        this.$refs.myscroller.done()
         this.pageNumber=1
         this.goodsList=[]
-        this.$myLoading.show('加载中...')
         queryGoods({pageNumber: 1, pageSize: 10, classId:id}).then(res => {
           this.goodsList = res.result
           this.id = id
-          this.$myLoading.hide()
+          if(res.result.length<10){
+            this.$refs.myscroller.done(true)
+          }
         })
       },
       get_class1(id,ev){
+        this.isOpen = !this.isOpen
+        if(this.id == id) return
+        this.parent_id = id
         ev = ev || window.event
+        this.$refs.myscroller.done()
         this.pageNumber=1
         this.goodsList=[]
         this.id = id
-        this.$myLoading.show('加载中...')
         queryGoods({pageNumber: 1, pageSize: 10, classId:this.id=='0'? '':this.id}).then(res => {
           this.goodsList = res.result
-          this.$myLoading.hide()
         })
         if(id !== 0){
           queryClass({pageNumber: 1, pageSize: 50, class_parent_id: id}).then(res => {
             if(res.result[0]){
-              this.isOpen = !this.isOpen
               this.class1.some(item => {
                 if(item.id === res.result[0].parent_id){
                   item.class2 = res.result
@@ -75,49 +81,45 @@
                 }
               })
               this.parent_id = res.result[0].parent_id
-            }else {
-              this.parent_id = id
             }
             this.$nextTick(()=>{
               if(this.$refs.content.offsetHeight-ev.target.offsetTop<this.$refs.class_list.offsetHeight) return
-              this.$refs.myscroll.scrollTo(0,ev.target.offsetTop)
+              this.$refs.myscroll.scrollto(ev.target.offsetTop)
             })
           })
         }
       },
       infinite(done){
-        if(this.goodsList.length){
-          queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId: this.id=='0'? '':this.id}).then(res => {
-            if(res.result.length!=0){
-              this.goodsList = [...this.goodsList,...res.result]
-              this.pageNumber++
-              done() //进行下一次加载操作
-            }else{
-              done(true)
-            }
-          })
-        }else {
-          this.$nextTick(()=>{
+        queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId: this.id=='0'? '':this.id}).then(res => {
+          if(res.result.length!=0){
+            this.goodsList = [...this.goodsList,...res.result]
+            this.pageNumber++
             done()
-          })
-        }
+          }else done(true)
+        })
+      },
+      refresh(reset){
+        this.pageNumber = 1
+        this.$refs.myscroller.done()
+        queryGoods({pageNumber: this.pageNumber, pageSize: 10, classId: this.id=='0'? '':this.id}).then(res => {
+          if(res.result.length!=0) this.goodsList = res.result
+          reset()
+        })
       }
     },
     created(){
-      this.$myLoading.show('加载中...')
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
         this.class1 = [{id:'0', name:'所有商品'},...res.result]
       })
       queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
         this.goodsList = res.result
-        this.$myLoading.hide()
       })
     },
     watch: {
       '$route' (to, from) {
         if(!sessionStorage.sortPositon || from.path == '/') sessionStorage.sortPositon = ''
         if(to.path === "/sort"){
-          setTimeout(()=>this.$refs.myscroller.scrollTo(0,sessionStorage.sortPositon),50) //同步转异步操作
+          setTimeout(()=>this.$refs.myscroller.scrollto(sessionStorage.sortPositon),50) //同步转异步操作
         }
       },
       parent_id(){
@@ -125,7 +127,7 @@
       }
     },
     beforeRouteLeave(to,from,next){//记录离开时的位置
-      sessionStorage.sortPositon = this.$refs.myscroller && this.$refs.myscroller.getPosition() && this.$refs.myscroller.getPosition().top;
+      sessionStorage.sortPositon = this.$refs.myscroller.getPosition()
       next()
     }
   }
@@ -152,9 +154,6 @@
       text-align: center;
       overflow: hidden;
       .scroll_wrap{
-        height: auto;
-        top: 0/@rem;
-        bottom: 150/@rem;
         .content{
           .item{
             margin: 0 auto;
@@ -171,7 +170,7 @@
           }
           .class_open{
             height: auto;
-            background: @gray2;
+            background: @gray1;
             color: @c1;
           }
         }

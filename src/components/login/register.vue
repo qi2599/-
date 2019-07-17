@@ -3,32 +3,32 @@
     <form>
       <div class='reg_wrap'>
         <div class='reg_item'>
-          <input type='text' name='num' placeholder='请输入手机号码'v-model="mobile"/>
+          <input type='text' name='num' placeholder='请输入手机号码'v-model="mobile" @click.stop="get_focus"/>
           <span>手机号</span>
         </div>
         <div class='reg_item'>
-          <input type='text' name='store_name' placeholder='请输入商店名称'v-model="cust_name"/>
+          <input type='text' name='store_name' placeholder='请输入商店名称'v-model="cust_name" @click.stop="get_focus"/>
           <span>商店名称</span>
         </div>
         <div class='reg_item'>
-          <input type='text' name='user_name' placeholder='请输入您的姓名'v-model="p_name"/>
+          <input type='text' name='user_name' placeholder='请输入您的姓名'v-model="p_name" @click.stop="get_focus"/>
           <span>客户名字</span>
         </div>
         <div class='reg_item'>
-          <input type='text' name='user_add' placeholder='请输入收货地址' v-model="cust_addr"/>
+          <input type='text' name='user_add' placeholder='请输入收货地址' v-model="cust_addr" @click.stop="get_focus"/>
           <span>收货地址</span>
         </div>
         <div class='reg_item'>
-          <input type='password' name='psd' placeholder='6-20位数字+字母或符号'v-model="passwd"/>
+          <input type='password' name='psd' placeholder='6-20位数字+字母或符号'v-model="passwd" @click.stop="get_focus"/>
           <span>设置密码</span>
         </div>
         <div class='reg_item'>
-          <input type='password' name='aff_psd' placeholder='6-20位数字+字母或符号' v-model="aff_passwd"/>
+          <input type='password' name='aff_psd' placeholder='6-20位数字+字母或符号' v-model="aff_passwd" @click.stop="get_focus"/>
           <span>确认密码</span>
         </div>
         <div class='reg_item'>
           <img :src="img_code" @click="get_imgcode">
-          <input type='span' name='yanzhen' placeholder='请输入验证码'v-model="authCode"/>
+          <input type='span' name='yanzhen' placeholder='请输入验证码'v-model="authCode" @click.stop="get_focus"/>
           <span>验证码</span>
         </div>
       </div>
@@ -79,7 +79,11 @@
           this.$myLoading.hide()
           this.$myToast.show({text:'验证码错误'})
         })
-      }
+      },
+      get_focus(ev){
+        ev = ev || event
+        ev.target.focus()
+      },
     },
     mounted() {
       this.get_imgcode()
