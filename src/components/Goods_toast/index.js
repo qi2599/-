@@ -19,8 +19,8 @@ export default {
     // 定义接口函数 接收商品id
     let showToast = function (id,isCar=false) {
       toastDom.isCar = isCar
-      toastDom.trans=true
       toastDom.showWrap=true
+      setTimeout(()=>{ toastDom.trans=true },20)
       queryDetail({id}).then(res =>　{
         toastDom.info=res.result
         toastDom.img_url = res.result.mains[0].tab_image_url

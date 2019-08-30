@@ -13,10 +13,10 @@
         <p>分类</p>
       </div>
     </div>
-    <div class="mask" :class="{mask_show: isMask}" @touchstart.self="isMask = !isMask">
+    <div class="mask" :class="{mask_show: isMask}" @click.self="isMask = !isMask" @touchmove.prevent>
       <div class="class_wrap">
-        <div class="class1">
-          <div class="content">
+        <div class="content">
+          <div class="class-box" @touchmove.stop>
             <div :class="{active: item.id===parent_id}"
                  v-for="(item,index) in classList"
                  :key="index"
@@ -28,8 +28,8 @@
           <div class="item" v-for="(item, index) in classList2" :key="index" @click="reqGoods({id:item.id})">{{item.name}}</div>
         </div>
       </div>
-      <div class="to_car" @click="$router.push('/car')">
-        <div class="iconfont_box">
+      <div class="to_car">
+        <div class="iconfont_box" @click="$router.push('/car')">
           <div class="iconfont iconcar_active"></div>
         </div>
         <div>前往购物车</div>
@@ -40,7 +40,6 @@
 
 <script>
   import {queryClass} from "../../api";
-  import BScroll from 'better-scroll'
   export default {
     data () {
       return {
@@ -120,16 +119,6 @@
     mounted() {
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
         this.classList = [{id:'0', name:'所有商品'},...res.result]
-        this.$nextTick(() => {
-          new BScroll('.class1',{
-            startX: 0,
-            click: true,
-            scrollX: true,
-            // 忽略竖直方向的滚动
-            scrollY: false,
-            eventPassthrough: "vertical"
-          })
-        })
       })
     }
   }
@@ -139,6 +128,7 @@
   #search{
     position: fixed;
     width: 100%;
+    max-width: 780px;
     top: 0;
     z-index: 1;
     &.show{
@@ -147,6 +137,7 @@
     .head{
       display: flex;
       width: 100%;
+      max-width: 780px;
       background: @c1;
       height: 107/@rem;
       align-items: center;
@@ -208,25 +199,17 @@
       overflow: hidden;
       background: rgba(0,0,0,0.5);
       .class_wrap{
-        overflow: hidden;
         background: white;
-        .class1{
-          padding: 30/@rem 0;
-          height: 60/@rem;
-          position: relative;
-          .content{
-            position: absolute;
-            display: flex;
+        .content{
+          .class-box{
             white-space: nowrap;
+            padding: 20/@rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             div{
               line-height: 60/@rem;
               padding: 0 20/@rem;
-            }
-            > :first-child{
-              margin-left: 20/@rem;
-            }
-            > :last-child{
-              margin-right: 20/@rem;
+              display: inline-block;
             }
             .active{
               background: @c3;
@@ -255,8 +238,7 @@
       .to_car{
         position: absolute;
         bottom: 180/@rem;
-        right: 225/@rem;
-        width: 300/@rem;
+        width: 100%;
         text-align: center;
         line-height: 50/@rem;
         font-size: 0.9rem;

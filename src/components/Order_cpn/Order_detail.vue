@@ -1,26 +1,24 @@
 <template>
 	<div id="order_detail" :class="{show:details}" @touchmove.prevent>
-    <div class="order_goods">
-      <scroller>
-        <div class="clearfix"></div>
-        <div class="goods_wrap" v-for="(info,index) in details" :key="index">
-          <div class="img">
-            <img :src="info.tab_image_url">
-          </div>
-          <div class="info">
-            <div class="name">{{info.product_name}}</div>
-            <div class="specification">{{info.specifications}} 产地：{{info.producing_area}}</div>
-            <div class="footer">
-              <div class="num">x{{info.sale_qty}} {{info.product_sale_unit}}，小计：<span>{{info.price_total}}元</span></div>
-              <div class="price">￥{{info.product_sale_price}}</div>
-            </div>
-          </div>
-          <div class="clear"></div>
+    <div class="order_goods"  @touchmove.stop>
+      <div class="clearfix"></div>
+      <div class="goods_wrap" v-for="(info,index) in details" :key="index">
+        <div class="img">
+          <img :src="info.tab_image_url">
         </div>
-      </scroller>
+        <div class="info">
+          <div class="name">{{info.product_name}}</div>
+          <div class="specification">{{info.specifications}} 产地：{{info.producing_area}}</div>
+          <div class="footer">
+            <div class="num">x{{info.sale_qty}} {{info.product_sale_unit}}，小计：<span>{{info.price_total}}元</span></div>
+            <div class="price">￥{{info.product_sale_price}}</div>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
     </div>
-    <div class="cloce" @click="cloce">
-      <div class="iconfont_box">
+    <div class="cloce">
+      <div class="iconfont_box" @click="cloce">
         <div class="iconfont iconguanbi"></div>
       </div>
     </div>
@@ -46,6 +44,7 @@
 #order_detail{
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 2;
   width: 100%;
   height: 100%;
@@ -58,12 +57,12 @@
     transform: scaleY(1);
   }
   .order_goods{
-    position: absolute;
-    top: 0/@rem;
-    bottom: 170/@rem;
-    left: 20/@rem;
-    right: 20/@rem;
-    margin: auto;
+    max-height: 83%;
+    max-width: 780px;
+    padding: 0 20/@rem;
+    margin: 0 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     .goods_wrap{
       padding: 10/@rem 0;
       margin: 20/@rem 0;
@@ -108,8 +107,7 @@
   .cloce{
     position: absolute;
     bottom: 60/@rem;
-    right: 225/@rem;
-    width: 300/@rem;
+    width: 100%;
     text-align: center;
     line-height: 50/@rem;
     font-size: 0.9rem;

@@ -23,11 +23,11 @@ export default new VueRouter({
   routes: [
     { path: '/', redirect: '/home' },
     { path: '/home', component: Home, meta:{ keepAlive: true }},
-    { path: '/sort', component: Sort, meta:{ keepAlive: true }},
+    { path: '/menu', component: Sort, meta:{ keepAlive: true }},
     { path: '/car', component: Car},
     { path: '/me', component: Me},
     { path: '/search', name:'search', component: Search},
-    { path: '/search_text', name:'search_text', component: Search_text },
+    { path: '/soso', name:'soso', component: Search_text },
     { path: '/login', name:'login', component: Login},
     { path: '/resetpwd', name:'resetpwd', component: Resetpwd},
     { path: '/pay', name:'pay', component: Pay},

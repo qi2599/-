@@ -20,6 +20,14 @@ export default {
       localStorage.cust_name = res.result.cust_name
       localStorage.isLogin = 'true'
       success()
+  
+      queryCarNum({custId: localStorage.app_uid}).then(res => {
+        if (res.result.cartsum){
+          commit('setCarNum', {unm: res.result.cartsum})
+        }else {
+          commit('setCarNum', {unm: ''})
+        }
+      })
       commit(REQ_LOGIN, {userInfo})
     }else if(res.result_code === '1062'){
       fail(res.result_desc)

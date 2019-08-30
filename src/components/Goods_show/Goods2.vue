@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="content">
+    <div class="content clearfix">
       <div class="goods2" v-for="(info, index) in goodsList" :key="index" @click="$goods_toast(info.id)">
         <div class="img">
           <img  :src="info.tab_image_url">
@@ -47,17 +47,15 @@
 
 <style lang="less" scoped>
   .content{
-    padding: 15/@rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    padding-top: 14.6/@rem;
     .goods2{
+      float: left;
+      margin: 0 0 14.6/@rem 14.6/@rem;
       width: 353/@rem;
       height: 480/@rem;
       box-sizing: border-box;
       background: white;
       padding: 15/@rem;
-      margin-bottom: 15/@rem;
       box-shadow: 0 0 10px @gray2;
       border-radius: 5px;
       .img{

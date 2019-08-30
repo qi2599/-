@@ -2,7 +2,7 @@
   <div id="search_page">
     <Search ref="search_id" :queryGoods="queryGoods" :queryAll="queryAll"></Search>
     <div class="scro_wrap">
-      <infinite :on_infinite="infinite" ref="myscroll">
+      <infinite :on_infinite="infinite" :text="'没有更多商品'" :distance="100" ref="myscroll">
         <Goods2 :goodsList="goodsList"></Goods2>
       </infinite>
     </div>
@@ -34,7 +34,7 @@
       queryAll(){
         this.$refs.myscroll.done()
         this.goodsList=[]
-        queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
+        queryGoods({pageNumber: 1, pageSize: 16}).then(res => {
           this.goodsList = res.result
         })
       },
@@ -43,7 +43,7 @@
         this.goodsList=[]
         queryGoods(queryData).then(res => {
           this.goodsList = res.result
-          if(res.result.length < 10) this.$refs.myscroll.done(true)
+          if(res.result.length < 16) this.$refs.myscroll.done(true)
         })
       },
       infinite(done){
@@ -61,12 +61,12 @@
         if(this.$refs.search_id.keyword){
           this.keyword = this.$refs.search_id.keyword
         }
-        queryGoods({keyword: this.keyword, ref_factor_id: this.ref_factor_id, pageNumber: this.pageNumber+1, pageSize: 10, classId: classId==='0'? '':classId}).then(res => {
+        queryGoods({keyword: this.keyword, ref_factor_id: this.ref_factor_id, pageNumber: this.pageNumber+1, pageSize: 16, classId: classId==='0'? '':classId}).then(res => {
           if(res.result.length!=0){
             this.goodsList = [...this.goodsList,...res.result]
             this.pageNumber++
             done() //进行下一次加载操作
-          }else if(res.result.length < 10){
+          }else if(res.result.length < 16){
             // 没有返回商品则停止上拉加载
             done(true)
           }
@@ -76,23 +76,23 @@
     created() {
       if(this.$route.query.id){
         let ref_factor_id = this.ref_factor_id = this.$route.query.id
-        queryGoods({ref_factor_id, pageNumber:1, pageSize:10}).then(res => {
+        queryGoods({ref_factor_id, pageNumber:1, pageSize:16}).then(res => {
           this.goodsList = res.result
-          if(res.result.length < 10) this.$refs.myscroll.done(true)
+          if(res.result.length < 16) this.$refs.myscroll.done(true)
         })
       }
       if(this.$route.query.keyword){
         let keyword = this.keyword = this.$route.query.keyword
-        queryGoods({keyword, pageNumber:1, pageSize:10}).then(res => {
+        queryGoods({keyword, pageNumber:1, pageSize:16}).then(res => {
           this.goodsList = res.result
-          if(res.result.length < 10) this.$refs.myscroll.done(true)
+          if(res.result.length < 16) this.$refs.myscroll.done(true)
         })
       }
       if(this.$route.query.classId){
         let classId = this.classId = this.$route.query.classId
-        queryGoods({classId, pageNumber:1, pageSize:10}).then(res => {
+        queryGoods({classId, pageNumber:1, pageSize:16}).then(res => {
           this.goodsList = res.result
-          if(res.result.length < 10) this.$refs.myscroll.done(true)
+          if(res.result.length < 16) this.$refs.myscroll.done(true)
         })
       }
     }
@@ -106,6 +106,7 @@
       top: 105/@rem;
       bottom: 0;
       width: 100%;
+      max-width: 780px;
     }
   }
 </style>

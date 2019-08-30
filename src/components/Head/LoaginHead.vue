@@ -1,7 +1,7 @@
 <template>
   <div id="app_head">
     <div class="head">
-      <div class="back iconfont iconarrow-left" @click="$router.go(-1)"></div>
+      <div class="back iconfont iconarrow-left" @click="$router.push({path: '/home'})"></div>
       <div>{{text}}</div>
     </div>
     <div></div>

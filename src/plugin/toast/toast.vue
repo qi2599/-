@@ -37,6 +37,7 @@
       position: fixed;
       z-index: 9999;
       margin: auto;
+      left: 0;
       .text{
         text-align: center;
         letter-spacing: 2px;

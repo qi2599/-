@@ -13,11 +13,11 @@ export default {
         setTimeout(()=>{
           myConfirm.toggleShow = true
         },20)
-        
+  
         // 设置显示文字
-        if(options.text) myConfirm.text = options.text
-        if(options.confirmText) myConfirm.confirmText = options.confirmText
-        if(options.cancelText) myConfirm.cancelText = options.cancelText
+        myConfirm.text = options.text ? options.text : ''
+        myConfirm.confirmText = options.confirmText ? options.confirmText : '确定'
+        myConfirm.cancelText = options.cancelText ? options.cancelText : '取消'
         
         // 清除 myConfirm 的 on-cancel 事件
         myConfirm.$off('on-cancel')

@@ -128,6 +128,7 @@
     .head{
       position: fixed;
       width: 100%;
+      max-width: 780px;
       top: 0;
       z-index: 2;
       color: white;
@@ -145,7 +146,7 @@
     }
     .content{
       .addr{
-        width: 700/@rem;
+        width: 94%;
         padding: 10/@rem;
         background: white;
         margin: 10/@rem auto;
@@ -162,7 +163,7 @@
           }
         }
         .info{
-          width: 570/@rem;
+          margin-left: 30/@rem;
           .up{
             display: flex;
             justify-content: space-between;
@@ -182,7 +183,7 @@
       }
       .remark{
         textarea{
-          width: 700/@rem;
+          width: 94%;
           height: 192/@rem;
           border-radius: 10/@rem;
           padding: 10/@rem;
@@ -196,9 +197,9 @@
         }
       }
       .gold{
-        width: 680/@rem;
+        width: 94%;
         height: 80/@rem;
-        padding: 10/@rem 20/@rem;
+        padding: 10/@rem;
         margin: 10/@rem auto 100/@rem;
         border-radius: 10/@rem;
         background: white;
@@ -208,6 +209,7 @@
         }
         .my_gold{
           line-height: 80/@rem;
+          padding-left: 10/@rem;
         }
       }
     }
@@ -215,6 +217,7 @@
       position: fixed;
       bottom: 0;
       width: 100%;
+      max-width: 780px;
       display: flex;
       background: @gray1;
       height: 100/@rem;

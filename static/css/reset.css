@@ -54,7 +54,7 @@ li {
 }
 
 /*::-webkit-scrollbar {*/
-/*  width: 2px;*/
+/*  width: 5px;*/
 /*  height: 5px;*/
 /*}*/
 
@@ -65,20 +65,20 @@ li {
 
 /*::-webkit-scrollbar-thumb:vertical {*/
 /*  height: 5px;*/
-/*  background-color: rgba(125, 125, 125, 0.7);*/
+/*  background-color: rgba(183, 183, 183, 0.51);*/
 /*  -webkit-border-radius: 6px;*/
 /*}*/
 
 /*::-webkit-scrollbar-thumb:horizontal {*/
 /*  width: 5px;*/
-/*  background-color: rgba(125, 125, 125, 0.7);*/
+/*  background-color: rgba(186, 186, 186, 0.48);*/
 /*  -webkit-border-radius: 6px;*/
 /*}*/
 
-html, body {
-  width: 100%;
+html {
   height: 100%;
   color: #3c5078;
+  background-color: black;
 }
 
 body {
@@ -88,9 +88,23 @@ body {
   touch-action: pan-y;
   touch-action: manipulation;
   font-family: Helvetica;
+  min-height: 100%;
+  max-width: 780px;
+  margin: 0 auto;
 }
 input{
   outline: none;
+}
+
+@media only screen and (min-width: 750px) and (max-width: 1024px){
+  html{
+    font-size: 20.5px !important;
+  }
+}
+@media only screen and (min-width: 1025px){
+  html{
+    font-size: 15px !important;
+  }
 }
 
 /*显示省略号*/

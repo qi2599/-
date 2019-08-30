@@ -12,7 +12,6 @@
           <div class="price">￥{{info.wap_price}}/{{info.unit}}</div>
         </div>
       </div>
-      <div class="clear"></div>
     </div>
   </div>
 </template>
@@ -27,7 +26,7 @@
 
 <style lang="less" scoped>
   #goods_pay{
-    width: 700/@rem;
+    width: 94%;
     padding: 10/@rem;
     margin: 10/@rem auto;
     background: white;
@@ -38,6 +37,7 @@
     .item{
       padding: 10/@rem 0;
       display: flex;
+      justify-content: space-around;
       .img{
         text-align: center;
         width: 220/@rem;

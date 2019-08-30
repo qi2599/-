@@ -65,7 +65,7 @@
 </template>
 
 <script>
-  import {queryLogout,queryCarNum,queryCustVirtual} from '../../api'
+  import {queryLogout,queryCustVirtual} from '../../api'
   export default {
     data(){
       return{
@@ -78,12 +78,14 @@
       logout(){
         this.$myConfirm.show({
           text: '确定退出登录吗？',
+          confirmText: '退出登录',
           onConfirm : () => {
             queryLogout({cust_id: localStorage.app_uid})
             localStorage.isLogin = ''
             localStorage.app_uid = ''
             localStorage.cust_name = ''
             this.$store.commit('setCustId')
+            this.$store.commit('setCarNum',{unm:''})
             this.$router.replace('/login')
           }
         })
@@ -97,13 +99,7 @@
         this.$router.replace('/login')
         return
       }
-      queryCarNum({custId: localStorage.app_uid}).then(res => {
-        if (res.result.cartsum){
-          this.$store.commit('setCarNum', {unm: res.result.cartsum})
-        }else {
-          this.$store.commit('setCarNum', {unm: ''})
-        }
-      })
+      
       queryCustVirtual({uid: localStorage.app_uid}).then(res => {
         this.CustVirtual = res
         if(!res.cust_coin) this.CustVirtual.cust_coin=0
@@ -141,7 +137,7 @@
         }
         .info{
           background: @c4;
-          width: 680/@rem;
+          width: 90%;
           margin: 130/@rem auto 0;
           padding: 20/@rem;
           height: 230/@rem;

@@ -36,7 +36,7 @@
 <style lang="less" scoped>
 .order{
   .order_wrap{
-    margin: 20/@rem 10/@rem;
+    margin-bottom: 20/@rem;
     background: white;
     border-radius: 10/@rem;
     color: @gray5;

@@ -80,7 +80,7 @@
         setTimeout(() => {
           this.showWrap=false
           this.boxout = false
-        } ,200)
+        } ,300)
       },
       add_car(){
         if(this.isCar){
@@ -116,14 +116,15 @@
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     bottom: 0;
-    z-index: 2;
+    z-index: 999;
     background: rgba(0,0,0,0.8);
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
     .box{
       transform: scale(1.5);
       opacity: 0;
-      transition: all 0.2s;
+      transition: all 0.3s;
       position: absolute;
       height: 1032/@rem;
       top: 0;
@@ -204,13 +205,15 @@
       }
       .button{
         padding: 0 50/@rem;
+        font-size: 0;
+        text-align: center;
         .close, .to_car, .add_car{
           width: 216.5/@rem;
           text-align: center;
           line-height: 50/@rem;
           font-size: 0.9rem;
           color: @c4;
-          float: left;
+          display: inline-block;
         }
         .iconfont_box{
           width: 100/@rem;

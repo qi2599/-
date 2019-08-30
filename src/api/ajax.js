@@ -14,6 +14,10 @@ axios.defaults.withCredentials=true
 axios.defaults.timeout = 10000;
 // post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// 设置 GZIP 压缩请求头
+let reqHeaders = {
+  'Accept-Encoding': 'gzip, deflate'
+}
 //对外接口
 export default function ajax(url='', data={}, method='POST'){
   if(method === 'GET'){
@@ -26,7 +30,7 @@ export default function ajax(url='', data={}, method='POST'){
 function get(url, data){
   return new Promise((resolve, reject) =>{
     url = url + '?' + dataStr(data)
-    axios.get(url).then(res =>{
+    axios.get(url,reqHeaders).then(res =>{
       resolve(res.data);
     }).catch(err =>{
       reject(err);
@@ -37,7 +41,7 @@ function get(url, data){
 function post(url, data){
   return new Promise((resolve, reject) =>{
     data = dataStr(data)
-    axios.post(url, data).then(res =>{
+    axios.post(url, data, reqHeaders).then(res =>{
       resolve(res.data);
     }).catch(err =>{
       reject(err);

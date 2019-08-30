@@ -50,7 +50,6 @@
     box-sizing: border-box;
     background: white;
     border-radius: 10/@rem;
-    margin-bottom: 7/@rem;
     padding: 10/@rem;
     overflow: hidden;
     .img{

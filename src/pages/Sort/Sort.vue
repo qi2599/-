@@ -15,8 +15,8 @@
       </infinite>
     </div>
     <div class="goods_wrap">
-      <infinite :on_infinite="infinite" :on_refresh="refresh" ref="myscroller" >
-        <div class="list_wrap">
+      <infinite :on_infinite="infinite" :on_refresh="refresh" :text="'没有更多商品'" :distance="100" ref="myscroller" >
+        <div class="list_wrap clearfix">
           <Goods3 v-for="(item, index) in goodsList" :key="index" :info="item"></Goods3>
         </div>
       </infinite>
@@ -51,10 +51,10 @@
         this.$refs.myscroller.done()
         this.pageNumber=1
         this.goodsList=[]
-        queryGoods({pageNumber: 1, pageSize: 10, classId:id}).then(res => {
+        queryGoods({pageNumber: 1, pageSize: 16, classId:id}).then(res => {
           this.goodsList = res.result
           this.id = id
-          if(res.result.length<10){
+          if(res.result.length<16){
             this.$refs.myscroller.done(true)
           }
         })
@@ -68,7 +68,7 @@
         this.pageNumber=1
         this.goodsList=[]
         this.id = id
-        queryGoods({pageNumber: 1, pageSize: 10, classId:this.id=='0'? '':this.id}).then(res => {
+        queryGoods({pageNumber: 1, pageSize: 16, classId:this.id=='0'? '':this.id}).then(res => {
           this.goodsList = res.result
         })
         if(id !== 0){
@@ -90,7 +90,7 @@
         }
       },
       infinite(done){
-        queryGoods({pageNumber: this.pageNumber+1, pageSize: 10, classId: this.id=='0'? '':this.id}).then(res => {
+        queryGoods({pageNumber: this.pageNumber+1, pageSize: 16, classId: this.id=='0'? '':this.id}).then(res => {
           if(res.result.length!=0){
             this.goodsList = [...this.goodsList,...res.result]
             this.pageNumber++
@@ -101,7 +101,7 @@
       refresh(reset){
         this.pageNumber = 1
         this.$refs.myscroller.done()
-        queryGoods({pageNumber: this.pageNumber, pageSize: 10, classId: this.id=='0'? '':this.id}).then(res => {
+        queryGoods({pageNumber: this.pageNumber, pageSize: 16, classId: this.id=='0'? '':this.id}).then(res => {
           if(res.result.length!=0) this.goodsList = res.result
           reset()
         })
@@ -111,14 +111,16 @@
       queryClass({pageNumber : 1, pageSize : 50}).then(res => {
         this.class1 = [{id:'0', name:'所有商品'},...res.result]
       })
-      queryGoods({pageNumber: 1, pageSize: 10}).then(res => {
+      queryGoods({pageNumber: 1, pageSize: 16}).then(res => {
         this.goodsList = res.result
       })
+      document.body.style.height = '100%'
     },
     watch: {
       '$route' (to, from) {
-        if(!sessionStorage.sortPositon || from.path == '/') sessionStorage.sortPositon = ''
-        if(to.path === "/sort"){
+        if(!sessionStorage.sortPositon || from.path == '/'){}
+        if(to.path === "/menu"){
+          document.body.style.height = '100%'
           setTimeout(()=>this.$refs.myscroller.scrollto(sessionStorage.sortPositon),50) //同步转异步操作
         }
       },
@@ -128,6 +130,7 @@
     },
     beforeRouteLeave(to,from,next){//记录离开时的位置
       sessionStorage.sortPositon = this.$refs.myscroller.getPosition()
+      document.body.style.height = ''
       next()
     }
   }
@@ -136,6 +139,7 @@
 <style lang="less" scoped>
   #sort{
     height: 100%;
+    position: relative;
     .iconsousuo{
       width: 85/@rem;
       height: 70/@rem;
@@ -146,7 +150,7 @@
       font-size: 1.3rem;
     }
     #class_list{
-      position: fixed;
+      position: absolute;
       top: 107/@rem;
       bottom: 122/@rem;
       width: 163/@rem;
@@ -179,14 +183,15 @@
     .goods_wrap{
       position: absolute;
       top: 107/@rem;
-      left: 163/@rem;
       bottom: 122/@rem;
-      width: 587/@rem;
+      left: 163/@rem;
+      right: 0;
       .list_wrap{
-        padding: 10/@rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        padding-top: 9/@rem;
+        &>div{
+          float: left;
+          margin: 0 0 9/@rem 9/@rem;
+        }
       }
     }
   }

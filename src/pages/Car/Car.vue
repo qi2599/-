@@ -3,7 +3,7 @@
     <div id="car" @touchstart="head_bar">
       <div class="head" :class="{is_head: is_head_bar}">
         <div class="title">购物车</div>
-        <div class="del" @touchend="del">删除</div>
+        <div class="del" @click="del">删除</div>
       </div>
       <div class="goods_wrap" v-if="car_list.length">
         <Goods_car :info="info" :chack_item="chack_item" :set_total="set_total" v-for="(info, index) in car_list" :key="index"></Goods_car>
@@ -41,18 +41,15 @@
         if(this.chack_id){
           this.$myConfirm.show({
             text: '确定删除选中商品吗？',
-              onConfirm : () => {
-                this.$myLoading.show('正在删除...')
-                queryDelCar({custId: localStorage.app_uid,ids:this.chack_id}).then(()=>{
-                  this.getCarNum()
-                  this.get_car_list()
-                })
-              }
+            confirmText: '删除',
+            onConfirm : () => {
+              this.$myLoading.show('正在删除...')
+              queryDelCar({custId: localStorage.app_uid,ids:this.chack_id}).then(()=>{
+                this.getCarNum()
+                this.get_car_list()
+              })
+            }
           })
-          // this.$vux.confirm.show({
-          //   content: '确认删除选中商品吗？',
-
-          // })
         }else {
           this.$myToast.show({text:'商品选择了咩?',time:2000})
         }
@@ -144,9 +141,7 @@
         let startY=Math.floor(touch.clientY)
         let foo = ev=>{
           ev = ev || event
-          let touch=ev.changedTouches[0]
-          let nowY=Math.floor(touch.clientY)
-          if(nowY-startY >= 0){
+          if(Math.floor(ev.changedTouches[0].clientY)-startY >= 0){
             this.is_head_bar=false
           } else {
             this.is_head_bar=true
@@ -175,6 +170,7 @@
       position: fixed;
       top: 0;
       width: 100%;
+      max-width: 780px;
       z-index: 2;
       height: 107/@rem;
       line-height: 107/@rem;

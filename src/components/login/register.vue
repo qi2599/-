@@ -28,13 +28,12 @@
         </div>
         <div class='reg_item'>
           <img :src="img_code" @click="get_imgcode">
-          <input type='span' name='yanzhen' placeholder='请输入验证码'v-model="authCode" @click.stop="get_focus"/>
+          <input type='text' name='yanzhen' placeholder='请输入验证码'v-model="authCode" @click.stop="get_focus"/>
           <span>验证码</span>
         </div>
       </div>
       <div class='reg_btn' @click="to_register">提 交</div>
     </form>
-    <div class="footer"></div>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <div>
     <div class='login_wrap'>
       <div class="my-1px-b">
-        <input type='span' placeholder='手机号/用户名' @click.stop="get_focus" v-model="mobile"/>
+        <input type='number' placeholder='手机号/用户名' @click.stop="get_focus" v-model="mobile"/>
         <span class='iconfont iconpersonal_active'></span>
       </div>
       <div>
@@ -10,7 +10,7 @@
         <span class='iconfont iconai-password'></span>
       </div>
     </div>
-    <div class='login_btn' @click="to_login">登 录</div>
+    <div class='login_btn' @touchstart="to_login" @click="to_login">登 录</div>
     <a class='forget_psd' @click="$router.push('/resetpwd')">忘记密码?</a>
   </div>
 </template>
@@ -20,7 +20,7 @@
     data(){
       return {
         mobile: '',
-        passwd:''
+        passwd:'',
       }
     },
     methods:{

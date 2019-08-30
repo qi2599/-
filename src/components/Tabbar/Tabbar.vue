@@ -5,9 +5,9 @@
       <div class="iconfont" :class="{iconhome_active: '/home' === $route.path}"></div>
       <span>首页</span>
     </div>
-    <div class="item" :class="{active: '/sort' === $route.path}" @click="goTo('/sort')">
-      <div class="iconfont" :class="{iconsort: '/sort' !== $route.path}"></div>
-      <div class="iconfont" :class="{iconsort_active: '/sort' === $route.path}"></div>
+    <div class="item" :class="{active: '/menu' === $route.path}" @click="goTo('/menu')">
+      <div class="iconfont" :class="{iconsort: '/menu' !== $route.path}"></div>
+      <div class="iconfont" :class="{iconsort_active: '/menu' === $route.path}"></div>
       <span>分类</span>
     </div>
     <div class="item car" :class="{active: '/car' === $route.path}" @click="goTo('/car')">
@@ -41,8 +41,10 @@ export default {
   },
   watch:{
     $route(to){
-      if(to.path=='/home' || to.path=='/sort' || to.path=='/car' || to.path=='/me') this.isShow=true
+      if(to.path=='/home' || to.path=='/menu' || to.path=='/car' || to.path=='/me') this.isShow=true
       else this.isShow=false
+      document.title = '双华商城'+ to.path
+      gtag('config', 'G-23GHJCQS4S');
     }
   }
 }
@@ -54,6 +56,7 @@ export default {
   z-index: 2;
   bottom: -130/@rem;
   width: 100%;
+  max-width: 780px;
   height: 122/@rem;
   box-sizing: border-box;
   padding: 5px 10px 10px;

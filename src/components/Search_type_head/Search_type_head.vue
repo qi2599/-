@@ -3,7 +3,7 @@
     <slot name='iconfont'></slot>
     <div class="content">
       <input type="text" placeholder="饮料 / 酒 / 零食等" ref="sort_inp" @change="to_search" @touchstart.stop="set_focus"/>
-      <a href="javascript:;" @touchend="to_search">搜索</a>
+      <a href="javascript:;" @click="to_search">搜索</a>
     </div>
   </div>
 </template>
@@ -81,6 +81,7 @@
     height: 70/@rem;
     padding: 18.5/@rem;
     width: 100%;
+    max-width: 760px;
     .content{
       width: 680/@rem;
       input{

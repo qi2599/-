@@ -11,21 +11,25 @@ export default {
       })
       document.body.appendChild(myToast.$el)
     }
+    let timeId1
+    let timeId2
     let toastMethods = {
       show({text,icon,time=1000}) {
         myToast.isShow = true
         myToast.icon = icon
         myToast.text = text
+        clearInterval(timeId1)
+        clearInterval(timeId2)
         setTimeout(()=>{
           myToast.trans = true
         },20)
-        setTimeout(()=>{
+        timeId1 = setTimeout(()=>{
           this.hide()
         },time)
       },
       hide(){
         myToast.trans=false
-        setTimeout(()=>{
+        timeId2 = setTimeout(()=>{
           myToast.isShow = false
         },300)
       }

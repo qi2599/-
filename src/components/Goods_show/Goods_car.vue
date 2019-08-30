@@ -45,6 +45,7 @@
       },
       set_num(ev){
         ev = ev || event
+        let oldQty = this.info.qty
         let num= +ev.target.value
         if(num<this.info.buy_lower_limit){
           this.$myToast.show({text:this.info.buy_lower_limit+'件起购',time:2000})
@@ -53,11 +54,13 @@
           this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件',time:2000})
           num= ev.target.value =this.info.buy_upper_limit
         }
+        this.$store.commit('setCarNum', {unm: this.$store.state.cartsum - (oldQty - num)})
         this.info.qty=num
         this.set_total()
         this.info.qtyChanged=true
       },
       add_cut(type){
+        let oldQty = this.info.qty
         if (type === 'cut'){
           this.info.qty--
         } else if(type === 'add'){
@@ -70,6 +73,7 @@
           this.$myToast.show({text:'限购'+this.info.buy_upper_limit+'件',time:2000})
           this.info.qty = this.$refs.c_num.num = this.info.buy_upper_limit
         }
+        this.$store.commit('setCarNum', {unm: this.$store.state.cartsum - (oldQty - this.info.qty)})
         this.set_total()
         this.info.qtyChanged=true
       }
@@ -98,29 +102,30 @@
 <style lang="less" scoped>
   .goods_car{
     background: white;
-    width: 700/@rem;
+    width: 94%;
     height: 200/@rem;
     margin: 10/@rem auto;
     padding: 10/@rem;
     border-radius: 10/@rem;
+    display: flex;
     .check{
       width: 64.4/@rem;
-      float: left;
       padding: 77/@rem 0;
     }
     .img{
       position: relative;
       height: 200/@rem;
-      width: 200/@rem;
-      float: left;
       margin-right: 10/@rem;
+      text-align: center;
+      flex-grow:1;
       img{
-        width: 100%;
+        height: 100%;
       }
       .mask{
         position: absolute;
         bottom: 0;
-        width: 200/@rem;
+        left: 0;
+        right: 0;
         height: 2rem;
         line-height: 2rem;
         text-align: center;
@@ -129,8 +134,7 @@
       }
     }
     .goods_info{
-      float: left;
-      width: 425.6/@rem;
+      flex-grow:1;
       .name{
         padding-top: 15/@rem;
         line-height: 1.2rem;

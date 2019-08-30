@@ -1,13 +1,9 @@
 <template>
-  <div style="height: 100%">
-    <transition>
-      <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
-    </transition>
-    <transition>
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
-    </transition>
+  <div id="app">
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
     <Tabbar></Tabbar>
   </div>
 </template>
@@ -22,20 +18,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .v-enter{
-    opacity: 0;
-    position: absolute;
-    /*transform: translateX(100%);*/
-  }
-  
-  .v-leave-to{
-    opacity: 0;
-    position: absolute;
-    /*transform: translateX(-100%);*/
-  }
-  
-  .v-enter-active,
-  .v-leave-active{
-    transition: all 0.5s ease;
+  #app{
+    height: 100%;
   }
 </style>

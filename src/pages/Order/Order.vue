@@ -33,7 +33,7 @@
     },
     methods:{
       toggle(){
-        this.index=this.$refs.tabBox.index
+        this.index= parseInt(this.$refs.tabBox.index)
       },
       add_cut(type){
         let index=this.index
@@ -54,10 +54,10 @@
       Order_detail
     },
     created() {
-      this.index=this.$route.query.index
+      this.index=parseInt(this.$route.query.index)
     },
     mounted() {
-      this.$refs.tabBox.index=this.$route.query.index
+      this.$refs.tabBox.index=+this.$route.query.index
     }
   }
 </script>
@@ -68,6 +68,7 @@
   .head{
     position: fixed;
     width: 100%;
+    max-width: 780px;
     top: 0;
     z-index: 2;
     color: white;
@@ -92,6 +93,7 @@
   .tab{
     position: fixed;
     width: 100%;
+    max-width: 780px;
     top: 107/@rem;
     z-index: 2;
   }

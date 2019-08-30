@@ -1,7 +1,7 @@
 <template>
   <div id="search_text">
     <search_head :focus="true" ref="search_head">
-      <div class="iconfont iconarrow-left" slot='iconfont' @touchend="goback"></div>
+      <div class="iconfont iconarrow-left" slot='iconfont' @click="goback"></div>
     </search_head>
     <div class="local_search">
       <div class="title">最近搜索</div>
@@ -37,8 +37,14 @@
         this.$router.go(-1)
       },
       del_local(){
-        this.localSearch= []
-        localStorage.setItem('search',JSON.stringify([]))
+        this.$myConfirm.show({
+          text: '确定删除搜索记录吗？',
+          confirmText: '删除',
+          onConfirm : () => {
+            this.localSearch= []
+            localStorage.setItem('search',JSON.stringify([]))
+          }
+        })
       },
       hot_local(keyword){
         this.$refs.search_head.keyword=keyword

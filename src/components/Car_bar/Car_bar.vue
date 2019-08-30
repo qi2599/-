@@ -68,6 +68,7 @@
     position: fixed;
     bottom: 122/@rem;
     width: 100%;
+    max-width: 780px;
     height: 100/@rem;
     line-height: 100/@rem;
     font-size: 0.9rem;

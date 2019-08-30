@@ -193,22 +193,21 @@
   #swiper_page{
     overflow: hidden;
     .clearfix{
-      width: 2250/@rem;
-      transform: translate(-750/@rem);
+      width: 300%;
+      transform: translate(-33.333%);
       display: flex;
       .left, .middle, .right{
-        width: 750/@rem;
+        width: 99%;
+        margin: 0.5%;
         min-height: 1000/@rem;
       }
       .left, .right{
-        width: 710/@rem;
-        margin: 20/@rem;
+
         border-radius: 10/@rem;
         background: white;
       }
       .no_goods{
-        width: 710/@rem;
-        margin: 20/@rem;
+
         height: 1000/@rem;
         background: white;
         border-radius: 10/@rem;
